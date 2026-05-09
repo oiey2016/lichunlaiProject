@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国象棋</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>中国象棋</h1>
+        </header>
+        
+        <div class="game-info">
+            <div class="player-info red-player">
+                <div class="player-indicator"></div>
+                <span id="red-status">红方</span>
+            </div>
+            <div class="turn-indicator">
+                <span id="current-turn">红方先行</span>
+            </div>
+            <div class="player-info black-player">
+                <div class="player-indicator"></div>
+                <span id="black-status">黑方</span>
+            </div>
+        </div>
+
+        <div class="board-container">
+            <canvas id="chess-board" width="540" height="600"></canvas>
+        </div>
+
+        <div class="controls">
+            <button id="btn-start">开始新游戏</button>
+            <button id="btn-restart">重新开始</button>
+            <button id="btn-undo">悔棋</button>
+            <button id="btn-help">游戏说明</button>
+        </div>
+
+        <div class="game-message" id="game-message"></div>
+
+        <div class="help-modal" id="help-modal">
+            <div class="help-content">
+                <h2>游戏说明</h2>
+                <h3>基本规则</h3>
+                <ul>
+                    <li>红方先行，双方轮流走棋</li>
+                    <li>将对方将（帅）吃掉即获胜</li>
+                    <li>被将军的一方必须应将</li>
+                </ul>
+                <h3>棋子走法</h3>
+                <ul>
+                    <li><strong>将/帅</strong>：在九宫内走直线，每次走一步</li>
+                    <li><strong>士/仕</strong>：在九宫内走斜线，每次走一步</li>
+                    <li><strong>象/相</strong>：走田字，不能过河</li>
+                    <li><strong>马</strong>：走日字，有蹩马腿</li>
+                    <li><strong>车</strong>：走直线，不能越子</li>
+                    <li><strong>炮</strong>：走直线，吃子需隔子</li>
+                    <li><strong>卒/兵</strong>：每次走一步，过河后可横走</li>
+                </ul>
+                <button id="btn-close-help">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/pieces.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/rules.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
