@@ -110,7 +110,7 @@ class ChessGame {
             isStalemate
         });
 
-        this.lastMove = { fromRow, fromCol, toRow, toCol };
+        this.lastMove = null;
         this.selectedPiece = null;
 
         if (isCheckmate) {
@@ -147,18 +147,7 @@ class ChessGame {
 
         this.currentPlayer = piece.color;
         this.gameStatus = 'playing';
-        
-        if (this.moveHistory.length > 0) {
-            const prevMove = this.moveHistory[this.moveHistory.length - 1];
-            this.lastMove = { 
-                fromRow: prevMove.fromRow, 
-                fromCol: prevMove.fromCol, 
-                toRow: prevMove.toRow, 
-                toCol: prevMove.toCol 
-            };
-        } else {
-            this.lastMove = null;
-        }
+        this.lastMove = null;
 
         this.selectedPiece = null;
         return true;
