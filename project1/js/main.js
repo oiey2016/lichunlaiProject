@@ -122,8 +122,8 @@ class GameUI {
     render() {
         this.boardElement.innerHTML = '';
         
-        const boardWidth = this.CELL_SIZE * 8 + 40;
-        const boardHeight = this.CELL_SIZE * 9 + 40;
+        const boardWidth = this.CELL_SIZE * 9 + 40;
+        const boardHeight = this.CELL_SIZE * 10 + 40;
         
         this.boardElement.style.width = `${boardWidth}px`;
         this.boardElement.style.height = `${boardHeight}px`;
@@ -136,22 +136,31 @@ class GameUI {
 
     renderGrid() {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('width', this.CELL_SIZE * 8 + 40);
-        svg.setAttribute('height', this.CELL_SIZE * 9 + 40);
+        svg.setAttribute('width', this.CELL_SIZE * 9 + 40);
+        svg.setAttribute('height', this.CELL_SIZE * 10 + 40);
         svg.style.position = 'absolute';
         svg.style.left = '0';
         svg.style.top = '0';
         svg.style.pointerEvents = 'none';
         
         for (let i = 0; i < 9; i++) {
-            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-            line.setAttribute('x1', i * this.CELL_SIZE + 20);
-            line.setAttribute('y1', 20);
-            line.setAttribute('x2', i * this.CELL_SIZE + 20);
-            line.setAttribute('y2', 9 * this.CELL_SIZE + 20);
-            line.setAttribute('stroke', '#000');
-            line.setAttribute('stroke-width', '1');
-            svg.appendChild(line);
+            const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line1.setAttribute('x1', i * this.CELL_SIZE + 20);
+            line1.setAttribute('y1', 20);
+            line1.setAttribute('x2', i * this.CELL_SIZE + 20);
+            line1.setAttribute('y2', 4 * this.CELL_SIZE + 20);
+            line1.setAttribute('stroke', '#000');
+            line1.setAttribute('stroke-width', '1');
+            svg.appendChild(line1);
+            
+            const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line2.setAttribute('x1', i * this.CELL_SIZE + 20);
+            line2.setAttribute('y1', 5 * this.CELL_SIZE + 20);
+            line2.setAttribute('x2', i * this.CELL_SIZE + 20);
+            line2.setAttribute('y2', 9 * this.CELL_SIZE + 20);
+            line2.setAttribute('stroke', '#000');
+            line2.setAttribute('stroke-width', '1');
+            svg.appendChild(line2);
         }
         
         for (let i = 0; i < 10; i++) {
@@ -164,24 +173,6 @@ class GameUI {
             line.setAttribute('stroke-width', '1');
             svg.appendChild(line);
         }
-        
-        const leftLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        leftLine.setAttribute('x1', 20);
-        leftLine.setAttribute('y1', 20);
-        leftLine.setAttribute('x2', 20);
-        leftLine.setAttribute('y2', 4 * this.CELL_SIZE + 20);
-        leftLine.setAttribute('stroke', '#000');
-        leftLine.setAttribute('stroke-width', '1');
-        svg.appendChild(leftLine);
-        
-        const rightLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        rightLine.setAttribute('x1', 20);
-        rightLine.setAttribute('y1', 5 * this.CELL_SIZE + 20);
-        rightLine.setAttribute('x2', 20);
-        rightLine.setAttribute('y2', 9 * this.CELL_SIZE + 20);
-        rightLine.setAttribute('stroke', '#000');
-        rightLine.setAttribute('stroke-width', '1');
-        svg.appendChild(rightLine);
         
         const diag1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         diag1.setAttribute('x1', 3 * this.CELL_SIZE + 20);
