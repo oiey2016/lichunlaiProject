@@ -122,8 +122,8 @@ class GameUI {
     render() {
         this.boardElement.innerHTML = '';
         
-        const boardWidth = this.CELL_SIZE * 9 + 40;
-        const boardHeight = this.CELL_SIZE * 10 + 40;
+        const boardWidth = this.CELL_SIZE * 8 + 40;
+        const boardHeight = this.CELL_SIZE * 9 + 40;
         
         this.boardElement.style.width = `${boardWidth}px`;
         this.boardElement.style.height = `${boardHeight}px`;
@@ -136,8 +136,8 @@ class GameUI {
 
     renderGrid() {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('width', this.CELL_SIZE * 9 + 40);
-        svg.setAttribute('height', this.CELL_SIZE * 10 + 40);
+        svg.setAttribute('width', this.CELL_SIZE * 8 + 40);
+        svg.setAttribute('height', this.CELL_SIZE * 9 + 40);
         svg.style.position = 'absolute';
         svg.style.left = '0';
         svg.style.top = '0';
@@ -266,12 +266,17 @@ class GameUI {
         for (const move of this.game.validMoves) {
             const moveElement = document.createElement('div');
             moveElement.className = 'valid-move';
-            moveElement.style.left = `${move.x * this.CELL_SIZE + 20 - 10}px`;
-            moveElement.style.top = `${move.y * this.CELL_SIZE + 20 - 10}px`;
             
             const targetPiece = this.game.board.getPieceAt(move.x, move.y);
             if (targetPiece) {
                 moveElement.classList.add('capture');
+                moveElement.style.left = `${move.x * this.CELL_SIZE + 20 - this.PIECE_SIZE / 2}px`;
+                moveElement.style.top = `${move.y * this.CELL_SIZE + 20 - this.PIECE_SIZE / 2}px`;
+                moveElement.style.width = `${this.PIECE_SIZE}px`;
+                moveElement.style.height = `${this.PIECE_SIZE}px`;
+            } else {
+                moveElement.style.left = `${move.x * this.CELL_SIZE + 20 - 10}px`;
+                moveElement.style.top = `${move.y * this.CELL_SIZE + 20 - 10}px`;
             }
             
             this.boardElement.appendChild(moveElement);
