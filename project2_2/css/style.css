@@ -1,0 +1,374 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.turn-indicator {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.turn-indicator span {
+    color: #667eea;
+}
+
+.game-status {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #28a745;
+}
+
+.game-status.check {
+    color: #ffc107;
+}
+
+.game-status.checkmate,
+.game-status.stalemate {
+    color: #dc3545;
+}
+
+.main-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.captured-pieces {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    width: 150px;
+    min-height: 200px;
+}
+
+.captured-pieces h3 {
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.captured-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.captured-piece {
+    font-size: 2rem;
+    cursor: default;
+}
+
+.board-container {
+    flex: 0 0 auto;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: 560px;
+    height: 560px;
+    border: 5px solid #8b4513;
+    border-radius: 5px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    background: #8b4513;
+    padding: 0;
+}
+
+.square {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.square.light {
+    background: #f0d9b5;
+}
+
+.square.dark {
+    background: #b58863;
+}
+
+.square:hover {
+    filter: brightness(1.1);
+}
+
+.square.selected {
+    box-shadow: inset 0 0 0 4px #ffd700;
+}
+
+.square.valid-move {
+    position: relative;
+}
+
+.square.valid-move::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.square.valid-capture::after {
+    width: 90%;
+    height: 90%;
+    background: transparent;
+    border: 5px solid rgba(0, 0, 0, 0.3);
+    border-radius: 0;
+}
+
+.square.last-move {
+    box-shadow: inset 0 0 0 4px #007bff;
+}
+
+.square.check {
+    box-shadow: inset 0 0 0 4px #ff0000;
+}
+
+.piece {
+    font-size: 3.5rem;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s ease;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.piece:hover {
+    transform: scale(1.1);
+}
+
+.piece.white {
+    color: #fff;
+    -webkit-text-stroke: 1px #000;
+}
+
+.piece.black {
+    color: #000;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#restart-btn {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+}
+
+#restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+#undo-btn {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+    color: white;
+}
+
+#undo-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+}
+
+#undo-btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.move-history {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.move-history h3 {
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.history-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.move-item {
+    background: #e9ecef;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.move-number {
+    color: #667eea;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.promotion-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.promotion-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.promotion-content h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.promotion-options {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.promotion-piece {
+    font-size: 3rem;
+    padding: 10px 20px;
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.promotion-piece:hover {
+    background: #e9ecef;
+    transform: scale(1.1);
+    border-color: #667eea;
+}
+
+@media (max-width: 900px) {
+    .main-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .captured-pieces {
+        width: 100%;
+        min-height: auto;
+    }
+    
+    .board {
+        width: 400px;
+        height: 400px;
+    }
+    
+    .square {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .piece {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .board {
+        width: 320px;
+        height: 320px;
+    }
+    
+    .square {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .piece {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国际象棋</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>国际象棋</h1>
+        </header>
+        
+        <div class="game-info">
+            <div class="turn-indicator">
+                <span>当前回合：</span>
+                <span id="current-turn">白方</span>
+            </div>
+            <div class="game-status">
+                <span id="game-status">游戏进行中</span>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="captured-pieces captured-white">
+                <h3>白方被吃</h3>
+                <div id="captured-white" class="captured-list"></div>
+            </div>
+            
+            <div class="board-container">
+                <div class="board" id="chess-board"></div>
+            </div>
+            
+            <div class="captured-pieces captured-black">
+                <h3>黑方被吃</h3>
+                <div id="captured-black" class="captured-list"></div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="restart-btn">重新开始</button>
+            <button id="undo-btn">悔棋</button>
+        </div>
+        
+        <div class="move-history">
+            <h3>走棋记录</h3>
+            <div id="move-history" class="history-list"></div>
+        </div>
+    </div>
+    
+    <script src="js/chessboard.js"></script>
+    <script src="js/pieces.js"></script>
+    <script src="js/rules.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
