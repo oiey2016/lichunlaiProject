@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国际象棋</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .board-container {
+            background: linear-gradient(145deg, #2d2d44, #1a1a2e);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .chess-board {
+            display: grid;
+            grid-template-columns: repeat(8, 70px);
+            grid-template-rows: repeat(8, 70px);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .square {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .square.light {
+            background: linear-gradient(145deg, #f0d9b5, #e6c99a);
+        }
+
+        .square.dark {
+            background: linear-gradient(145deg, #b58863, #a07855);
+        }
+
+        .square:hover {
+            filter: brightness(1.1);
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        .square.selected {
+            box-shadow: inset 0 0 20px rgba(72, 187, 120, 0.6);
+        }
+
+        .square.valid-move::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(72, 187, 120, 0.6);
+            border-radius: 50%;
+        }
+
+        .square.valid-move.capture::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(72, 187, 120, 0.8);
+            border-radius: 50%;
+        }
+
+        .square.last-move {
+            box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .square.check {
+            animation: pulse-red 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: inset 0 0 20px rgba(220, 38, 38, 0.5); }
+            50% { box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.8); }
+        }
+
+        .piece {
+            user-select: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            transition: transform 0.15s ease;
+        }
+
+        .piece:hover {
+            transform: scale(1.1);
+        }
+
+        .coordinates {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 16px;
+            color: #a0a0b0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .coord-label {
+            width: 70px;
+            text-align: center;
+        }
+
+        .rank-labels {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 8px;
+            color: #a0a0b0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .rank-label {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-panel {
+            background: linear-gradient(145deg, #2d2d44, #1a1a2e);
+            border-radius: 16px;
+            padding: 24px;
+            min-width: 280px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .status-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .status-text {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .status-subtext {
+            font-size: 14px;
+            color: #a0a0b0;
+        }
+
+        .player-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .player-indicator.white {
+            background: linear-gradient(145deg, #f8f8f8, #e0e0e0);
+        }
+
+        .player-indicator.black {
+            background: linear-gradient(145deg, #333, #1a1a1a);
+        }
+
+        .player-indicator.white .player-label {
+            color: #333;
+        }
+
+        .player-indicator.black .player-label {
+            color: #f0f0f0;
+        }
+
+        .player-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            animation: pulse-green 1.5s ease-in-out infinite;
+        }
+
+        .player-indicator.white .player-dot {
+            background: #48bb78;
+        }
+
+        .player-indicator.black .player-dot {
+            background: #48bb78;
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, #48bb78, #38a169);
+            color: white;
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.5);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(145deg, #4a5568, #2d3748);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .move-history {
+            margin-top: 24px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .move-history::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .move-history::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .move-history::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .move-history-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #a0a0b0;
+            margin-bottom: 12px;
+        }
+
+        .move-item {
+            display: flex;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #d0d0e0;
+        }
+
+        .move-number {
+            color: #808090;
+            font-weight: 500;
+            min-width: 30px;
+        }
+
+        .move-white, .move-black {
+            font-weight: 500;
+        }
+
+        .move-white {
+            color: #f0f0f0;
+        }
+
+        .move-black {
+            color: #c0c0d0;
+        }
+
+        .captured-pieces {
+            margin-top: 24px;
+        }
+
+        .captured-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #a0a0b0;
+            margin-bottom: 12px;
+        }
+
+        .captured-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            font-size: 24px;
+        }
+
+        .game-over-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .game-over-modal {
+            background: linear-gradient(145deg, #2d2d44, #1a1a2e);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .game-over-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .game-over-subtitle {
+            font-size: 18px;
+            color: #a0a0b0;
+            margin-bottom: 32px;
+        }
+
+        .btn-large {
+            padding: 16px 40px;
+            font-size: 18px;
+        }
+
+        @media (max-width: 900px) {
+            .game-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .chess-board {
+                grid-template-columns: repeat(8, 45px);
+                grid-template-rows: repeat(8, 45px);
+            }
+
+            .square {
+                font-size: 30px;
+            }
+
+            .coord-label {
+                width: 45px;
+            }
+
+            .rank-label {
+                height: 45px;
+            }
+
+            .info-panel {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="rank-labels">
+            <div class="rank-label">8</div>
+            <div class="rank-label">7</div>
+            <div class="rank-label">6</div>
+            <div class="rank-label">5</div>
+            <div class="rank-label">4</div>
+            <div class="rank-label">3</div>
+            <div class="rank-label">2</div>
+            <div class="rank-label">1</div>
+        </div>
+        
+        <div class="board-container">
+            <div class="coordinates">
+                <div class="coord-label">a</div>
+                <div class="coord-label">b</div>
+                <div class="coord-label">c</div>
+                <div class="coord-label">d</div>
+                <div class="coord-label">e</div>
+                <div class="coord-label">f</div>
+                <div class="coord-label">g</div>
+                <div class="coord-label">h</div>
+            </div>
+            
+            <div class="chess-board" id="chessBoard"></div>
+            
+            <div class="coordinates">
+                <div class="coord-label">a</div>
+                <div class="coord-label">b</div>
+                <div class="coord-label">c</div>
+                <div class="coord-label">d</div>
+                <div class="coord-label">e</div>
+                <div class="coord-label">f</div>
+                <div class="coord-label">g</div>
+                <div class="coord-label">h</div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <div class="status-header">
+                <div class="status-text" id="statusText">白方回合</div>
+                <div class="status-subtext" id="moveCount">回合: 1</div>
+            </div>
+
+            <div class="player-indicator" id="playerIndicator">
+                <div class="player-dot"></div>
+                <span class="player-label">白方执子</span>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-primary" id="newGameBtn">
+                    <span>新游戏</span>
+                </button>
+                <button class="btn btn-secondary" id="undoBtn">
+                    <span>悔棋</span>
+                </button>
+            </div>
+
+            <div class="move-history">
+                <div class="move-history-title">走棋记录</div>
+                <div id="moveHistory"></div>
+            </div>
+
+            <div class="captured-pieces">
+                <div class="captured-title">被吃棋子</div>
+                <div class="captured-list" id="capturedPieces"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-over-overlay" id="gameOverOverlay" style="display: none;">
+        <div class="game-over-modal">
+            <div class="game-over-title" id="gameOverTitle">游戏结束</div>
+            <div class="game-over-subtitle" id="gameOverSubtitle"></div>
+            <button class="btn btn-primary btn-large" id="restartBtn">再来一局</button>
+        </div>
+    </div>
+
+    <script src="chess.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const game = new ChessGame();
+            const boardElement = document.getElementById('chessBoard');
+            const statusText = document.getElementById('statusText');
+            const moveCount = document.getElementById('moveCount');
+            const playerIndicator = document.getElementById('playerIndicator');
+            const newGameBtn = document.getElementById('newGameBtn');
+            const undoBtn = document.getElementById('undoBtn');
+            const moveHistory = document.getElementById('moveHistory');
+            const capturedPieces = document.getElementById('capturedPieces');
+            const gameOverOverlay = document.getElementById('gameOverOverlay');
+            const gameOverTitle = document.getElementById('gameOverTitle');
+            const gameOverSubtitle = document.getElementById('gameOverSubtitle');
+            const restartBtn = document.getElementById('restartBtn');
+
+            let selectedSquare = null;
+            let validMoves = [];
+            let capturedWhite = [];
+            let capturedBlack = [];
+
+            function renderBoard() {
+                boardElement.innerHTML = '';
+
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const square = document.createElement('div');
+                        const isLight = (row + col) % 2 === 0;
+                        square.className = `square ${isLight ? 'light' : 'dark'}`;
+
+                        const piece = game.getPieceAt(row, col);
+                        if (piece) {
+                            const pieceElement = document.createElement('div');
+                            pieceElement.className = 'piece';
+                            pieceElement.textContent = piece.type;
+                            square.appendChild(pieceElement);
+                        }
+
+                        if (selectedSquare && selectedSquare.row === row && selectedSquare.col === col) {
+                            square.classList.add('selected');
+                        }
+
+                        const isValidMove = validMoves.some(m => m.row === row && m.col === col);
+                        if (isValidMove) {
+                            const targetPiece = game.getPieceAt(row, col);
+                            square.classList.add(targetPiece ? 'valid-move capture' : 'valid-move');
+                        }
+
+                        const lastMove = game.getLastMove();
+                        if (lastMove) {
+                            if ((lastMove.from.row === row && lastMove.from.col === col) ||
+                                (lastMove.to.row === row && lastMove.to.col === col)) {
+                                square.classList.add('last-move');
+                            }
+                        }
+
+                        const kingPos = game.findKing(game.board, game.currentPlayer);
+                        if (game.isInCheck(game.currentPlayer) && kingPos && kingPos.row === row && kingPos.col === col) {
+                            square.classList.add('check');
+                        }
+
+                        square.addEventListener('click', () => handleSquareClick(row, col));
+                        boardElement.appendChild(square);
+                    }
+                }
+            }
+
+            function handleSquareClick(row, col) {
+                if (game.gameStatus !== 'playing') return;
+
+                const piece = game.getPieceAt(row, col);
+
+                if (selectedSquare) {
+                    const isValidMove = validMoves.some(m => m.row === row && m.col === col);
+
+                    if (isValidMove) {
+                        const movedPiece = game.getPieceAt(selectedSquare.row, selectedSquare.col);
+                        const captured = game.getPieceAt(row, col);
+                        
+                        if (game.makeMove(selectedSquare.row, selectedSquare.col, row, col)) {
+                            if (captured) {
+                                if (captured.color === 'white') {
+                                    capturedWhite.push(captured.type);
+                                } else {
+                                    capturedBlack.push(captured.type);
+                                }
+                            }
+                            
+                            updateUI();
+                        }
+                        
+                        selectedSquare = null;
+                        validMoves = [];
+                        renderBoard();
+                        return;
+                    }
+                }
+
+                if (piece && piece.color === game.currentPlayer) {
+                    selectedSquare = { row, col };
+                    validMoves = game.getValidMovesForPiece(row, col);
+                } else {
+                    selectedSquare = null;
+                    validMoves = [];
+                }
+
+                renderBoard();
+            }
+
+            function updateUI() {
+                statusText.textContent = game.getStatusMessage();
+                moveCount.textContent = `回合: ${game.fullMoveNumber}`;
+
+                if (game.currentPlayer === 'white') {
+                    playerIndicator.className = 'player-indicator white';
+                    playerIndicator.innerHTML = '<div class="player-dot"></div><span class="player-label">白方执子</span>';
+                } else {
+                    playerIndicator.className = 'player-indicator black';
+                    playerIndicator.innerHTML = '<div class="player-dot"></div><span class="player-label">黑方执子</span>';
+                }
+
+                updateMoveHistory();
+                updateCapturedPieces();
+
+                if (game.gameStatus !== 'playing') {
+                    showGameOver();
+                }
+            }
+
+            function updateMoveHistory() {
+                moveHistory.innerHTML = '';
+                const history = game.moveHistory;
+
+                for (let i = 0; i < history.length; i += 2) {
+                    const moveItem = document.createElement('div');
+                    moveItem.className = 'move-item';
+
+                    const number = document.createElement('span');
+                    number.className = 'move-number';
+                    number.textContent = `${Math.floor(i / 2) + 1}.`;
+
+                    const whiteMove = document.createElement('span');
+                    whiteMove.className = 'move-white';
+                    whiteMove.textContent = formatMove(history[i]);
+
+                    moveItem.appendChild(number);
+                    moveItem.appendChild(whiteMove);
+
+                    if (history[i + 1]) {
+                        const blackMove = document.createElement('span');
+                        blackMove.className = 'move-black';
+                        blackMove.textContent = formatMove(history[i + 1]);
+                        moveItem.appendChild(blackMove);
+                    }
+
+                    moveHistory.appendChild(moveItem);
+                }
+
+                moveHistory.scrollTop = moveHistory.scrollHeight;
+            }
+
+            function formatMove(move) {
+                const pieceSymbols = {
+                    '♖': 'R', '♘': 'N', '♗': 'B', '♕': 'Q', '♔': 'K',
+                    '♜': 'R', '♞': 'N', '♝': 'B', '♛': 'Q', '♚': 'K'
+                };
+
+                const cols = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+                const fromCol = cols[move.from.col];
+                const fromRow = 8 - move.from.row;
+                const toCol = cols[move.to.col];
+                const toRow = 8 - move.to.row;
+
+                let piece = pieceSymbols[move.piece] || '';
+                let capture = move.captured ? 'x' : '';
+                
+                if (move.castling) {
+                    return move.to.col > move.from.col ? 'O-O' : 'O-O-O';
+                }
+
+                if (move.enPassant) {
+                    return `${fromCol}x${toCol}${toRow}`;
+                }
+
+                return `${piece}${fromCol}${fromRow}${capture}${toCol}${toRow}`;
+            }
+
+            function updateCapturedPieces() {
+                capturedPieces.innerHTML = '';
+                
+                capturedBlack.forEach(piece => {
+                    const span = document.createElement('span');
+                    span.textContent = piece;
+                    capturedPieces.appendChild(span);
+                });
+
+                if (capturedBlack.length > 0 && capturedWhite.length > 0) {
+                    const separator = document.createElement('span');
+                    separator.textContent = ' | ';
+                    capturedPieces.appendChild(separator);
+                }
+
+                capturedWhite.forEach(piece => {
+                    const span = document.createElement('span');
+                    span.textContent = piece;
+                    capturedPieces.appendChild(span);
+                });
+            }
+
+            function showGameOver() {
+                gameOverOverlay.style.display = 'flex';
+                
+                if (game.gameStatus === 'checkmate') {
+                    gameOverTitle.textContent = game.winner === 'white' ? '白方获胜！' : '黑方获胜！';
+                    gameOverSubtitle.textContent = '将死！';
+                } else if (game.gameStatus === 'stalemate') {
+                    gameOverTitle.textContent = '平局';
+                    gameOverSubtitle.textContent = '无子可动';
+                } else if (game.gameStatus === 'draw_50move') {
+                    gameOverTitle.textContent = '平局';
+                    gameOverSubtitle.textContent = '50回合规则';
+                } else if (game.gameStatus === 'draw_repetition') {
+                    gameOverTitle.textContent = '平局';
+                    gameOverSubtitle.textContent = '重复局面';
+                } else if (game.gameStatus === 'draw_insufficient') {
+                    gameOverTitle.textContent = '平局';
+                    gameOverSubtitle.textContent = '无子可胜';
+                }
+            }
+
+            function newGame() {
+                game.reset();
+                selectedSquare = null;
+                validMoves = [];
+                capturedWhite = [];
+                capturedBlack = [];
+                gameOverOverlay.style.display = 'none';
+                updateUI();
+                renderBoard();
+            }
+
+            function undo() {
+                if (game.undo()) {
+                    updateUI();
+                    renderBoard();
+                }
+            }
+
+            newGameBtn.addEventListener('click', newGame);
+            undoBtn.addEventListener('click', undo);
+            restartBtn.addEventListener('click', newGame);
+
+            updateUI();
+            renderBoard();
+        });
+    </script>
+</body>
+</html>
