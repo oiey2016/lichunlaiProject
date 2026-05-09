@@ -3,292 +3,229 @@ class Rules {
         this.board = board;
     }
 
-    isMoveValid(piece, toX, toY) {
-        if (!this.board.isValidPosition(toX, toY)) {
-            return false;
-        }
+    isValidMove(piece, toX, toY) {
+        if (!piece) return false;
+        if (toX < 0 || toX > 8 || toY < 0 || toY > 9) return false;
         
-        const targetPiece = this.board.getPiece(toX, toY);
-        if (targetPiece && targetPiece.color === piece.color) {
-            return false;
-        }
+        const targetPiece = this.board.getPieceAt(toX, toY);
+        if (targetPiece && targetPiece.color === piece.color) return false;
         
-        let isValid = false;
         switch (piece.type) {
-            case PieceType.KING:
-                isValid = this.isKingMoveValid(piece, toX, toY);
-                break;
-            case PieceType.ADVISOR:
-                isValid = this.isAdvisorMoveValid(piece, toX, toY);
-                break;
-            case PieceType.ELEPHANT:
-                isValid = this.isElephantMoveValid(piece, toX, toY);
-                break;
-            case PieceType.HORSE:
-                isValid = this.isHorseMoveValid(piece, toX, toY);
-                break;
-            case PieceType.CHARIOT:
-                isValid = this.isChariotMoveValid(piece, toX, toY);
-                break;
-            case PieceType.CANNON:
-                isValid = this.isCannonMoveValid(piece, toX, toY);
-                break;
-            case PieceType.PAWN:
-                isValid = this.isPawnMoveValid(piece, toX, toY);
-                break;
-        }
-        
-        if (!isValid) return false;
-        
-        return !this.wouldBeInCheck(piece, toX, toY);
-    }
-
-    isKingMoveValid(piece, toX, toY) {
-        const dx = Math.abs(toX - piece.x);
-        const dy = Math.abs(toY - piece.y);
-        
-        if ((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) {
-            if (this.board.isInPalace(toX, toY, piece.color)) {
-                return true;
-            }
-        }
-        
-        const targetKing = this.board.getKing(piece.color === PieceColor.RED ? PieceColor.BLACK : PieceColor.RED);
-        if (targetKing && piece.x === toX && targetKing.x === toX) {
-            const minY = Math.min(piece.y, targetKing.y);
-            const maxY = Math.max(piece.y, targetKing.y);
-            
-            for (let y = minY + 1; y < maxY; y++) {
-                if (this.board.getPiece(piece.x, y)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        
-        return false;
-    }
-
-    isAdvisorMoveValid(piece, toX, toY) {
-        const dx = Math.abs(toX - piece.x);
-        const dy = Math.abs(toY - piece.y);
-        
-        if (dx === 1 && dy === 1) {
-            return this.board.isInPalace(toX, toY, piece.color);
-        }
-        
-        return false;
-    }
-
-    isElephantMoveValid(piece, toX, toY) {
-        const dx = Math.abs(toX - piece.x);
-        const dy = Math.abs(toY - piece.y);
-        
-        if (dx === 2 && dy === 2) {
-            if (this.board.hasCrossedRiver(toY, piece.color)) {
-                return false;
-            }
-            
-            const eyeX = (piece.x + toX) / 2;
-            const eyeY = (piece.y + toY) / 2;
-            
-            if (this.board.getPiece(eyeX, eyeY)) {
-                return false;
-            }
-            
-            return true;
-        }
-        
-        return false;
-    }
-
-    isHorseMoveValid(piece, toX, toY) {
-        const dx = Math.abs(toX - piece.x);
-        const dy = Math.abs(toY - piece.y);
-        
-        if ((dx === 2 && dy === 1) || (dx === 1 && dy === 2)) {
-            let legX, legY;
-            
-            if (dx === 2) {
-                legX = (piece.x + toX) / 2;
-                legY = piece.y;
-            } else {
-                legX = piece.x;
-                legY = (piece.y + toY) / 2;
-            }
-            
-            if (this.board.getPiece(legX, legY)) {
-                return false;
-            }
-            
-            return true;
-        }
-        
-        return false;
-    }
-
-    isChariotMoveValid(piece, toX, toY) {
-        const dx = toX - piece.x;
-        const dy = toY - piece.y;
-        
-        if (dx !== 0 && dy !== 0) {
-            return false;
-        }
-        
-        const stepX = dx === 0 ? 0 : dx > 0 ? 1 : -1;
-        const stepY = dy === 0 ? 0 : dy > 0 ? 1 : -1;
-        
-        let x = piece.x + stepX;
-        let y = piece.y + stepY;
-        
-        while (x !== toX || y !== toY) {
-            if (this.board.getPiece(x, y)) {
-                return false;
-            }
-            x += stepX;
-            y += stepY;
-        }
-        
-        return true;
-    }
-
-    isCannonMoveValid(piece, toX, toY) {
-        const dx = toX - piece.x;
-        const dy = toY - piece.y;
-        
-        if (dx !== 0 && dy !== 0) {
-            return false;
-        }
-        
-        const stepX = dx === 0 ? 0 : dx > 0 ? 1 : -1;
-        const stepY = dy === 0 ? 0 : dy > 0 ? 1 : -1;
-        
-        let x = piece.x + stepX;
-        let y = piece.y + stepY;
-        let piecesBetween = 0;
-        
-        while (x !== toX || y !== toY) {
-            if (this.board.getPiece(x, y)) {
-                piecesBetween++;
-            }
-            x += stepX;
-            y += stepY;
-        }
-        
-        const targetPiece = this.board.getPiece(toX, toY);
-        
-        if (targetPiece) {
-            return piecesBetween === 1;
-        } else {
-            return piecesBetween === 0;
-        }
-    }
-
-    isPawnMoveValid(piece, toX, toY) {
-        const dx = toX - piece.x;
-        const dy = toY - piece.y;
-        
-        const forward = piece.color === PieceColor.RED ? -1 : 1;
-        
-        if (dy === forward && dx === 0) {
-            return true;
-        }
-        
-        if (this.board.hasCrossedRiver(piece.y, piece.color)) {
-            if (dy === 0 && Math.abs(dx) === 1) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-
-    wouldBeInCheck(piece, toX, toY) {
-        const oldX = piece.x;
-        const oldY = piece.y;
-        const targetPiece = this.board.getPiece(toX, toY);
-        
-        if (targetPiece) {
-            this.board.removePiece(targetPiece);
-        }
-        
-        piece.x = toX;
-        piece.y = toY;
-        
-        const inCheck = this.isInCheck(piece.color);
-        
-        piece.x = oldX;
-        piece.y = oldY;
-        
-        if (targetPiece) {
-            this.board.addPiece(targetPiece);
-        }
-        
-        return inCheck;
-    }
-
-    isInCheck(color) {
-        const king = this.board.getKing(color);
-        if (!king) return true;
-        
-        const enemyColor = color === PieceColor.RED ? PieceColor.BLACK : PieceColor.RED;
-        const enemyPieces = this.board.getPiecesByColor(enemyColor);
-        
-        for (const piece of enemyPieces) {
-            if (this.canAttack(piece, king.x, king.y)) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-
-    canAttack(piece, toX, toY) {
-        switch (piece.type) {
-            case PieceType.KING:
-                return this.isKingMoveValid(piece, toX, toY);
-            case PieceType.ADVISOR:
-                return this.isAdvisorMoveValid(piece, toX, toY);
-            case PieceType.ELEPHANT:
-                return this.isElephantMoveValid(piece, toX, toY);
-            case PieceType.HORSE:
-                return this.isHorseMoveValid(piece, toX, toY);
-            case PieceType.CHARIOT:
-                return this.isChariotMoveValid(piece, toX, toY);
-            case PieceType.CANNON:
-                return this.isCannonMoveValid(piece, toX, toY);
-            case PieceType.PAWN:
-                return this.isPawnMoveValid(piece, toX, toY);
+            case 'king':
+                return this.isValidKingMove(piece, toX, toY);
+            case 'advisor':
+                return this.isValidAdvisorMove(piece, toX, toY);
+            case 'elephant':
+                return this.isValidElephantMove(piece, toX, toY);
+            case 'horse':
+                return this.isValidHorseMove(piece, toX, toY);
+            case 'chariot':
+                return this.isValidChariotMove(piece, toX, toY);
+            case 'cannon':
+                return this.isValidCannonMove(piece, toX, toY);
+            case 'soldier':
+                return this.isValidSoldierMove(piece, toX, toY);
             default:
                 return false;
         }
     }
 
-    getValidMoves(piece) {
-        const moves = [];
+    isValidKingMove(piece, toX, toY) {
+        const dx = Math.abs(toX - piece.x);
+        const dy = Math.abs(toY - piece.y);
         
-        for (let x = 0; x < this.board.width; x++) {
-            for (let y = 0; y < this.board.height; y++) {
-                if (this.isMoveValid(piece, x, y)) {
-                    moves.push({ x, y });
+        if (piece.color === 'red') {
+            if (toX < 3 || toX > 5 || toY < 7 || toY > 9) return false;
+        } else {
+            if (toX < 3 || toX > 5 || toY < 0 || toY > 2) return false;
+        }
+        
+        if ((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) return true;
+        
+        if (dx === 0 && dy > 0) {
+            const enemyKing = this.board.findKing(piece.color === 'red' ? 'black' : 'red');
+            if (enemyKing && enemyKing.x === piece.x) {
+                const minY = Math.min(piece.y, enemyKing.y);
+                const maxY = Math.max(piece.y, enemyKing.y);
+                
+                let hasPiece = false;
+                for (let y = minY + 1; y < maxY; y++) {
+                    if (this.board.getPieceAt(piece.x, y)) {
+                        hasPiece = true;
+                        break;
+                    }
+                }
+                
+                if (!hasPiece && ((piece.color === 'red' && toY <= enemyKing.y) || 
+                                   (piece.color === 'black' && toY >= enemyKing.y))) {
+                    return true;
                 }
             }
         }
         
+        return false;
+    }
+
+    isValidAdvisorMove(piece, toX, toY) {
+        const dx = Math.abs(toX - piece.x);
+        const dy = Math.abs(toY - piece.y);
+        
+        if (piece.color === 'red') {
+            if (toX < 3 || toX > 5 || toY < 7 || toY > 9) return false;
+        } else {
+            if (toX < 3 || toX > 5 || toY < 0 || toY > 2) return false;
+        }
+        
+        return dx === 1 && dy === 1;
+    }
+
+    isValidElephantMove(piece, toX, toY) {
+        const dx = Math.abs(toX - piece.x);
+        const dy = Math.abs(toY - piece.y);
+        
+        if (piece.color === 'red') {
+            if (toY < 5) return false;
+        } else {
+            if (toY > 4) return false;
+        }
+        
+        if (dx !== 2 || dy !== 2) return false;
+        
+        const eyeX = (piece.x + toX) / 2;
+        const eyeY = (piece.y + toY) / 2;
+        
+        return !this.board.getPieceAt(eyeX, eyeY);
+    }
+
+    isValidHorseMove(piece, toX, toY) {
+        const dx = Math.abs(toX - piece.x);
+        const dy = Math.abs(toY - piece.y);
+        
+        if (!((dx === 1 && dy === 2) || (dx === 2 && dy === 1))) return false;
+        
+        let legX = piece.x;
+        let legY = piece.y;
+        
+        if (dx === 2) {
+            legX = (piece.x + toX) / 2;
+        } else {
+            legY = (piece.y + toY) / 2;
+        }
+        
+        return !this.board.getPieceAt(legX, legY);
+    }
+
+    isValidChariotMove(piece, toX, toY) {
+        const dx = toX - piece.x;
+        const dy = toY - piece.y;
+        
+        if (dx !== 0 && dy !== 0) return false;
+        
+        if (dx === 0) {
+            const step = dy > 0 ? 1 : -1;
+            for (let y = piece.y + step; y !== toY; y += step) {
+                if (this.board.getPieceAt(piece.x, y)) return false;
+            }
+        } else {
+            const step = dx > 0 ? 1 : -1;
+            for (let x = piece.x + step; x !== toX; x += step) {
+                if (this.board.getPieceAt(x, piece.y)) return false;
+            }
+        }
+        
+        return true;
+    }
+
+    isValidCannonMove(piece, toX, toY) {
+        const dx = toX - piece.x;
+        const dy = toY - piece.y;
+        
+        if (dx !== 0 && dy !== 0) return false;
+        
+        const targetPiece = this.board.getPieceAt(toX, toY);
+        let pieceCount = 0;
+        
+        if (dx === 0) {
+            const step = dy > 0 ? 1 : -1;
+            for (let y = piece.y + step; y !== toY; y += step) {
+                if (this.board.getPieceAt(piece.x, y)) pieceCount++;
+            }
+        } else {
+            const step = dx > 0 ? 1 : -1;
+            for (let x = piece.x + step; x !== toX; x += step) {
+                if (this.board.getPieceAt(x, piece.y)) pieceCount++;
+            }
+        }
+        
+        if (targetPiece) {
+            return pieceCount === 1;
+        } else {
+            return pieceCount === 0;
+        }
+    }
+
+    isValidSoldierMove(piece, toX, toY) {
+        const dx = toX - piece.x;
+        const dy = toY - piece.y;
+        
+        if (piece.color === 'red') {
+            if (dy > 0) return false;
+            
+            if (piece.y > 4) {
+                return dy === -1 && dx === 0;
+            } else {
+                return (dy === -1 && dx === 0) || (dy === 0 && Math.abs(dx) === 1);
+            }
+        } else {
+            if (dy < 0) return false;
+            
+            if (piece.y < 5) {
+                return dy === 1 && dx === 0;
+            } else {
+                return (dy === 1 && dx === 0) || (dy === 0 && Math.abs(dx) === 1);
+            }
+        }
+    }
+
+    getValidMoves(piece) {
+        const moves = [];
+        for (let x = 0; x < 9; x++) {
+            for (let y = 0; y < 10; y++) {
+                if (this.isValidMove(piece, x, y)) {
+                    moves.push({ x, y });
+                }
+            }
+        }
         return moves;
     }
 
-    isCheckmate(color) {
-        if (!this.isInCheck(color)) {
-            return false;
+    isInCheck(color) {
+        const king = this.board.findKing(color);
+        if (!king) return false;
+        
+        const enemyColor = color === 'red' ? 'black' : 'red';
+        const pieces = this.board.getPiecesByColor(enemyColor);
+        
+        for (const piece of pieces) {
+            if (this.isValidMove(piece, king.x, king.y)) {
+                return true;
+            }
         }
+        
+        return false;
+    }
+
+    isCheckmate(color) {
+        if (!this.isInCheck(color)) return false;
         
         const pieces = this.board.getPiecesByColor(color);
         
         for (const piece of pieces) {
-            const validMoves = this.getValidMoves(piece);
-            if (validMoves.length > 0) {
-                return false;
+            const moves = this.getValidMoves(piece);
+            for (const move of moves) {
+                if (this.board.testMove(piece, move.x, move.y)) {
+                    return false;
+                }
             }
         }
         
@@ -296,16 +233,16 @@ class Rules {
     }
 
     isStalemate(color) {
-        if (this.isInCheck(color)) {
-            return false;
-        }
+        if (this.isInCheck(color)) return false;
         
         const pieces = this.board.getPiecesByColor(color);
         
         for (const piece of pieces) {
-            const validMoves = this.getValidMoves(piece);
-            if (validMoves.length > 0) {
-                return false;
+            const moves = this.getValidMoves(piece);
+            for (const move of moves) {
+                if (this.board.testMove(piece, move.x, move.y)) {
+                    return false;
+                }
             }
         }
         
