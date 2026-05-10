@@ -5,7 +5,6 @@ class Minesweeper {
             medium: { rows: 16, cols: 16, mines: 40, hints: 3 },
             hard: { rows: 16, cols: 30, mines: 99, hints: 1 }
         };
-        
         this.currentDifficulty = 'medium';
         this.rows = 16;
         this.cols = 16;
