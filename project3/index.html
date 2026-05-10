@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>围棋对弈</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1 class="title">围棋</h1>
+            <p class="subtitle">弈道千年 · 妙手生香</p>
+        </header>
+        
+        <main class="game-main">
+            <div class="board-container">
+                <div class="board" id="board">
+                    <div class="board-grid" id="boardGrid"></div>
+                </div>
+            </div>
+            
+            <aside class="game-sidebar">
+                <div class="panel player-info">
+                    <h2>对局信息</h2>
+                    <div class="player current" id="blackPlayer">
+                        <div class="stone black"></div>
+                        <span>黑方</span>
+                        <span class="captures" id="blackCaptures">提子: 0</span>
+                    </div>
+                    <div class="player" id="whitePlayer">
+                        <div class="stone white"></div>
+                        <span>白方</span>
+                        <span class="captures" id="whiteCaptures">提子: 0</span>
+                    </div>
+                    <div class="current-turn" id="currentTurn">当前: 黑方落子</div>
+                </div>
+                
+                <div class="panel">
+                    <h2>棋盘尺寸</h2>
+                    <div class="board-size-selector">
+                        <label>选择棋盘大小:</label>
+                        <div class="size-buttons">
+                            <button class="size-btn" data-size="9">9路</button>
+                            <button class="size-btn" data-size="13">13路</button>
+                            <button class="size-btn active" data-size="19">19路</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2>游戏控制</h2>
+                    <div class="controls-grid">
+                        <button class="btn btn-primary" id="passBtn">虚手(Pass)</button>
+                        <button class="btn btn-secondary" id="undoBtn">悔棋</button>
+                        <button class="btn btn-secondary" id="resignBtn">认输</button>
+                        <button class="btn btn-danger" id="resetBtn">重新开始</button>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2>棋谱记录</h2>
+                    <div class="move-list" id="moveList"></div>
+                </div>
+            </aside>
+        </main>
+        
+        <footer class="game-footer">
+            <p>黑方先行 · 双方轮流落子 · 气尽被提 · 禁止打劫</p>
+        </footer>
+    </div>
+    
+    <div class="modal hidden" id="gameModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">游戏结束</h2>
+            <p id="modalMessage">黑方中盘胜</p>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" id="modalConfirm">再来一局</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
