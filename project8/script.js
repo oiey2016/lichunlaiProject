@@ -1,15 +1,16 @@
 class Minesweeper {
     constructor() {
         this.difficulties = {
-            easy: { rows: 9, cols: 9, mines: 10 },
-            medium: { rows: 16, cols: 16, mines: 40 },
-            hard: { rows: 16, cols: 30, mines: 99 }
+            easy: { rows: 9, cols: 9, mines: 10, hints: 5 },
+            medium: { rows: 16, cols: 16, mines: 40, hints: 3 },
+            hard: { rows: 16, cols: 30, mines: 99, hints: 1 }
         };
         
         this.currentDifficulty = 'medium';
         this.rows = 16;
         this.cols = 16;
         this.mines = 40;
+        this.hints = 3;
         this.board = [];
         this.revealed = [];
         this.flagged = [];
@@ -20,6 +21,7 @@ class Minesweeper {
         this.timerInterval = null;
         this.flagCount = 0;
         this.revealedCount = 0;
+        this.hintedCells = new Set();
         
         this.init();
     }
@@ -36,6 +38,7 @@ class Minesweeper {
         });
         
         document.getElementById('restart-btn').addEventListener('click', () => this.newGame());
+        document.getElementById('hint-btn').addEventListener('click', () => this.useHint());
         document.getElementById('modal-restart').addEventListener('click', () => {
             this.hideModal();
             this.newGame();
@@ -66,6 +69,7 @@ class Minesweeper {
         this.rows = config.rows;
         this.cols = config.cols;
         this.mines = config.mines;
+        this.hints = config.hints;
         
         this.gameOver = false;
         this.gameWon = false;
@@ -73,6 +77,7 @@ class Minesweeper {
         this.flagCount = 0;
         this.revealedCount = 0;
         this.timer = 0;
+        this.hintedCells = new Set();
         
         if (this.timerInterval) {
             clearInterval(this.timerInterval);
@@ -242,8 +247,10 @@ class Minesweeper {
         this.revealedCount++;
         
         const cellEl = this.getCellElement(r, c);
-        cellEl.classList.remove('hidden', 'flagged');
+        cellEl.classList.remove('hidden', 'flagged', 'hinted');
         cellEl.classList.add('revealed');
+        
+        this.hintedCells.delete(`${r},${c}`);
         
         if (this.board[r][c] === -1) {
             this.gameOver = true;
@@ -289,13 +296,17 @@ class Minesweeper {
         
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.cols; c++) {
+                const cellEl = this.getCellElement(r, c);
+                cellEl.classList.remove('hinted');
+                
                 if (this.board[r][c] === -1) {
-                    const cellEl = this.getCellElement(r, c);
                     cellEl.classList.remove('hidden');
                     cellEl.classList.add('revealed', 'mine');
                 }
             }
         }
+        
+        this.hintedCells.clear();
         
         if (won) {
             this.updateStatus('🎉 恭喜你赢了！');
@@ -324,6 +335,17 @@ class Minesweeper {
         document.getElementById('mine-count').textContent = this.mines;
         document.getElementById('flag-count').textContent = this.flagCount;
         document.getElementById('timer').textContent = String(this.timer).padStart(3, '0');
+        document.getElementById('hint-count').textContent = this.hints;
+        
+        const hintBtn = document.getElementById('hint-btn');
+        hintBtn.disabled = this.hints <= 0 || this.firstClick || this.gameOver;
+        if (this.hints <= 0) {
+            hintBtn.textContent = '💡 提示已用完';
+        } else if (this.firstClick) {
+            hintBtn.textContent = '💡 请先开始游戏';
+        } else {
+            hintBtn.textContent = `💡 使用提示 (${this.hints})`;
+        }
     }
     
     updateStatus(message) {
@@ -347,6 +369,50 @@ class Minesweeper {
     
     hideModal() {
         document.getElementById('game-modal').classList.add('hidden');
+    }
+    
+    useHint() {
+        if (this.gameOver || this.hints <= 0 || this.firstClick) return;
+        
+        const safeCells = [];
+        for (let r = 0; r < this.rows; r++) {
+            for (let c = 0; c < this.cols; c++) {
+                if (!this.revealed[r][c] && !this.flagged[r][c] && this.board[r][c] !== -1) {
+                    const key = `${r},${c}`;
+                    if (!this.hintedCells.has(key)) {
+                        safeCells.push({ r, c });
+                    }
+                }
+            }
+        }
+        
+        if (safeCells.length === 0) {
+            this.updateStatus('⚠️ 没有可用的提示格子了');
+            return;
+        }
+        
+        const randomIndex = Math.floor(Math.random() * safeCells.length);
+        const { r, c } = safeCells[randomIndex];
+        const key = `${r},${c}`;
+        
+        this.hintedCells.add(key);
+        const cellEl = this.getCellElement(r, c);
+        cellEl.classList.add('hinted');
+        
+        this.hints--;
+        this.updateDisplay();
+        this.updateStatus('💡 提示：绿色闪烁的格子是安全的！');
+        
+        setTimeout(() => {
+            if (this.isValid(r, c) && !this.revealed[r][c]) {
+                const currentCell = this.getCellElement(r, c);
+                if (currentCell) {
+                    currentCell.classList.remove('hinted');
+                }
+                this.hintedCells.delete(key);
+                this.updateStatus('游戏进行中...');
+            }
+        }, 4000);
     }
 }
 

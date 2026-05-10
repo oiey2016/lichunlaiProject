@@ -23,6 +23,10 @@
                     <span class="info-label">⏱️ 时间</span>
                     <span id="timer" class="info-value">000</span>
                 </div>
+                <div class="info-item">
+                    <span class="info-label">💡 提示</span>
+                    <span id="hint-count" class="info-value">3</span>
+                </div>
             </div>
         </header>
 
@@ -35,7 +39,10 @@
                     <option value="hard">高级 (30×16, 99雷)</option>
                 </select>
             </div>
-            <button id="restart-btn" class="btn restart-btn">🔄 重新开始</button>
+            <div class="action-buttons">
+                <button id="hint-btn" class="btn hint-btn">💡 使用提示</button>
+                <button id="restart-btn" class="btn restart-btn">🔄 重新开始</button>
+            </div>
         </div>
 
         <div class="game-status" id="game-status">点击任意格子开始游戏</div>
@@ -50,6 +57,7 @@
                 <li>🖱️ <strong>左键点击</strong>：翻开格子</li>
                 <li>🖱️ <strong>右键点击</strong>：标记/取消标记地雷</li>
                 <li>🖱️ <strong>双击已翻开的数字格子</strong>：如果周围标记的地雷数与数字相等，则翻开周围未标记的格子</li>
+                <li>💡 <strong>使用提示</strong>：点击提示按钮，会高亮一个安全的未翻开格子（有使用次数限制）</li>
                 <li>🎯 <strong>目标</strong>：翻开所有非地雷格子即可获胜</li>
             </ul>
         </div>
