@@ -40,6 +40,7 @@ export const PIECE_CONFIG = {
         { type: PIECE_TYPES.PLATOON, count: 3 },
         { type: PIECE_TYPES.ENGINEER, count: 3 }
     ],
+	
     [PLAYER.BLUE]: [
         { type: PIECE_TYPES.FLAG, count: 1 },
         { type: PIECE_TYPES.MINE, count: 3 },

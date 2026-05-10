@@ -10,132 +10,61 @@ export class Renderer {
 
     render(game) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        this.drawBackground();
-        this.drawGrid();
-        this.drawCamps();
-        this.drawHeadquarters();
+        this.drawBoard();
+        this.drawSpecialAreas();
         this.drawRailways();
-        this.drawValidMoves(game.validMoves);
-        this.drawPieces(game.board.grid);
-        this.drawSelectedPiece(game.selectedPiece, game.board.grid);
+        this.drawValidMoves(game);
+        this.drawPieces(game);
+        this.drawSelection(game);
     }
 
-    drawBackground() {
-        const gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
-        gradient.addColorStop(0, '#DEB887');
-        gradient.addColorStop(0.5, '#D2B48C');
-        gradient.addColorStop(1, '#BC8F8F');
-        this.ctx.fillStyle = gradient;
+    drawBoard() {
+        const { ROWS, COLS } = BOARD_CONFIG;
+        
+        this.ctx.fillStyle = '#f5e6d3';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    }
 
-    drawGrid() {
-        this.ctx.strokeStyle = '#8B4513';
+        this.ctx.strokeStyle = '#8b4513';
         this.ctx.lineWidth = 2;
 
-        for (let row = 0; row <= BOARD_CONFIG.ROWS; row++) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(this.padding, this.padding + row * this.cellSize);
-            this.ctx.lineTo(this.padding + BOARD_CONFIG.COLS * this.cellSize, this.padding + row * this.cellSize);
-            this.ctx.stroke();
-        }
-
-        for (let col = 0; col <= BOARD_CONFIG.COLS; col++) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(this.padding + col * this.cellSize, this.padding);
-            this.ctx.lineTo(this.padding + col * this.cellSize, this.padding + BOARD_CONFIG.ROWS * this.cellSize);
-            this.ctx.stroke();
-        }
-
-        this.ctx.strokeStyle = '#A0522D';
-        this.ctx.lineWidth = 1;
-        
-        for (let row = 0; row < BOARD_CONFIG.ROWS; row++) {
-            for (let col = 0; col < BOARD_CONFIG.COLS; col++) {
-                const centerX = this.padding + col * this.cellSize + this.cellSize / 2;
-                const centerY = this.padding + row * this.cellSize + this.cellSize / 2;
-                
-                if (this.isIntersection(row, col)) {
-                    this.drawCross(centerX, centerY);
-                }
+        for (let row = 0; row < ROWS; row++) {
+            for (let col = 0; col < COLS; col++) {
+                const x = col * this.cellSize + this.padding;
+                const y = row * this.cellSize + this.padding;
+                this.ctx.strokeRect(x, y, this.cellSize, this.cellSize);
             }
         }
     }
 
-    isIntersection(row, col) {
-        return (row >= 1 && row <= 4) || (row >= 7 && row <= 10);
-    }
-
-    drawCross(x, y) {
-        const size = 8;
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, 3, 0, Math.PI * 2);
-        this.ctx.fillStyle = '#8B4513';
-        this.ctx.fill();
-    }
-
-    drawCamps() {
+    drawSpecialAreas() {
+        this.ctx.fillStyle = 'rgba(144, 238, 144, 0.5)';
         CAMPS.forEach(camp => {
-            const x = this.padding + camp.col * this.cellSize + this.cellSize / 2;
-            const y = this.padding + camp.row * this.cellSize + this.cellSize / 2;
-            
-            this.ctx.save();
-            this.ctx.translate(x, y);
-            
+            const x = camp.col * this.cellSize + this.padding + 5;
+            const y = camp.row * this.cellSize + this.padding + 5;
             this.ctx.beginPath();
-            for (let i = 0; i < 6; i++) {
-                const angle = (Math.PI / 3) * i - Math.PI / 6;
-                const px = 25 * Math.cos(angle);
-                const py = 25 * Math.sin(angle);
-                if (i === 0) {
-                    this.ctx.moveTo(px, py);
-                } else {
-                    this.ctx.lineTo(px, py);
-                }
-            }
-            this.ctx.closePath();
-            
-            this.ctx.fillStyle = 'rgba(255, 215, 0, 0.2)';
+            this.ctx.arc(x + this.cellSize / 2 - 5, y + this.cellSize / 2 - 5, 15, 0, Math.PI * 2);
             this.ctx.fill();
-            this.ctx.strokeStyle = '#DAA520';
-            this.ctx.lineWidth = 2;
-            this.ctx.stroke();
-            
-            this.ctx.restore();
         });
-    }
 
-    drawHeadquarters() {
-        Object.entries(HEADQUARTERS).forEach(([player, hqs]) => {
-            const color = player === PLAYER.RED ? 'rgba(255, 0, 0, 0.15)' : 'rgba(0, 0, 255, 0.15)';
-            const borderColor = player === PLAYER.RED ? '#CC0000' : '#0000CC';
-            
-            hqs.forEach(hq => {
-                const x = this.padding + hq.col * this.cellSize;
-                const y = this.padding + hq.row * this.cellSize;
-                
-                this.ctx.fillStyle = color;
-                this.ctx.fillRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
-                
-                this.ctx.strokeStyle = borderColor;
-                this.ctx.lineWidth = 3;
-                this.ctx.setLineDash([5, 5]);
-                this.ctx.strokeRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
-                this.ctx.setLineDash([]);
+        this.ctx.fillStyle = 'rgba(255, 215, 0, 0.4)';
+        Object.values(HEADQUARTERS).forEach(hqPositions => {
+            hqPositions.forEach(hq => {
+                const x = hq.col * this.cellSize + this.padding + 5;
+                const y = hq.row * this.cellSize + this.padding + 5;
+                this.ctx.fillRect(x, y, this.cellSize - 10, this.cellSize - 10);
             });
         });
     }
 
     drawRailways() {
-        this.ctx.strokeStyle = '#4a4a4a';
-        this.ctx.lineWidth = 4;
+        this.ctx.strokeStyle = '#666';
+        this.ctx.lineWidth = 3;
         this.ctx.setLineDash([8, 4]);
 
         RAILWAY_LINES.horizontal.forEach(line => {
-            const y = this.padding + line.row * this.cellSize + this.cellSize / 2;
-            const startX = this.padding + line.cols[0] * this.cellSize + this.cellSize / 2;
-            const endX = this.padding + line.cols[line.cols.length - 1] * this.cellSize + this.cellSize / 2;
+            const y = line.row * this.cellSize + this.padding + this.cellSize / 2;
+            const startX = line.cols[0] * this.cellSize + this.padding + this.cellSize / 2;
+            const endX = line.cols[line.cols.length - 1] * this.cellSize + this.padding + this.cellSize / 2;
             
             this.ctx.beginPath();
             this.ctx.moveTo(startX, y);
@@ -144,9 +73,9 @@ export class Renderer {
         });
 
         RAILWAY_LINES.vertical.forEach(line => {
-            const x = this.padding + line.col * this.cellSize + this.cellSize / 2;
-            const startY = this.padding + line.rows[0] * this.cellSize + this.cellSize / 2;
-            const endY = this.padding + line.rows[line.rows.length - 1] * this.cellSize + this.cellSize / 2;
+            const x = line.col * this.cellSize + this.padding + this.cellSize / 2;
+            const startY = line.rows[0] * this.cellSize + this.padding + this.cellSize / 2;
+            const endY = line.rows[line.rows.length - 1] * this.cellSize + this.padding + this.cellSize / 2;
             
             this.ctx.beginPath();
             this.ctx.moveTo(x, startY);
@@ -157,105 +86,95 @@ export class Renderer {
         this.ctx.setLineDash([]);
     }
 
-    drawValidMoves(moves) {
-        moves.forEach(move => {
-            const x = this.padding + move.col * this.cellSize;
-            const y = this.padding + move.row * this.cellSize;
+    drawValidMoves(game) {
+        if (!game.validMoves || game.validMoves.length === 0) return;
+
+        this.ctx.fillStyle = 'rgba(0, 200, 0, 0.3)';
+        this.ctx.strokeStyle = 'rgba(0, 200, 0, 0.8)';
+        this.ctx.lineWidth = 2;
+
+        game.validMoves.forEach(move => {
+            const x = move.col * this.cellSize + this.padding + 5;
+            const y = move.row * this.cellSize + this.padding + 5;
             
-            this.ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
-            this.ctx.fillRect(x + 5, y + 5, this.cellSize - 10, this.cellSize - 10);
+            const centerX = x + (this.cellSize - 10) / 2;
+            const centerY = y + (this.cellSize - 10) / 2;
             
-            this.ctx.strokeStyle = '#00CC00';
-            this.ctx.lineWidth = 2;
-            this.ctx.strokeRect(x + 5, y + 5, this.cellSize - 10, this.cellSize - 10);
+            this.ctx.beginPath();
+            this.ctx.arc(centerX, centerY, 12, 0, Math.PI * 2);
+            this.ctx.fill();
+            this.ctx.stroke();
         });
     }
 
-    drawPieces(grid) {
-        for (let row = 0; row < BOARD_CONFIG.ROWS; row++) {
-            for (let col = 0; col < BOARD_CONFIG.COLS; col++) {
-                const piece = grid[row][col];
+    drawPieces(game) {
+        const { ROWS, COLS } = BOARD_CONFIG;
+
+        for (let row = 0; row < ROWS; row++) {
+            for (let col = 0; col < COLS; col++) {
+                const piece = game.board.getPiece(row, col);
                 if (piece) {
-                    this.drawPiece(piece, row, col);
+                    this.drawPiece(piece);
                 }
             }
         }
     }
 
-    drawPiece(piece, row, col) {
-        const x = this.padding + col * this.cellSize + this.cellSize / 2;
-        const y = this.padding + row * this.cellSize + this.cellSize / 2;
-        const radius = 24;
+    drawPiece(piece) {
+        const x = piece.col * this.cellSize + this.padding + 8;
+        const y = piece.row * this.cellSize + this.padding + 8;
+        const width = this.cellSize - 16;
+        const height = this.cellSize - 16;
 
-        const gradient = this.ctx.createRadialGradient(x - 5, y - 5, 0, x, y, radius);
-        if (piece.player === PLAYER.RED) {
-            gradient.addColorStop(0, '#FF6B6B');
-            gradient.addColorStop(1, '#CC0000');
-        } else {
-            gradient.addColorStop(0, '#6B9BFF');
-            gradient.addColorStop(1, '#0000CC');
-        }
-
+        this.ctx.fillStyle = piece.player === PLAYER.RED ? '#e53935' : '#1e88e5';
         this.ctx.beginPath();
-        this.ctx.arc(x, y, radius, 0, Math.PI * 2);
-        this.ctx.fillStyle = gradient;
+        this.ctx.roundRect(x, y, width, height, 8);
         this.ctx.fill();
 
-        this.ctx.strokeStyle = piece.player === PLAYER.RED ? '#8B0000' : '#000080';
-        this.ctx.lineWidth = 3;
+        this.ctx.strokeStyle = piece.player === PLAYER.RED ? '#b71c1c' : '#0d47a1';
+        this.ctx.lineWidth = 2;
         this.ctx.stroke();
 
-        this.ctx.fillStyle = '#FFFFFF';
-        this.ctx.font = 'bold 16px Microsoft YaHei';
+        this.ctx.fillStyle = '#fff';
+        this.ctx.font = 'bold 16px "Microsoft YaHei", sans-serif';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
-        this.ctx.fillText(piece.name, x, y);
-
-        this.ctx.beginPath();
-        this.ctx.arc(x - 8, y - 8, 4, 0, Math.PI * 2);
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-        this.ctx.fill();
+        this.ctx.fillText(piece.name, x + width / 2, y + height / 2);
     }
 
-    drawSelectedPiece(selected, grid) {
-        if (!selected) return;
+    drawSelection(game) {
+        if (!game.selectedPiece) return;
 
-        const piece = grid[selected.row][selected.col];
-        if (!piece) return;
+        const piece = game.selectedPiece;
+        const x = piece.col * this.cellSize + this.padding + 5;
+        const y = piece.row * this.cellSize + this.padding + 5;
+        const width = this.cellSize - 10;
+        const height = this.cellSize - 10;
 
-        const x = this.padding + selected.col * this.cellSize + this.cellSize / 2;
-        const y = this.padding + selected.row * this.cellSize + this.cellSize / 2;
-
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, 28, 0, Math.PI * 2);
-        this.ctx.strokeStyle = '#FFD700';
+        this.ctx.strokeStyle = '#ffeb3b';
         this.ctx.lineWidth = 4;
-        this.ctx.setLineDash([5, 5]);
-        this.ctx.stroke();
-        this.ctx.setLineDash([]);
-
-        this.ctx.shadowColor = '#FFD700';
-        this.ctx.shadowBlur = 15;
         this.ctx.beginPath();
-        this.ctx.arc(x, y, 24, 0, Math.PI * 2);
-        this.ctx.strokeStyle = '#FFD700';
-        this.ctx.lineWidth = 2;
+        this.ctx.roundRect(x, y, width, height, 10);
+        this.ctx.stroke();
+
+        this.ctx.shadowColor = '#ffeb3b';
+        this.ctx.shadowBlur = 10;
         this.ctx.stroke();
         this.ctx.shadowBlur = 0;
     }
 
     getBoardPosition(clientX, clientY) {
         const rect = this.canvas.getBoundingClientRect();
-        const x = clientX - rect.left - this.padding;
-        const y = clientY - rect.top - this.padding;
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
 
-        const col = Math.floor(x / this.cellSize);
-        const row = Math.floor(y / this.cellSize);
+        const col = Math.floor((x - this.padding) / this.cellSize);
+        const row = Math.floor((y - this.padding) / this.cellSize);
 
-        if (col < 0 || col >= BOARD_CONFIG.COLS || row < 0 || row >= BOARD_CONFIG.ROWS) {
-            return null;
+        if (row >= 0 && row < BOARD_CONFIG.ROWS && col >= 0 && col < BOARD_CONFIG.COLS) {
+            return { row, col };
         }
 
-        return { row, col };
+        return null;
     }
 }

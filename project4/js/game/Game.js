@@ -9,6 +9,7 @@ export class Game {
         this.validMoves = [];
         this.gameOver = false;
         this.winner = null;
+		
     }
 
     initialize() {
