@@ -14,6 +14,7 @@ export class Piece {
         this.col = col;
         this.revealed = false;
     }
+	
 
     static compare(attacker, defender) {
         if (!attacker || !defender) {

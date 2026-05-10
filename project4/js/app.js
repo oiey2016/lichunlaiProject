@@ -9,6 +9,7 @@ class App {
         this.renderer = new Renderer(this.canvas);
         this.initialize();
     }
+	
 
     initialize() {
         this.game.initialize();

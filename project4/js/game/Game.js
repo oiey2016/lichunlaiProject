@@ -10,6 +10,7 @@ export class Game {
         this.winner = null;
         this.validMoves = [];
     }
+	
 
     initialize() {
         this.board.initialize();

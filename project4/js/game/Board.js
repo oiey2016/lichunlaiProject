@@ -9,6 +9,7 @@ import {
 } from './constants.js';
 
 
+
 export class Board {
     constructor() {
         this.rows = BOARD_CONFIG.ROWS;

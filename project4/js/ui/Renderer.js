@@ -7,6 +7,7 @@ import {
     PLAYER 
 } from '../game/constants.js';
 
+
 export class Renderer {
     constructor(canvas) {
         this.canvas = canvas;

@@ -24,6 +24,7 @@ export const PIECE_TYPES = {
     ENGINEER: { id: 11, name: '工兵', rank: 1, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false, isEngineer: true }
 };
 
+
 export const PIECE_CONFIG = {
     [PLAYER.RED]: [
         { type: PIECE_TYPES.FLAG, count: 1 },
