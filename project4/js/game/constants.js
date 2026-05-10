@@ -6,24 +6,22 @@ export const PLAYER = {
 export const BOARD_CONFIG = {
     ROWS: 12,
     COLS: 5,
-    CELL_SIZE: 60,
-    PADDING: 30
+    CELL_SIZE: 60
 };
 
-
 export const PIECE_TYPES = {
-    FLAG: { id: 0, name: '军旗', rank: -1, canMove: false, isFlag: true, isMine: false, isBomb: false, isCommander: false },
-    MINE: { id: 1, name: '地雷', rank: -2, canMove: false, isFlag: false, isMine: true, isBomb: false, isCommander: false },
-    BOMB: { id: 2, name: '炸弹', rank: -3, canMove: true, isFlag: false, isMine: false, isBomb: true, isCommander: false },
-    COMMANDER: { id: 3, name: '司令', rank: 9, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: true },
-    GENERAL: { id: 4, name: '军长', rank: 8, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
-    DIVISION: { id: 5, name: '师长', rank: 7, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
-    BRIGADE: { id: 6, name: '旅长', rank: 6, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
-    REGIMENT: { id: 7, name: '团长', rank: 5, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
-    BATTALION: { id: 8, name: '营长', rank: 4, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
-    COMPANY: { id: 9, name: '连长', rank: 3, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
-    PLATOON: { id: 10, name: '排长', rank: 2, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
-    ENGINEER: { id: 11, name: '工兵', rank: 1, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false }
+    FLAG: { id: 0, name: '军旗', rank: -1, canMove: false, isFlag: true, isMine: false, isBomb: false, isCommander: false, isEngineer: false },
+    MINE: { id: 1, name: '地雷', rank: -2, canMove: false, isFlag: false, isMine: true, isBomb: false, isCommander: false, isEngineer: false },
+    BOMB: { id: 2, name: '炸弹', rank: 13, canMove: true, isFlag: false, isMine: false, isBomb: true, isCommander: false, isEngineer: false },
+    COMMANDER: { id: 3, name: '司令', rank: 9, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: true, isEngineer: false },
+    GENERAL: { id: 4, name: '军长', rank: 8, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false, isEngineer: false },
+    DIVISION: { id: 5, name: '师长', rank: 7, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false, isEngineer: false },
+    BRIGADE: { id: 6, name: '旅长', rank: 6, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false, isEngineer: false },
+    REGIMENT: { id: 7, name: '团长', rank: 5, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false, isEngineer: false },
+    BATTALION: { id: 8, name: '营长', rank: 4, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false, isEngineer: false },
+    COMPANY: { id: 9, name: '连长', rank: 3, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false, isEngineer: false },
+    PLATOON: { id: 10, name: '排长', rank: 2, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false, isEngineer: false },
+    ENGINEER: { id: 11, name: '工兵', rank: 1, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false, isEngineer: true }
 };
 
 export const PIECE_CONFIG = {
@@ -41,7 +39,6 @@ export const PIECE_CONFIG = {
         { type: PIECE_TYPES.PLATOON, count: 3 },
         { type: PIECE_TYPES.ENGINEER, count: 3 }
     ],
-	
     [PLAYER.BLUE]: [
         { type: PIECE_TYPES.FLAG, count: 1 },
         { type: PIECE_TYPES.MINE, count: 3 },
@@ -87,12 +84,36 @@ export const CAMPS = [
 ];
 
 export const HEADQUARTERS = {
-    [PLAYER.BLUE]: [
-        { row: 0, col: 1 },
-        { row: 0, col: 3 }
-    ],
     [PLAYER.RED]: [
         { row: 11, col: 1 },
         { row: 11, col: 3 }
+    ],
+    [PLAYER.BLUE]: [
+        { row: 0, col: 1 },
+        { row: 0, col: 3 }
     ]
+};
+
+export const COLORS = {
+    [PLAYER.RED]: {
+        primary: '#e74c3c',
+        secondary: '#c0392b',
+        background: '#ffecf0',
+        text: '#721c24'
+    },
+    [PLAYER.BLUE]: {
+        primary: '#3498db',
+        secondary: '#2980b9',
+        background: '#e8f4fd',
+        text: '#0c5460'
+    },
+    board: {
+        background: '#d4b483',
+        line: '#8b6f47',
+        railway: '#4a4a4a',
+        camp: '#27ae60',
+        headquarters: '#f39c12',
+        highlight: '#2ecc71',
+        selected: '#f1c40f'
+    }
 };

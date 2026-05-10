@@ -6,25 +6,31 @@ export class Game {
         this.board = new Board();
         this.currentPlayer = PLAYER.RED;
         this.selectedPiece = null;
-        this.validMoves = [];
         this.gameOver = false;
         this.winner = null;
-		
+        this.validMoves = [];
     }
+
     initialize() {
         this.board.initialize();
         this.currentPlayer = PLAYER.RED;
         this.selectedPiece = null;
-        this.validMoves = [];
         this.gameOver = false;
         this.winner = null;
+        this.validMoves = [];
     }
 
     selectPiece(row, col) {
+        if (this.gameOver) {
+            return { success: false, gameOver: false };
+        }
+
         const piece = this.board.getPiece(row, col);
 
         if (this.selectedPiece) {
-            const isValidMove = this.validMoves.some(move => move.row === row && move.col === col);
+            const isValidMove = this.validMoves.some(move => 
+                move.row === row && move.col === col
+            );
 
             if (isValidMove) {
                 return this.makeMove(this.selectedPiece.row, this.selectedPiece.col, row, col);
@@ -33,74 +39,64 @@ export class Game {
             if (piece && piece.player === this.currentPlayer) {
                 this.selectedPiece = piece;
                 this.validMoves = this.board.getValidMoves(row, col, this.currentPlayer);
-                return { success: true };
+                return { success: true, gameOver: false };
             }
 
             this.selectedPiece = null;
             this.validMoves = [];
-            return { success: true };
+            return { success: true, gameOver: false };
         }
 
         if (piece && piece.player === this.currentPlayer) {
             this.selectedPiece = piece;
             this.validMoves = this.board.getValidMoves(row, col, this.currentPlayer);
-            return { success: true };
+            return { success: true, gameOver: false };
         }
 
-        return { success: false };
+        return { success: false, gameOver: false };
     }
 
     makeMove(fromRow, fromCol, toRow, toCol) {
         const result = this.board.movePiece(fromRow, fromCol, toRow, toCol);
-
+        
         if (!result) {
-            return { success: false };
+            this.selectedPiece = null;
+            this.validMoves = [];
+            return { success: false, gameOver: false };
+        }
+
+        if (result.piece) {
+            result.piece.revealed = true;
+        }
+        if (result.targetPiece) {
+            result.targetPiece.revealed = true;
+        }
+
+        if (result.battleResult === 1 && result.targetPiece && result.targetPiece.isFlag) {
+            this.gameOver = true;
+            this.winner = this.currentPlayer;
+            this.selectedPiece = null;
+            this.validMoves = [];
+            return { success: true, gameOver: true, winner: this.winner };
+        }
+
+        this.switchPlayer();
+
+        if (!this.board.hasMovablePieces(this.currentPlayer)) {
+            this.gameOver = true;
+            this.winner = this.currentPlayer === PLAYER.RED ? PLAYER.BLUE : PLAYER.RED;
+            this.selectedPiece = null;
+            this.validMoves = [];
+            return { success: true, gameOver: true, winner: this.winner };
         }
 
         this.selectedPiece = null;
         this.validMoves = [];
-
-        this.checkGameOver();
-
-        if (!this.gameOver) {
-            this.currentPlayer = this.currentPlayer === PLAYER.RED ? PLAYER.BLUE : PLAYER.RED;
-        }
-
-        return {
-            success: true,
-            gameOver: this.gameOver,
-            winner: this.winner,
-            moveResult: result
-        };
+        return { success: true, gameOver: false };
     }
 
-    checkGameOver() {
-        const redFlag = this.board.getFlagPosition(PLAYER.RED);
-        const blueFlag = this.board.getFlagPosition(PLAYER.BLUE);
-
-        if (!redFlag) {
-            this.gameOver = true;
-            this.winner = PLAYER.BLUE;
-            return;
-        }
-
-        if (!blueFlag) {
-            this.gameOver = true;
-            this.winner = PLAYER.RED;
-            return;
-        }
-
-        if (!this.board.hasMovablePieces(PLAYER.RED)) {
-            this.gameOver = true;
-            this.winner = PLAYER.BLUE;
-            return;
-        }
-
-        if (!this.board.hasMovablePieces(PLAYER.BLUE)) {
-            this.gameOver = true;
-            this.winner = PLAYER.RED;
-            return;
-        }
+    switchPlayer() {
+        this.currentPlayer = this.currentPlayer === PLAYER.RED ? PLAYER.BLUE : PLAYER.RED;
     }
 
     getCapturedPieces(player) {
