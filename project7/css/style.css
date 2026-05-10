@@ -68,6 +68,11 @@ body {
     color: white;
 }
 
+.btn-info {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+}
+
 .game-stats {
     display: flex;
     gap: 20px;
@@ -300,5 +305,123 @@ body {
     
     .top-row, .tableau {
         gap: 10px;
+    }
+}
+
+.rules-modal {
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #1a5a3c;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #9ca3af;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.rules-section {
+    margin-bottom: 25px;
+}
+
+.rules-section h3 {
+    font-size: 1.25rem;
+    color: #1f2937;
+    margin-bottom: 12px;
+    padding-left: 10px;
+    border-left: 4px solid #1a5a3c;
+}
+
+.rules-section p {
+    font-size: 1rem;
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.rules-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rules-section li {
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.8;
+    padding: 8px 0 8px 25px;
+    position: relative;
+}
+
+.rules-section li::before {
+    content: "•";
+    position: absolute;
+    left: 8px;
+    color: #1a5a3c;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.rules-section strong {
+    color: #1f2937;
+}
+
+.rules-modal .btn {
+    display: block;
+    margin: 30px auto 0;
+    padding: 12px 40px;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 600px) {
+    .rules-modal {
+        padding: 25px;
+        margin: 20px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .rules-section h3 {
+        font-size: 1.1rem;
+    }
+    
+    .rules-section li,
+    .rules-section p {
+        font-size: 0.9rem;
     }
 }

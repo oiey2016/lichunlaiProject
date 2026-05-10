@@ -13,6 +13,7 @@
             <div class="game-controls">
                 <button id="new-game-btn" class="btn btn-primary">新游戏</button>
                 <button id="undo-btn" class="btn btn-secondary">撤销</button>
+                <button id="rules-btn" class="btn btn-info">规则</button>
                 <div class="game-stats">
                     <span id="score">得分: 0</span>
                     <span id="moves">步数: 0</span>
@@ -63,6 +64,53 @@
                 <p>最终得分: <span id="final-score">0</span></p>
                 <p>总步数: <span id="final-moves">0</span></p>
                 <button id="play-again-btn" class="btn btn-primary">再来一局</button>
+            </div>
+        </div>
+
+        <!-- 游戏规则弹窗 -->
+        <div id="rules-modal" class="modal hidden">
+            <div class="modal-content rules-modal">
+                <div class="modal-header">
+                    <h2>🎮 游戏规则</h2>
+                    <button id="close-rules-btn" class="close-btn">&times;</button>
+                </div>
+                
+                <div class="rules-section">
+                    <h3>🎯 游戏目标</h3>
+                    <p>将所有牌按照花色（♥ ♦ ♣ ♠）分别移动到右上角的四个目标区域，从A到K依次排列，完成即可获胜。</p>
+                </div>
+
+                <div class="rules-section">
+                    <h3>📋 基本规则</h3>
+                    <ul>
+                        <li><strong>目标区域（Foundation）：</strong>只能放入A，然后依次按升序（A-2-3-...-K）放入同花色的牌。</li>
+                        <li><strong>游戏区域（Tableau）：</strong>七列牌，只能按降序（K-Q-J-...-A）和红黑交替的方式叠放。</li>
+                        <li><strong>牌堆（Stock）：</strong>左上角的牌堆，点击可翻牌。当牌堆用完时，可将废牌堆重新翻回。</li>
+                        <li><strong>废牌堆（Waste）：</strong>从牌堆翻出的牌，最上面的一张可以使用。</li>
+                        <li><strong>空位：</strong>游戏区域的空位只能放入K（可以是单独的K或带其他牌的序列）。</li>
+                    </ul>
+                </div>
+
+                <div class="rules-section">
+                    <h3>🖱️ 操作方式</h3>
+                    <ul>
+                        <li><strong>翻牌：</strong>点击左上角的牌堆翻牌。</li>
+                        <li><strong>选择：</strong>点击一张可见的牌来选中它（以及它下面的所有牌）。</li>
+                        <li><strong>移动：</strong>选中牌后，点击目标位置即可移动。</li>
+                        <li><strong>撤销：</strong>点击"撤销"按钮可以回退上一步操作。</li>
+                    </ul>
+                </div>
+
+                <div class="rules-section">
+                    <h3>🏆 计分规则</h3>
+                    <ul>
+                        <li>将隐藏牌翻开：+5分</li>
+                        <li>将牌移动到目标区域：+10分</li>
+                        <li>将牌从废牌堆移到游戏区域：+5分</li>
+                    </ul>
+                </div>
+
+                <button id="understand-btn" class="btn btn-primary">我知道了</button>
             </div>
         </div>
     </div>

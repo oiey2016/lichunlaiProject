@@ -14,6 +14,7 @@ class GameUI {
     initElements() {
         this.elements.newGameBtn = document.getElementById('new-game-btn');
         this.elements.undoBtn = document.getElementById('undo-btn');
+        this.elements.rulesBtn = document.getElementById('rules-btn');
         this.elements.score = document.getElementById('score');
         this.elements.moves = document.getElementById('moves');
         this.elements.stock = document.getElementById('stock');
@@ -24,6 +25,9 @@ class GameUI {
         this.elements.finalScore = document.getElementById('final-score');
         this.elements.finalMoves = document.getElementById('final-moves');
         this.elements.playAgainBtn = document.getElementById('play-again-btn');
+        this.elements.rulesModal = document.getElementById('rules-modal');
+        this.elements.closeRulesBtn = document.getElementById('close-rules-btn');
+        this.elements.understandBtn = document.getElementById('understand-btn');
 
         for (let i = 0; i < 4; i++) {
             this.elements.foundations.push(document.getElementById(`foundation-${i}`));
@@ -37,6 +41,9 @@ class GameUI {
     bindEvents() {
         this.elements.newGameBtn.addEventListener('click', () => this.startNewGame());
         this.elements.undoBtn.addEventListener('click', () => this.undoMove());
+        this.elements.rulesBtn.addEventListener('click', () => this.showRulesModal());
+        this.elements.closeRulesBtn.addEventListener('click', () => this.hideRulesModal());
+        this.elements.understandBtn.addEventListener('click', () => this.hideRulesModal());
         this.elements.playAgainBtn.addEventListener('click', () => {
             this.hideVictoryModal();
             this.startNewGame();
@@ -55,6 +62,12 @@ class GameUI {
                 this.handleTableauClick(i, e);
             });
         }
+
+        this.elements.rulesModal.addEventListener('click', (e) => {
+            if (e.target === this.elements.rulesModal) {
+                this.hideRulesModal();
+            }
+        });
     }
 
     startNewGame() {
@@ -240,6 +253,14 @@ class GameUI {
 
     hideVictoryModal() {
         this.elements.victoryModal.classList.add('hidden');
+    }
+
+    showRulesModal() {
+        this.elements.rulesModal.classList.remove('hidden');
+    }
+
+    hideRulesModal() {
+        this.elements.rulesModal.classList.add('hidden');
     }
 
     updateStats() {
