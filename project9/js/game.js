@@ -49,6 +49,14 @@ class SnakeGame {
             return;
         }
 
+        if (key === 'p') {
+            e.preventDefault();
+            if (this.gameState === GAME_STATE.PLAYING || this.gameState === GAME_STATE.PAUSED) {
+                this.togglePause();
+            }
+            return;
+        }
+
         if (this.gameState !== GAME_STATE.PLAYING) return;
 
         switch (key) {
