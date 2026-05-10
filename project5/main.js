@@ -11,22 +11,6 @@ class CheckersGame {
         this.initGame();
         this.setupEventListeners();
     }
-	
-
-    initGame() {
-        this.board = this.createInitialBoard();
-        this.currentPlayer = 'red';
-        this.selectedPiece = null;
-        this.validMoves = [];
-        this.validJumps = [];
-        this.isJumping = false;
-        this.gameOver = false;
-        
-        this.hideRulesModal();
-        this.renderBoard();
-        this.updateGameInfo();
-        this.hideMessage();
-    }
 
     createInitialBoard() {
         const board = Array(8).fill(null).map(() => Array(8).fill(null));
@@ -339,7 +323,9 @@ class CheckersGame {
         
         if (!hasPieces || !canMove) {
             this.gameOver = true;
-            this.showMessage(`游戏结束！${opponent === 'red' ? '红色' : '蓝色'}玩家获胜！`);
+            const winner = opponent === 'red' ? '红色' : '蓝色';
+            this.showMessage(`游戏结束！${winner}玩家获胜！`);
+            this.showGameOverModal(opponent);
         }
     }
 
@@ -396,6 +382,11 @@ class CheckersGame {
             }
         });
         
+        document.getElementById('play-again-btn').addEventListener('click', () => {
+            this.hideGameOverModal();
+            this.initGame();
+        });
+        
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.hideRulesModal();
@@ -417,6 +408,45 @@ class CheckersGame {
             modal.style.display = 'none';
             modal.classList.remove('show');
         }
+    }
+    
+    showGameOverModal(winner) {
+        const modal = document.getElementById('game-over-modal');
+        const winnerText = document.getElementById('winner-text');
+        
+        if (modal && winnerText) {
+            const winnerName = winner === 'red' ? '红色' : '蓝色';
+            winnerText.textContent = `${winnerName}玩家获胜！`;
+            winnerText.className = 'winner-text';
+            winnerText.classList.add(`${winner}-winner`);
+            
+            modal.style.display = 'flex';
+            modal.classList.add('show');
+        }
+    }
+    
+    hideGameOverModal() {
+        const modal = document.getElementById('game-over-modal');
+        if (modal) {
+            modal.style.display = 'none';
+            modal.classList.remove('show');
+        }
+    }
+    
+    initGame() {
+        this.board = this.createInitialBoard();
+        this.currentPlayer = 'red';
+        this.selectedPiece = null;
+        this.validMoves = [];
+        this.validJumps = [];
+        this.isJumping = false;
+        this.gameOver = false;
+        
+        this.hideRulesModal();
+        this.hideGameOverModal();
+        this.renderBoard();
+        this.updateGameInfo();
+        this.hideMessage();
     }
 }
 
