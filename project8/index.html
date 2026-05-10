@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扫雷游戏 - Minesweeper</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1 class="game-title">💣 扫雷游戏</h1>
+            <div class="game-info">
+                <div class="info-item">
+                    <span class="info-label">💣 地雷</span>
+                    <span id="mine-count" class="info-value">10</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">🏁 标记</span>
+                    <span id="flag-count" class="info-value">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">⏱️ 时间</span>
+                    <span id="timer" class="info-value">000</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="control-panel">
+            <div class="difficulty-selector">
+                <label for="difficulty">难度选择：</label>
+                <select id="difficulty">
+                    <option value="easy">初级 (9×9, 10雷)</option>
+                    <option value="medium" selected>中级 (16×16, 40雷)</option>
+                    <option value="hard">高级 (30×16, 99雷)</option>
+                </select>
+            </div>
+            <button id="restart-btn" class="btn restart-btn">🔄 重新开始</button>
+        </div>
+
+        <div class="game-status" id="game-status">点击任意格子开始游戏</div>
+
+        <div class="board-container">
+            <div id="game-board" class="game-board"></div>
+        </div>
+
+        <div class="instructions">
+            <h3>游戏说明</h3>
+            <ul>
+                <li>🖱️ <strong>左键点击</strong>：翻开格子</li>
+                <li>🖱️ <strong>右键点击</strong>：标记/取消标记地雷</li>
+                <li>🖱️ <strong>双击已翻开的数字格子</strong>：如果周围标记的地雷数与数字相等，则翻开周围未标记的格子</li>
+                <li>🎯 <strong>目标</strong>：翻开所有非地雷格子即可获胜</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="game-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modal-title">游戏结束</h2>
+            <p id="modal-message"></p>
+            <button id="modal-restart" class="btn">再玩一次</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
