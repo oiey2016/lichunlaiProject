@@ -3,56 +3,56 @@ export const PLAYER = {
     BLUE: 'blue'
 };
 
-export const PIECE_TYPE = {
-    FLAG: { id: 0, name: '军旗', rank: -1, canMove: false },
-    MINE: { id: 1, name: '地雷', rank: -2, canMove: false },
-    BOMB: { id: 2, name: '炸弹', rank: 14, canMove: true },
-    SOLDIER: { id: 3, name: '工兵', rank: 1, canMove: true },
-    PLATOON: { id: 4, name: '排长', rank: 2, canMove: true },
-    COMPANY: { id: 5, name: '连长', rank: 3, canMove: true },
-    BATTALION: { id: 6, name: '营长', rank: 4, canMove: true },
-    REGIMENT: { id: 7, name: '团长', rank: 5, canMove: true },
-    BRIGADE: { id: 8, name: '旅长', rank: 6, canMove: true },
-    DIVISION: { id: 9, name: '师长', rank: 7, canMove: true },
-    CORPS: { id: 10, name: '军长', rank: 8, canMove: true },
-    COMMANDER: { id: 11, name: '司令', rank: 9, canMove: true }
+export const BOARD_CONFIG = {
+    ROWS: 12,
+    COLS: 5,
+    CELL_SIZE: 60,
+    PADDING: 30
 };
 
-export const BOARD_CONFIG = {
-    CELL_SIZE: 60,
-    COLS: 5,
-    ROWS: 12,
-    PADDING: 30
+export const PIECE_TYPES = {
+    FLAG: { id: 0, name: '军旗', rank: -1, canMove: false, isFlag: true, isMine: false, isBomb: false, isCommander: false },
+    MINE: { id: 1, name: '地雷', rank: -2, canMove: false, isFlag: false, isMine: true, isBomb: false, isCommander: false },
+    BOMB: { id: 2, name: '炸弹', rank: -3, canMove: true, isFlag: false, isMine: false, isBomb: true, isCommander: false },
+    COMMANDER: { id: 3, name: '司令', rank: 9, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: true },
+    GENERAL: { id: 4, name: '军长', rank: 8, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
+    DIVISION: { id: 5, name: '师长', rank: 7, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
+    BRIGADE: { id: 6, name: '旅长', rank: 6, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
+    REGIMENT: { id: 7, name: '团长', rank: 5, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
+    BATTALION: { id: 8, name: '营长', rank: 4, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
+    COMPANY: { id: 9, name: '连长', rank: 3, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
+    PLATOON: { id: 10, name: '排长', rank: 2, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false },
+    ENGINEER: { id: 11, name: '工兵', rank: 1, canMove: true, isFlag: false, isMine: false, isBomb: false, isCommander: false }
 };
 
 export const PIECE_CONFIG = {
     [PLAYER.RED]: [
-        { type: PIECE_TYPE.FLAG, count: 1 },
-        { type: PIECE_TYPE.MINE, count: 3 },
-        { type: PIECE_TYPE.BOMB, count: 2 },
-        { type: PIECE_TYPE.SOLDIER, count: 3 },
-        { type: PIECE_TYPE.PLATOON, count: 3 },
-        { type: PIECE_TYPE.COMPANY, count: 3 },
-        { type: PIECE_TYPE.BATTALION, count: 2 },
-        { type: PIECE_TYPE.REGIMENT, count: 2 },
-        { type: PIECE_TYPE.BRIGADE, count: 2 },
-        { type: PIECE_TYPE.DIVISION, count: 2 },
-        { type: PIECE_TYPE.CORPS, count: 1 },
-        { type: PIECE_TYPE.COMMANDER, count: 1 }
+        { type: PIECE_TYPES.FLAG, count: 1 },
+        { type: PIECE_TYPES.MINE, count: 3 },
+        { type: PIECE_TYPES.BOMB, count: 2 },
+        { type: PIECE_TYPES.COMMANDER, count: 1 },
+        { type: PIECE_TYPES.GENERAL, count: 1 },
+        { type: PIECE_TYPES.DIVISION, count: 2 },
+        { type: PIECE_TYPES.BRIGADE, count: 2 },
+        { type: PIECE_TYPES.REGIMENT, count: 2 },
+        { type: PIECE_TYPES.BATTALION, count: 2 },
+        { type: PIECE_TYPES.COMPANY, count: 3 },
+        { type: PIECE_TYPES.PLATOON, count: 3 },
+        { type: PIECE_TYPES.ENGINEER, count: 3 }
     ],
     [PLAYER.BLUE]: [
-        { type: PIECE_TYPE.FLAG, count: 1 },
-        { type: PIECE_TYPE.MINE, count: 3 },
-        { type: PIECE_TYPE.BOMB, count: 2 },
-        { type: PIECE_TYPE.SOLDIER, count: 3 },
-        { type: PIECE_TYPE.PLATOON, count: 3 },
-        { type: PIECE_TYPE.COMPANY, count: 3 },
-        { type: PIECE_TYPE.BATTALION, count: 2 },
-        { type: PIECE_TYPE.REGIMENT, count: 2 },
-        { type: PIECE_TYPE.BRIGADE, count: 2 },
-        { type: PIECE_TYPE.DIVISION, count: 2 },
-        { type: PIECE_TYPE.CORPS, count: 1 },
-        { type: PIECE_TYPE.COMMANDER, count: 1 }
+        { type: PIECE_TYPES.FLAG, count: 1 },
+        { type: PIECE_TYPES.MINE, count: 3 },
+        { type: PIECE_TYPES.BOMB, count: 2 },
+        { type: PIECE_TYPES.COMMANDER, count: 1 },
+        { type: PIECE_TYPES.GENERAL, count: 1 },
+        { type: PIECE_TYPES.DIVISION, count: 2 },
+        { type: PIECE_TYPES.BRIGADE, count: 2 },
+        { type: PIECE_TYPES.REGIMENT, count: 2 },
+        { type: PIECE_TYPES.BATTALION, count: 2 },
+        { type: PIECE_TYPES.COMPANY, count: 3 },
+        { type: PIECE_TYPES.PLATOON, count: 3 },
+        { type: PIECE_TYPES.ENGINEER, count: 3 }
     ]
 };
 
@@ -85,12 +85,12 @@ export const CAMPS = [
 ];
 
 export const HEADQUARTERS = {
-    [PLAYER.RED]: [
-        { row: 11, col: 1 },
-        { row: 11, col: 3 }
-    ],
     [PLAYER.BLUE]: [
         { row: 0, col: 1 },
         { row: 0, col: 3 }
+    ],
+    [PLAYER.RED]: [
+        { row: 11, col: 1 },
+        { row: 11, col: 3 }
     ]
 };

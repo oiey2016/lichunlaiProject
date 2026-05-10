@@ -5,90 +5,73 @@ export class Game {
     constructor() {
         this.board = new Board();
         this.currentPlayer = PLAYER.RED;
-        this.gameOver = false;
-        this.winner = null;
         this.selectedPiece = null;
         this.validMoves = [];
+        this.gameOver = false;
+        this.winner = null;
     }
 
     initialize() {
         this.board.initialize();
         this.currentPlayer = PLAYER.RED;
-        this.gameOver = false;
-        this.winner = null;
         this.selectedPiece = null;
         this.validMoves = [];
+        this.gameOver = false;
+        this.winner = null;
     }
 
     selectPiece(row, col) {
-        if (this.gameOver) {
-            return { success: false, message: '游戏已结束' };
-        }
-
         const piece = this.board.getPiece(row, col);
 
-        if (piece && piece.player === this.currentPlayer) {
-            this.selectedPiece = { row, col };
-            this.validMoves = this.board.getValidMoves(row, col, this.currentPlayer);
-            return { 
-                success: true, 
-                selected: true,
-                piece,
-                validMoves: this.validMoves
-            };
-        }
-
         if (this.selectedPiece) {
-            return this.tryMove(row, col);
+            const isValidMove = this.validMoves.some(move => move.row === row && move.col === col);
+
+            if (isValidMove) {
+                return this.makeMove(this.selectedPiece.row, this.selectedPiece.col, row, col);
+            }
+
+            if (piece && piece.player === this.currentPlayer) {
+                this.selectedPiece = piece;
+                this.validMoves = this.board.getValidMoves(row, col, this.currentPlayer);
+                return { success: true };
+            }
+
+            this.selectedPiece = null;
+            this.validMoves = [];
+            return { success: true };
         }
 
-        return { success: false, message: '请选择己方棋子' };
+        if (piece && piece.player === this.currentPlayer) {
+            this.selectedPiece = piece;
+            this.validMoves = this.board.getValidMoves(row, col, this.currentPlayer);
+            return { success: true };
+        }
+
+        return { success: false };
     }
 
-    tryMove(toRow, toCol) {
-        if (!this.selectedPiece) {
-            return { success: false, message: '请先选择棋子' };
-        }
+    makeMove(fromRow, fromCol, toRow, toCol) {
+        const result = this.board.movePiece(fromRow, fromCol, toRow, toCol);
 
-        const { row: fromRow, col: fromCol } = this.selectedPiece;
-
-        if (!this.board.canMoveTo(fromRow, fromCol, toRow, toCol, this.currentPlayer)) {
-            return { success: false, message: '无效的移动' };
-        }
-
-        const moveResult = this.board.movePiece(fromRow, fromCol, toRow, toCol);
-
-        if (!moveResult) {
-            return { success: false, message: '移动失败' };
+        if (!result) {
+            return { success: false };
         }
 
         this.selectedPiece = null;
         this.validMoves = [];
 
-        const gameOverResult = this.checkGameOver();
-        if (gameOverResult.gameOver) {
-            this.gameOver = true;
-            this.winner = gameOverResult.winner;
-            return {
-                success: true,
-                moveResult,
-                gameOver: true,
-                winner: this.winner
-            };
-        }
+        this.checkGameOver();
 
-        this.switchPlayer();
+        if (!this.gameOver) {
+            this.currentPlayer = this.currentPlayer === PLAYER.RED ? PLAYER.BLUE : PLAYER.RED;
+        }
 
         return {
             success: true,
-            moveResult,
-            gameOver: false,
-            currentPlayer: this.currentPlayer
+            gameOver: this.gameOver,
+            winner: this.winner,
+            moveResult: result
         };
-    }
-
-    switchPlayer() {
-        this.currentPlayer = this.currentPlayer === PLAYER.RED ? PLAYER.BLUE : PLAYER.RED;
     }
 
     checkGameOver() {
@@ -96,40 +79,31 @@ export class Game {
         const blueFlag = this.board.getFlagPosition(PLAYER.BLUE);
 
         if (!redFlag) {
-            return { gameOver: true, winner: PLAYER.BLUE, reason: '红方军旗被吃' };
+            this.gameOver = true;
+            this.winner = PLAYER.BLUE;
+            return;
         }
 
         if (!blueFlag) {
-            return { gameOver: true, winner: PLAYER.RED, reason: '蓝方军旗被吃' };
+            this.gameOver = true;
+            this.winner = PLAYER.RED;
+            return;
         }
 
         if (!this.board.hasMovablePieces(PLAYER.RED)) {
-            return { gameOver: true, winner: PLAYER.BLUE, reason: '红方无棋可走' };
+            this.gameOver = true;
+            this.winner = PLAYER.BLUE;
+            return;
         }
 
         if (!this.board.hasMovablePieces(PLAYER.BLUE)) {
-            return { gameOver: true, winner: PLAYER.RED, reason: '蓝方无棋可走' };
+            this.gameOver = true;
+            this.winner = PLAYER.RED;
+            return;
         }
-
-        return { gameOver: false, winner: null };
     }
 
     getCapturedPieces(player) {
-        return this.board.capturedPieces[player];
-    }
-
-    getBoardState() {
-        return {
-            grid: this.board.grid,
-            currentPlayer: this.currentPlayer,
-            gameOver: this.gameOver,
-            winner: this.winner,
-            selectedPiece: this.selectedPiece,
-            validMoves: this.validMoves
-        };
-    }
-
-    restart() {
-        this.initialize();
+        return this.board.capturedPieces[player] || [];
     }
 }
