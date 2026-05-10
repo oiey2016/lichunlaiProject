@@ -21,6 +21,7 @@ class CheckersGame {
         this.isJumping = false;
         this.gameOver = false;
         
+        this.hideRulesModal();
         this.renderBoard();
         this.updateGameInfo();
         this.hideMessage();
@@ -381,18 +382,40 @@ class CheckersGame {
         });
         
         document.getElementById('rules-btn').addEventListener('click', () => {
-            document.getElementById('rules-modal').classList.add('show');
+            this.showRulesModal();
         });
         
         document.getElementById('close-modal').addEventListener('click', () => {
-            document.getElementById('rules-modal').classList.remove('show');
+            this.hideRulesModal();
         });
         
         document.getElementById('rules-modal').addEventListener('click', (e) => {
             if (e.target === document.getElementById('rules-modal')) {
-                document.getElementById('rules-modal').classList.remove('show');
+                this.hideRulesModal();
             }
         });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                this.hideRulesModal();
+            }
+        });
+    }
+    
+    showRulesModal() {
+        const modal = document.getElementById('rules-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+            modal.classList.add('show');
+        }
+    }
+    
+    hideRulesModal() {
+        const modal = document.getElementById('rules-modal');
+        if (modal) {
+            modal.style.display = 'none';
+            modal.classList.remove('show');
+        }
     }
 }
 
