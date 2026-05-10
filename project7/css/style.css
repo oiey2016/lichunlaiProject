@@ -1,0 +1,304 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.game-header h1 {
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.game-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.game-stats {
+    display: flex;
+    gap: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.game-board {
+    background: linear-gradient(135deg, #1a5a3c 0%, #14452f 100%);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    min-height: 600px;
+}
+
+.top-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    align-items: flex-start;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.stock, .waste, .foundation {
+    width: 80px;
+    height: 115px;
+    flex-shrink: 0;
+}
+
+.pile {
+    width: 100%;
+    height: 100%;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.pile-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 2rem;
+}
+
+.tableau {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.tableau-column {
+    flex: 1;
+    min-height: 400px;
+    position: relative;
+}
+
+.card {
+    width: 80px;
+    height: 115px;
+    background: white;
+    border-radius: 8px;
+    position: absolute;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    user-select: none;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.card.selected {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    border: 2px solid #4ade80;
+}
+
+.card.hidden {
+    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 255, 255, 0.1) 10px,
+            rgba(255, 255, 255, 0.1) 20px
+        );
+}
+
+.card.visible {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px;
+    font-weight: bold;
+}
+
+.card-red {
+    color: #ef4444;
+}
+
+.card-black {
+    color: #1f2937;
+}
+
+.card-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.card-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    transform: rotate(180deg);
+}
+
+.card-value {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.card-suit {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: modalAppear 0.3s ease;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-content h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #1a5a3c;
+}
+
+.modal-content p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #374151;
+}
+
+.modal-content .btn {
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+
+.stock:hover .pile-empty {
+    border-color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.foundation:hover .pile-empty {
+    border-color: rgba(74, 222, 128, 0.6);
+}
+
+.tableau-column:hover .pile-empty {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 900px) {
+    .game-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .game-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .card, .stock, .waste, .foundation {
+        width: 60px;
+        height: 86px;
+    }
+    
+    .card-value {
+        font-size: 1rem;
+    }
+    
+    .card-suit {
+        font-size: 0.8rem;
+    }
+    
+    .game-board {
+        padding: 20px;
+    }
+    
+    .top-row, .tableau {
+        gap: 10px;
+    }
+}

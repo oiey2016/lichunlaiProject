@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扑克接龙 - Klondike Solitaire</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>扑克接龙</h1>
+            <div class="game-controls">
+                <button id="new-game-btn" class="btn btn-primary">新游戏</button>
+                <button id="undo-btn" class="btn btn-secondary">撤销</button>
+                <div class="game-stats">
+                    <span id="score">得分: 0</span>
+                    <span id="moves">步数: 0</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-board">
+            <!-- 顶部区域：牌堆、废牌堆、四个花色堆 -->
+            <div class="top-row">
+                <div class="stock" id="stock">
+                    <div class="pile pile-empty"></div>
+                </div>
+                <div class="waste" id="waste">
+                    <div class="pile pile-empty"></div>
+                </div>
+                <div class="spacer"></div>
+                <div class="foundation" id="foundation-0">
+                    <div class="pile pile-empty"></div>
+                </div>
+                <div class="foundation" id="foundation-1">
+                    <div class="pile pile-empty"></div>
+                </div>
+                <div class="foundation" id="foundation-2">
+                    <div class="pile pile-empty"></div>
+                </div>
+                <div class="foundation" id="foundation-3">
+                    <div class="pile pile-empty"></div>
+                </div>
+            </div>
+
+            <!-- 中间区域：七个 tableau 列 -->
+            <div class="tableau" id="tableau">
+                <div class="tableau-column" id="tableau-0"></div>
+                <div class="tableau-column" id="tableau-1"></div>
+                <div class="tableau-column" id="tableau-2"></div>
+                <div class="tableau-column" id="tableau-3"></div>
+                <div class="tableau-column" id="tableau-4"></div>
+                <div class="tableau-column" id="tableau-5"></div>
+                <div class="tableau-column" id="tableau-6"></div>
+            </div>
+        </main>
+
+        <!-- 胜利弹窗 -->
+        <div id="victory-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>🎉 恭喜你赢了！</h2>
+                <p>最终得分: <span id="final-score">0</span></p>
+                <p>总步数: <span id="final-moves">0</span></p>
+                <button id="play-again-btn" class="btn btn-primary">再来一局</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
