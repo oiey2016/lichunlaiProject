@@ -1,0 +1,17 @@
+{
+  "name": "checkers-game",
+  "version": "1.0.0",
+  "description": "一款美观精致的跳棋游戏",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "checkers",
+    "game",
+    "javascript"
+  ],
+  "author": "",
+  "license": "MIT"
+}
