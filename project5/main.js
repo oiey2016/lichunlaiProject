@@ -11,6 +11,7 @@ class CheckersGame {
         this.initGame();
         this.setupEventListeners();
     }
+	
 
     initGame() {
         this.board = this.createInitialBoard();
