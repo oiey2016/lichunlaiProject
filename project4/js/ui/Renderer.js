@@ -8,6 +8,8 @@ export class Renderer {
         this.padding = BOARD_CONFIG.PADDING;
     }
 
+
+
     render(game) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawBoard();

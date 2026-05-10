@@ -11,7 +11,6 @@ export class Game {
         this.winner = null;
 		
     }
-
     initialize() {
         this.board.initialize();
         this.currentPlayer = PLAYER.RED;

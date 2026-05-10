@@ -10,6 +10,7 @@ export const BOARD_CONFIG = {
     PADDING: 30
 };
 
+
 export const PIECE_TYPES = {
     FLAG: { id: 0, name: '军旗', rank: -1, canMove: false, isFlag: true, isMine: false, isBomb: false, isCommander: false },
     MINE: { id: 1, name: '地雷', rank: -2, canMove: false, isFlag: false, isMine: true, isBomb: false, isCommander: false },

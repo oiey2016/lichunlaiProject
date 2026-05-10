@@ -11,6 +11,7 @@ export class Piece {
         return this.type.name;
     }
 
+
     get rank() {
         return this.type.rank;
     }

@@ -52,6 +52,7 @@ class App {
         this.updateCapturedPieces();
     }
 
+
     updateUI() {
         this.updateCurrentPlayer();
         this.updateGameStatus();
