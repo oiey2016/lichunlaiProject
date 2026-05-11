@@ -11,6 +11,7 @@ const gameState = {
     discoveredEasterEggs: new Set()
 };
 
+
 const easterEggs = {
     desk: {
         title: "🎯 发现隐藏线索！",
