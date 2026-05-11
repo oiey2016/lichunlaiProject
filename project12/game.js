@@ -23,47 +23,6 @@ class Game2048 {
     setupEventListeners() {
         document.addEventListener('keydown', (e) => this.handleKeyPress(e));
         this.newGameBtn.addEventListener('click', () => this.startNewGame());
-        
-        let touchStartX = 0;
-        let touchStartY = 0;
-        
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-        
-        document.addEventListener('touchend', (e) => {
-            if (!touchStartX || !touchStartY) return;
-            
-            const touchEndX = e.changedTouches[0].clientX;
-            const touchEndY = e.changedTouches[0].clientY;
-            
-            const diffX = touchEndX - touchStartX;
-            const diffY = touchEndY - touchStartY;
-            
-            const minSwipeDistance = 50;
-            
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (Math.abs(diffX) > minSwipeDistance) {
-                    if (diffX > 0) {
-                        this.move('right');
-                    } else {
-                        this.move('left');
-                    }
-                }
-            } else {
-                if (Math.abs(diffY) > minSwipeDistance) {
-                    if (diffY > 0) {
-                        this.move('down');
-                    } else {
-                        this.move('up');
-                    }
-                }
-            }
-            
-            touchStartX = 0;
-            touchStartY = 0;
-        }, { passive: true });
     }
     
     handleKeyPress(e) {
