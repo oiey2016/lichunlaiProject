@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寻道修仙 - 放置养成游戏</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 顶部状态栏 -->
+        <header class="game-header">
+            <div class="player-info">
+                <div class="avatar">
+                    <span class="avatar-icon">🧑‍🎤</span>
+                </div>
+                <div class="player-details">
+                    <div class="player-name">小妖</div>
+                    <div class="player-realm" id="realm-display">炼气期 一层</div>
+                </div>
+            </div>
+            <div class="resource-bar">
+                <div class="resource-item">
+                    <span class="resource-icon">💎</span>
+                    <span class="resource-value" id="spiritual-stones">100</span>
+                    <span class="resource-label">灵石</span>
+                </div>
+                <div class="resource-item">
+                    <span class="resource-icon">🍑</span>
+                    <span class="resource-value" id="peaches">50</span>
+                    <span class="resource-label">仙桃</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主要游戏区域 -->
+        <main class="game-main">
+            <!-- 左侧主界面 -->
+            <div class="main-area">
+                <!-- 修仙树 -->
+                <div class="tree-section" id="tree-section">
+                    <div class="tree-container">
+                        <div class="tree" id="tree">
+                            <div class="tree-trunk"></div>
+                            <div class="tree-leaves">
+                                <div class="leaf leaf-1">🍃</div>
+                                <div class="leaf leaf-2">🍃</div>
+                                <div class="leaf leaf-3">🍃</div>
+                            </div>
+                            <div class="tree-fruits">
+                                <div class="fruit fruit-1">⭐</div>
+                                <div class="fruit fruit-2">💎</div>
+                                <div class="fruit fruit-3">✨</div>
+                            </div>
+                        </div>
+                        <div class="tree-level">
+                            <span class="level-label">仙树等级</span>
+                            <span class="level-value" id="tree-level">Lv.1</span>
+                        </div>
+                    </div>
+                    <button class="chop-btn" id="chop-btn">
+                        <span class="btn-icon">🪓</span>
+                        <span class="btn-text">砍伐仙树</span>
+                    </button>
+                </div>
+
+                <!-- 修为进度 -->
+                <div class="cultivation-section">
+                    <div class="section-header">
+                        <h3>修为进度</h3>
+                        <span class="section-subtitle" id="cultivation-rate">+10/秒</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="cultivation-progress" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="cultivation-current">0</span>
+                            <span class="progress-slash">/</span>
+                            <span id="cultivation-need">100</span>
+                        </div>
+                    </div>
+                    <button class="breakthrough-btn" id="breakthrough-btn" disabled>
+                        <span class="btn-icon">⚡</span>
+                        <span class="btn-text">突破境界</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 右侧功能面板 -->
+            <div class="side-panel">
+                <nav class="panel-tabs">
+                    <button class="tab-btn active" data-tab="skills">技能</button>
+                    <button class="tab-btn" data-tab="equipment">装备</button>
+                    <button class="tab-btn" data-tab="pets">灵兽</button>
+                    <button class="tab-btn" data-tab="guide">攻略</button>
+                </nav>
+
+                <div class="tab-content">
+                    <!-- 技能面板 -->
+                    <div class="tab-pane active" id="tab-skills">
+                        <div class="panel-header">
+                            <h4>神通修炼</h4>
+                            <span class="panel-desc">消耗仙桃提升技能等级</span>
+                        </div>
+                        <div class="skills-list" id="skills-list">
+                            <!-- 技能项会动态生成 -->
+                        </div>
+                    </div>
+
+                    <!-- 装备面板 -->
+                    <div class="tab-pane" id="tab-equipment">
+                        <div class="panel-header">
+                            <h4>装备宝库</h4>
+                            <span class="panel-desc">砍伐仙树获得装备</span>
+                        </div>
+                        <div class="equipment-slots">
+                            <div class="equipment-slot" data-slot="weapon">
+                                <div class="slot-icon">🗡️</div>
+                                <div class="slot-label">武器</div>
+                            </div>
+                            <div class="equipment-slot" data-slot="armor">
+                                <div class="slot-icon">🛡️</div>
+                                <div class="slot-label">护甲</div>
+                            </div>
+                            <div class="equipment-slot" data-slot="accessory">
+                                <div class="slot-icon">💍</div>
+                                <div class="slot-label">饰品</div>
+                            </div>
+                        </div>
+                        <div class="inventory">
+                            <h5>背包</h5>
+                            <div class="inventory-grid" id="inventory-grid">
+                                <!-- 背包物品会动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 灵兽面板 -->
+                    <div class="tab-pane" id="tab-pets">
+                        <div class="panel-header">
+                            <h4>灵兽园</h4>
+                            <span class="panel-desc">召唤灵兽助战修行</span>
+                        </div>
+                        <button class="summon-btn" id="summon-pet-btn">
+                            <span class="btn-icon">✨</span>
+                            <span class="btn-text">召唤灵兽 (100灵石)</span>
+                        </button>
+                        <div class="pets-list" id="pets-list">
+                            <!-- 灵兽会动态生成 -->
+                        </div>
+                    </div>
+
+                    <!-- 攻略面板 -->
+                    <div class="tab-pane" id="tab-guide">
+                        <div class="panel-header">
+                            <h4>修仙指南</h4>
+                            <span class="panel-desc">快速上手，一日千里</span>
+                        </div>
+                        <div class="guide-content">
+                            <div class="guide-section">
+                                <h5>🌳 核心玩法</h5>
+                                <p>砍伐仙树获取修为、装备和资源。仙树等级越高，掉落越好！</p>
+                            </div>
+                            <div class="guide-section">
+                                <h5>⚡ 挂机收益</h5>
+                                <p>游戏会自动积累修为，即使关闭页面也能获得离线收益！</p>
+                            </div>
+                            <div class="guide-section">
+                                <h5>📈 境界提升</h5>
+                                <p>修为满后点击突破，提升境界解锁更多功能：</p>
+                                <ul class="realm-list">
+                                    <li>炼气期 → 筑基期 → 金丹期 → 元婴期</li>
+                                    <li>化神期 → 炼虚期 → 合体期 → 大乘期 → 渡劫期</li>
+                                </ul>
+                            </div>
+                            <div class="guide-section">
+                                <h5>🎯 养成系统</h5>
+                                <ul>
+                                    <li><strong>技能</strong>：消耗仙桃提升神通等级</li>
+                                    <li><strong>装备</strong>：砍树获得装备，增强属性</li>
+                                    <li><strong>灵兽</strong>：召唤灵兽获得额外加成</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部操作栏 -->
+        <footer class="game-footer">
+            <div class="footer-stats">
+                <div class="stat-item">
+                    <span class="stat-icon">⚔️</span>
+                    <span class="stat-value" id="attack-stat">10</span>
+                    <span class="stat-label">攻击</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🛡️</span>
+                    <span class="stat-value" id="defense-stat">5</span>
+                    <span class="stat-label">防御</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">❤️</span>
+                    <span class="stat-value" id="hp-stat">100</span>
+                    <span class="stat-label">血量</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">⚡</span>
+                    <span class="stat-value" id="power-stat">100</span>
+                    <span class="stat-label">战力</span>
+                </div>
+            </div>
+        </footer>
+
+        <!-- 通知消息 -->
+        <div class="notification-container" id="notification-container"></div>
+
+        <!-- 离线收益弹窗 -->
+        <div class="modal" id="offline-modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>🎁 离线收益</h3>
+                </div>
+                <div class="modal-body">
+                    <p id="offline-time">你离开了 0 小时 0 分钟</p>
+                    <div class="offline-rewards">
+                        <div class="reward-item">
+                            <span class="reward-icon">✨</span>
+                            <span class="reward-text">修为 +<span id="offline-xp">0</span></span>
+                        </div>
+                        <div class="reward-item">
+                            <span class="reward-icon">💎</span>
+                            <span class="reward-text">灵石 +<span id="offline-stones">0</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn" id="collect-offline-btn">领取奖励</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
