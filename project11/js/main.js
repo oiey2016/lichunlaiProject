@@ -25,6 +25,9 @@ class Game {
         this.modalTitle = document.getElementById('modalTitle');
         this.modalMessage = document.getElementById('modalMessage');
         this.modalBtn = document.getElementById('modalBtn');
+        this.helpBtn = document.getElementById('helpBtn');
+        this.rulesModal = document.getElementById('rulesModal');
+        this.closeRulesBtn = document.getElementById('closeRulesBtn');
     }
 
     setupEventListeners() {
@@ -32,6 +35,13 @@ class Game {
         this.shuffleBtn.addEventListener('click', () => this.shuffle());
         this.restartBtn.addEventListener('click', () => this.restart());
         this.modalBtn.addEventListener('click', () => this.handleModalClose());
+        this.helpBtn.addEventListener('click', () => this.showRules());
+        this.closeRulesBtn.addEventListener('click', () => this.hideRules());
+        this.rulesModal.addEventListener('click', (e) => {
+            if (e.target === this.rulesModal) {
+                this.hideRules();
+            }
+        });
     }
 
     startGame() {
@@ -120,6 +130,14 @@ class Game {
 
     hideModal() {
         this.modal.classList.remove('show');
+    }
+
+    showRules() {
+        this.rulesModal.classList.add('show');
+    }
+
+    hideRules() {
+        this.rulesModal.classList.remove('show');
     }
 
     handleModalClose() {

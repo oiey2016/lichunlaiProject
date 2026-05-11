@@ -9,6 +9,7 @@
 <body>
     <div class="game-container">
         <header class="game-header">
+            <button class="help-btn" id="helpBtn">❓ 规则</button>
             <h1 class="game-title">🐑 羊了个羊</h1>
             <div class="game-stats">
                 <div class="stat">
@@ -51,6 +52,41 @@
             <h2 id="modalTitle">游戏结束</h2>
             <p id="modalMessage">恭喜你完成了游戏！</p>
             <button class="modal-btn" id="modalBtn">再来一局</button>
+        </div>
+    </div>
+
+    <div class="modal" id="rulesModal">
+        <div class="modal-content rules-modal">
+            <h2>🎮 游戏规则</h2>
+            <div class="rules-content">
+                <div class="rule-item">
+                    <span class="rule-number">1</span>
+                    <span class="rule-text">点击<strong>顶层可点击</strong>的卡牌，将其放入底部槽位</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">2</span>
+                    <span class="rule-text">收集<strong>3张相同</strong>的卡牌会自动消除</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">3</span>
+                    <span class="rule-text">底部槽位最多容纳<strong>7张卡牌</strong></span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">4</span>
+                    <span class="rule-text">消除<strong>所有卡牌</strong>即可过关</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">5</span>
+                    <span class="rule-text">槽位满了但还有卡牌未消除则<strong>游戏失败</strong></span>
+                </div>
+            </div>
+            <div class="rules-tips">
+                <h3>💡 小技巧</h3>
+                <p>🔄 <strong>撤回</strong>：可以撤销上一步操作</p>
+                <p>🔀 <strong>洗牌</strong>：重新排列剩余卡牌位置</p>
+                <p>⚠️ 当槽位有5张以上卡牌时会闪烁警告</p>
+            </div>
+            <button class="modal-btn" id="closeRulesBtn">知道了</button>
         </div>
     </div>
 

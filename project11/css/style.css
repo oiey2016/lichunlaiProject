@@ -49,6 +49,29 @@ body {
     flex-shrink: 0;
 }
 
+.help-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 8px 16px;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(5px);
+}
+
+.help-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.help-btn:active {
+    transform: translateY(0);
+}
+
 .game-title {
     font-size: 1.8rem;
     font-weight: bold;
@@ -286,6 +309,81 @@ body {
     text-align: center;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     animation: slideUp 0.3s ease;
+}
+
+.modal-content.rules-modal {
+    max-width: 450px;
+    text-align: left;
+    padding: 35px;
+}
+
+.modal-content.rules-modal h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.rules-content {
+    margin-bottom: 25px;
+}
+
+.rule-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.rule-number {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.rule-text {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.rule-text strong {
+    color: var(--primary-color);
+}
+
+.rules-tips {
+    background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.rules-tips h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #856404;
+}
+
+.rules-tips p {
+    font-size: 0.9rem;
+    color: #856404;
+    margin: 5px 0;
+}
+
+.modal-content.rules-modal .modal-btn {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 200px;
 }
 
 @keyframes slideUp {
