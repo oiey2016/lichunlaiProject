@@ -3,96 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>羊了个羊 - 趣味消除游戏</title>
+    <title>羊了个羊 - 消除游戏</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
     <div class="game-container">
-        <div class="game-header">
+        <header class="game-header">
             <h1 class="game-title">🐑 羊了个羊</h1>
             <div class="game-stats">
-                <div class="stat-item">
+                <div class="stat">
                     <span class="stat-label">关卡</span>
                     <span class="stat-value" id="level">1</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-label">步数</span>
-                    <span class="stat-value" id="moves">0</span>
+                <div class="stat">
+                    <span class="stat-label">剩余</span>
+                    <span class="stat-value" id="remaining">0</span>
                 </div>
             </div>
-        </div>
-        
-        <div class="game-area">
-            <div class="card-board" id="cardBoard">
+        </header>
+
+        <main class="game-main">
+            <div class="game-board" id="gameBoard"></div>
+        </main>
+
+        <footer class="game-footer">
+            <div class="selection-bar" id="selectionBar">
+                <div class="slots">
+                    <div class="slot" data-index="0"></div>
+                    <div class="slot" data-index="1"></div>
+                    <div class="slot" data-index="2"></div>
+                    <div class="slot" data-index="3"></div>
+                    <div class="slot" data-index="4"></div>
+                    <div class="slot" data-index="5"></div>
+                    <div class="slot" data-index="6"></div>
+                </div>
             </div>
-        </div>
-        
-        <div class="slot-area">
-            <div class="slots-container" id="slots">
+            <div class="game-controls">
+                <button class="control-btn" id="undoBtn">🔄 撤回</button>
+                <button class="control-btn" id="shuffleBtn">🔀 洗牌</button>
+                <button class="control-btn" id="restartBtn">🔁 重新开始</button>
             </div>
-        </div>
-        
-        <div class="game-controls">
-            <button class="btn btn-primary" id="restartBtn">🔄 重新开始</button>
-            <button class="btn btn-secondary" id="shuffleBtn">🔀 洗牌</button>
-            <button class="btn btn-secondary" id="undoBtn">↩️ 撤销</button>
-            <button class="btn btn-info" id="rulesBtn">📖 规则</button>
-        </div>
+        </footer>
     </div>
-    
-    <div class="modal" id="rulesModal">
-        <div class="modal-content rules-content">
-            <h2 class="modal-title">📖 游戏规则</h2>
-            <div class="rules-list">
-                <div class="rule-item">
-                    <span class="rule-icon">🎯</span>
-                    <div class="rule-text">
-                        <strong>目标</strong>
-                        <p>消除场上所有卡牌即可过关</p>
-                    </div>
-                </div>
-                <div class="rule-item">
-                    <span class="rule-icon">👆</span>
-                    <div class="rule-text">
-                        <strong>点击卡牌</strong>
-                        <p>只有最上层未被遮挡的卡牌才能点击，被遮挡的卡牌显示为半透明</p>
-                    </div>
-                </div>
-                <div class="rule-item">
-                    <span class="rule-icon">📥</span>
-                    <div class="rule-text">
-                        <strong>槽位机制</strong>
-                        <p>点击的卡牌会放入下方7个槽位中，槽位满则游戏结束</p>
-                    </div>
-                </div>
-                <div class="rule-item">
-                    <span class="rule-icon">✨</span>
-                    <div class="rule-text">
-                        <strong>三消规则</strong>
-                        <p>槽位中集齐3张相同的卡牌会自动消除</p>
-                    </div>
-                </div>
-                <div class="rule-item">
-                    <span class="rule-icon">🛠️</span>
-                    <div class="rule-text">
-                        <strong>道具使用</strong>
-                        <p>洗牌：打乱场上卡牌图案；撤销：返回上一步</p>
-                    </div>
-                </div>
-            </div>
-            <button class="btn btn-primary" id="closeRulesBtn">知道了</button>
-        </div>
-    </div>
-    
-    <div class="modal" id="gameModal">
+
+    <div class="modal" id="modal">
         <div class="modal-content">
-            <h2 class="modal-title" id="modalTitle">恭喜过关！</h2>
-            <p class="modal-message" id="modalMessage"></p>
-            <button class="btn btn-primary" id="modalBtn">继续游戏</button>
+            <h2 id="modalTitle">游戏结束</h2>
+            <p id="modalMessage">恭喜你完成了游戏！</p>
+            <button class="modal-btn" id="modalBtn">再来一局</button>
         </div>
     </div>
 
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

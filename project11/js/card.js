@@ -1,33 +1,38 @@
 export class Card {
-    constructor(id, symbol, x, y, z, onBoard) {
+    constructor(type, id, x, y, layer) {
+        this.type = type;
         this.id = id;
-        this.symbol = symbol;
         this.x = x;
         this.y = y;
-        this.z = z;
-        this.onBoard = onBoard;
+        this.layer = layer;
+        this.isBlocked = false;
+        this.isSelected = false;
         this.element = null;
     }
 
     createElement() {
-        const div = document.createElement('div');
-        div.className = 'card';
-        div.dataset.id = this.id;
-        div.textContent = this.symbol;
-        this.updatePosition(div);
-        this.element = div;
-        return div;
+        const el = document.createElement('div');
+        el.className = 'card';
+        el.textContent = this.type;
+        el.dataset.id = this.id;
+        el.style.left = `${this.x}px`;
+        el.style.top = `${this.y}px`;
+        el.style.zIndex = this.layer;
+        
+        el.addEventListener('click', () => {
+            if (!this.isBlocked && !this.isSelected) {
+                this.onSelect();
+            }
+        });
+        
+        this.element = el;
+        return el;
     }
 
-    updatePosition(element) {
-        element.style.left = `${this.x}px`;
-        element.style.top = `${this.y}px`;
-        element.style.zIndex = this.z;
-    }
-
-    setDisabled(disabled) {
+    setBlocked(blocked) {
+        this.isBlocked = blocked;
         if (this.element) {
-            if (disabled) {
+            if (blocked) {
                 this.element.classList.add('disabled');
             } else {
                 this.element.classList.remove('disabled');
@@ -35,10 +40,31 @@ export class Card {
         }
     }
 
-    removeFromDOM() {
-        if (this.element && this.element.parentNode) {
-            this.element.parentNode.removeChild(this.element);
+    setSelected(selected) {
+        this.isSelected = selected;
+        if (this.element) {
+            if (selected) {
+                this.element.classList.add('selected');
+            } else {
+                this.element.classList.remove('selected');
+            }
         }
-        this.element = null;
+    }
+
+    remove() {
+        if (this.element) {
+            this.element.classList.add('matched');
+            setTimeout(() => {
+                if (this.element && this.element.parentNode) {
+                    this.element.parentNode.removeChild(this.element);
+                }
+            }, 500);
+        }
+    }
+
+    onSelect() {
+        if (this.onSelectCallback) {
+            this.onSelectCallback(this);
+        }
     }
 }
