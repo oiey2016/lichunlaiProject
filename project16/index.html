@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谍影潜行 - 潜伏养成游戏</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <header id="game-header">
+            <div class="title-section">
+                <h1 class="game-title">谍影潜行</h1>
+                <p class="subtitle">第76号情报站</p>
+            </div>
+            <div class="resource-bar">
+                <div class="resource">
+                    <span class="icon">💰</span>
+                    <span id="money">0</span>
+                    <span class="label">经费</span>
+                </div>
+                <div class="resource">
+                    <span class="icon">📜</span>
+                    <span id="intel">0</span>
+                    <span class="label">情报</span>
+                </div>
+                <div class="resource">
+                    <span class="icon">⭐</span>
+                    <span id="reputation">0</span>
+                    <span class="label">声望</span>
+                </div>
+            </div>
+        </header>
+
+        <nav id="main-nav">
+            <button class="nav-btn active" data-tab="headquarters">🏠 总部</button>
+            <button class="nav-btn" data-tab="missions">📋 任务</button>
+            <button class="nav-btn" data-tab="agents">🕵️ 特工</button>
+            <button class="nav-btn" data-tab="minigame">🔍 侦察</button>
+            <button class="nav-btn" data-tab="story">📖 剧情</button>
+        </nav>
+
+        <main id="content-area">
+            <section id="headquarters" class="tab-content active">
+                <div class="office-scene">
+                    <div class="scene-layer">
+                        <div class="desk" id="easter-egg-desk">
+                            <div class="item lamp" id="easter-egg-lamp"></div>
+                            <div class="item phone" id="easter-egg-phone"></div>
+                            <div class="item document" id="easter-egg-doc"></div>
+                            <div class="item photo" id="easter-egg-photo"></div>
+                        </div>
+                        <div class="bookshelf" id="easter-egg-shelf"></div>
+                        <div class="window" id="easter-egg-window"></div>
+                    </div>
+                </div>
+                
+                <div class="production-panel">
+                    <h3>情报收集站</h3>
+                    <div class="production-items">
+                        <div class="prod-item">
+                            <span class="prod-name">线人报告</span>
+                            <span class="prod-rate">+1 情报/秒</span>
+                            <button class="upgrade-btn" data-type="informant">升级 (100经费)</button>
+                        </div>
+                        <div class="prod-item">
+                            <span class="prod-name">电台监听</span>
+                            <span class="prod-rate">+3 情报/秒</span>
+                            <button class="upgrade-btn" data-type="radio">升级 (500经费)</button>
+                        </div>
+                        <div class="prod-item">
+                            <span class="prod-name">卧底渗透</span>
+                            <span class="prod-rate">+10 情报/秒</span>
+                            <button class="upgrade-btn" data-type="infiltrate">升级 (2000经费)</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="missions" class="tab-content">
+                <div class="missions-list">
+                    <h2>执行任务</h2>
+                    <div class="mission-card" data-mission="1">
+                        <div class="mission-icon">📮</div>
+                        <div class="mission-info">
+                            <h4>传递密信</h4>
+                            <p>将重要情报安全送达联络点</p>
+                            <div class="mission-reward">
+                                <span>奖励: +500经费 +200情报</span>
+                            </div>
+                        </div>
+                        <button class="mission-btn">执行</button>
+                    </div>
+                    <div class="mission-card" data-mission="2">
+                        <div class="mission-icon">🎭</div>
+                        <div class="mission-info">
+                            <h4>伪装潜入</h4>
+                            <p>混入敌方宴会获取机密</p>
+                            <div class="mission-reward">
+                                <span>奖励: +1500经费 +800情报</span>
+                            </div>
+                        </div>
+                        <button class="mission-btn">执行</button>
+                    </div>
+                    <div class="mission-card" data-mission="3">
+                        <div class="mission-icon">⚡</div>
+                        <div class="mission-info">
+                            <h4>紧急营救</h4>
+                            <p>营救被困的我方同志</p>
+                            <div class="mission-reward">
+                                <span>奖励: +5000经费 +3000情报 +50声望</span>
+                            </div>
+                        </div>
+                        <button class="mission-btn">执行</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="agents" class="tab-content">
+                <div class="agents-panel">
+                    <h2>我的特工</h2>
+                    <div class="agent-cards">
+                        <div class="agent-card">
+                            <div class="agent-avatar">👨‍💼</div>
+                            <div class="agent-details">
+                                <h4>陈深</h4>
+                                <p class="agent-role">潜伏者</p>
+                                <div class="agent-stats">
+                                    <div class="stat">
+                                        <span class="stat-label">智力</span>
+                                        <div class="stat-bar"><div class="stat-fill" style="width: 85%"></div></div>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-label">身手</span>
+                                        <div class="stat-bar"><div class="stat-fill" style="width: 70%"></div></div>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-label">魅力</span>
+                                        <div class="stat-bar"><div class="stat-fill" style="width: 90%"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="train-btn">训练</button>
+                        </div>
+                        <div class="agent-card">
+                            <div class="agent-avatar">👩‍🎤</div>
+                            <div class="agent-details">
+                                <h4>徐碧城</h4>
+                                <p class="agent-role">联络员</p>
+                                <div class="agent-stats">
+                                    <div class="stat">
+                                        <span class="stat-label">智力</span>
+                                        <div class="stat-bar"><div class="stat-fill" style="width: 75%"></div></div>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-label">身手</span>
+                                        <div class="stat-bar"><div class="stat-fill" style="width: 60%"></div></div>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-label">魅力</span>
+                                        <div class="stat-bar"><div class="stat-fill" style="width: 95%"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="train-btn">训练</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="minigame" class="tab-content">
+                <div class="minigame-container">
+                    <h2>🔍 找不同 - 侦察训练</h2>
+                    <p class="game-instruction">找出两张图片中的5处不同，点击标记位置</p>
+                    <div class="game-images">
+                        <div class="image-wrapper" id="image-left">
+                            <div class="diff-spot" data-spot="1" style="top: 20%; left: 30%;"></div>
+                            <div class="diff-spot" data-spot="2" style="top: 50%; left: 70%;"></div>
+                            <div class="diff-spot" data-spot="3" style="top: 75%; left: 45%;"></div>
+                            <div class="diff-spot" data-spot="4" style="top: 35%; left: 85%;"></div>
+                            <div class="diff-spot" data-spot="5" style="top: 60%; left: 15%;"></div>
+                        </div>
+                        <div class="image-wrapper" id="image-right">
+                            <div class="diff-spot" data-spot="1" style="top: 20%; left: 30%;"></div>
+                            <div class="diff-spot" data-spot="2" style="top: 50%; left: 70%;"></div>
+                            <div class="diff-spot" data-spot="3" style="top: 75%; left: 45%;"></div>
+                            <div class="diff-spot" data-spot="4" style="top: 35%; left: 85%;"></div>
+                            <div class="diff-spot" data-spot="5" style="top: 60%; left: 15%;"></div>
+                        </div>
+                    </div>
+                    <div class="game-status">
+                        <span>已找到: <span id="found-count">0</span>/5</span>
+                        <button id="reset-game">重新开始</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="story" class="tab-content">
+                <div class="story-container">
+                    <h2>📖 谍战档案</h2>
+                    <div class="story-log" id="story-log">
+                        <div class="story-entry">
+                            <span class="story-date">1941年冬</span>
+                            <p class="story-text">你奉命潜入上海极司菲尔路76号，代号"麻雀"。任务是获取汪伪政府的绝密情报...</p>
+                        </div>
+                    </div>
+                    <div class="story-input">
+                        <textarea id="new-story" placeholder="记录你的谍战经历..."></textarea>
+                        <button id="add-story">记录</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="easter-egg-popup" class="popup hidden">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <h3 id="egg-title">🎉 发现彩蛋！</h3>
+            <p id="egg-text"></p>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
