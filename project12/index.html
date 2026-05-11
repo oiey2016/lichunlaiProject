@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1 class="game-title">2048</h1>
+            <div class="scores-container">
+                <div class="score-box">
+                    <div class="score-label">分数</div>
+                    <div id="score" class="score-value">0</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-label">最高</div>
+                    <div id="best-score" class="score-value">0</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-description">
+            <p>使用 <strong>方向键</strong> 或 <strong>滑动</strong> 移动方块，相同数字的方块合并时会加倍！</p>
+            <button id="new-game-btn" class="btn">新游戏</button>
+        </div>
+        
+        <div class="game-board">
+            <div class="grid-container">
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+            </div>
+            <div id="tile-container" class="tile-container"></div>
+            <div id="game-message" class="game-message"></div>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
