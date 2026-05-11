@@ -27,6 +27,7 @@ const gameData = {
     ]
 };
 
+
 const gachaPool = [
     {
         id: 1,
