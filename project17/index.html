@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人生开箱 - 温暖治愈的逆袭之旅</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <div class="header-content">
+                <h1 class="game-title">✨ 人生开箱 ✨</h1>
+                <p class="game-subtitle">每一次开箱，都是命运的转机</p>
+            </div>
+            <div class="energy-bar">
+                <span class="energy-label">⚡ 运气值</span>
+                <div class="energy-track">
+                    <div class="energy-fill" id="energyFill"></div>
+                </div>
+                <span class="energy-text" id="energyText">100/100</span>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <section class="character-section">
+                <div class="character-card">
+                    <div class="character-avatar">
+                        <div class="avatar-circle">
+                            <span class="avatar-emoji" id="avatarEmoji">🧑</span>
+                        </div>
+                    </div>
+                    <div class="character-info">
+                        <h2 class="character-name" id="characterName">普通人</h2>
+                        <p class="character-title" id="characterTitle">平凡的打工族</p>
+                        <div class="character-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">财富</span>
+                                <div class="stat-bar">
+                                    <div class="stat-fill wealth" id="wealthBar"></div>
+                                </div>
+                                <span class="stat-value" id="wealthValue">10</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">智慧</span>
+                                <div class="stat-bar">
+                                    <div class="stat-fill wisdom" id="wisdomBar"></div>
+                                </div>
+                                <span class="stat-value" id="wisdomValue">20</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">魅力</span>
+                                <div class="stat-bar">
+                                    <div class="stat-fill charm" id="charmBar"></div>
+                                </div>
+                                <span class="stat-value" id="charmValue">15</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">健康</span>
+                                <div class="stat-bar">
+                                    <div class="stat-fill health" id="healthBar"></div>
+                                </div>
+                                <span class="stat-value" id="healthValue">50</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="gacha-section">
+                <div class="gacha-area">
+                    <div class="box-container" id="boxContainer">
+                        <div class="mystery-box" id="mysteryBox">
+                            <div class="box-lid"></div>
+                            <div class="box-body">
+                                <span class="box-icon">🎁</span>
+                            </div>
+                            <div class="box-ribbon"></div>
+                        </div>
+                    </div>
+                    <button class="gacha-btn" id="gachaBtn">
+                        <span class="btn-icon">🎲</span>
+                        <span class="btn-text">开启命运宝箱</span>
+                        <span class="btn-cost">(-20 运气值)</span>
+                    </button>
+                    <p class="gacha-hint" id="gachaHint">点击宝箱，开启你的逆袭人生！</p>
+                </div>
+            </section>
+
+            <section class="inventory-section">
+                <div class="section-header">
+                    <h3>🎒 我的道具</h3>
+                    <span class="item-count" id="itemCount">0件</span>
+                </div>
+                <div class="inventory-grid" id="inventoryGrid">
+                    <div class="empty-slot">
+                        <span>还没有道具哦~</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="history-section">
+                <div class="section-header">
+                    <h3>📜 人生履历</h3>
+                </div>
+                <div class="history-list" id="historyList">
+                    <div class="history-item start">
+                        <span class="history-date">第1天</span>
+                        <p class="history-content">你的人生故事从这里开始...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div class="modal-overlay" id="resultModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="resultTitle">🎉 恭喜获得！</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="result-item" id="resultItem">
+                        <span class="result-icon" id="resultIcon">🎁</span>
+                        <h4 class="result-name" id="resultName">神秘道具</h4>
+                        <p class="result-desc" id="resultDesc">这是一个神秘的道具</p>
+                        <div class="result-effect" id="resultEffect"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn" id="closeModal">收下祝福</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
