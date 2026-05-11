@@ -59,6 +59,7 @@ function initGame() {
     setupMissions();
     setupStorySystem();
     setupAgentTraining();
+    setupRulesPopup();
     startProductionLoop();
 }
 
@@ -341,6 +342,32 @@ function setupAgentTraining() {
                 showNotification("经费不足！训练需要 300 经费", true);
             }
         });
+    });
+}
+
+function setupRulesPopup() {
+    const rulesBtn = document.getElementById('rules-btn');
+    const rulesPopup = document.getElementById('rules-popup');
+    const closeRules = document.querySelector('.close-rules');
+    
+    rulesBtn.addEventListener('click', () => {
+        rulesPopup.classList.remove('hidden');
+    });
+    
+    closeRules.addEventListener('click', () => {
+        rulesPopup.classList.add('hidden');
+    });
+    
+    rulesPopup.addEventListener('click', (e) => {
+        if (e.target.id === 'rules-popup') {
+            rulesPopup.classList.add('hidden');
+        }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !rulesPopup.classList.contains('hidden')) {
+            rulesPopup.classList.add('hidden');
+        }
     });
 }
 
