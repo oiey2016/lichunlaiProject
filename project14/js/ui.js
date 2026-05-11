@@ -1,5 +1,8 @@
 // UI 交互逻辑
+let game = null;
+
 document.addEventListener('DOMContentLoaded', () => {
+    game = new Game();
     initEventListeners();
     updateUIElements();
 });

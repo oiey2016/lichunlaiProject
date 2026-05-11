@@ -431,7 +431,7 @@ class Game {
             GameState.player.spiritualStones += offlineStones;
 
             const hours = Math.floor(offlineSeconds / 3600);
-            const minutes = Math.floor((offlineSeconds % 3600) / 60;
+            const minutes = Math.floor((offlineSeconds % 3600) / 60);
 
             this.showOfflineModal(hours, minutes, offlineCultivation, offlineStones);
         }
@@ -485,4 +485,4 @@ class Game {
     }
 }
 
-const game = new Game();
+
