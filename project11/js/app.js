@@ -10,8 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restartBtn');
     const shuffleBtn = document.getElementById('shuffleBtn');
     const undoBtn = document.getElementById('undoBtn');
+    const rulesBtn = document.getElementById('rulesBtn');
+    const closeRulesBtn = document.getElementById('closeRulesBtn');
     const modalBtn = document.getElementById('modalBtn');
     const modal = document.getElementById('gameModal');
+    const rulesModal = document.getElementById('rulesModal');
     
     restartBtn.addEventListener('click', () => {
         game.startGame(game.level);
@@ -23,6 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
     
     undoBtn.addEventListener('click', () => {
         game.undo();
+    });
+    
+    rulesBtn.addEventListener('click', () => {
+        rulesModal.classList.add('show');
+    });
+    
+    closeRulesBtn.addEventListener('click', () => {
+        rulesModal.classList.remove('show');
+    });
+    
+    rulesModal.addEventListener('click', (e) => {
+        if (e.target === rulesModal) {
+            rulesModal.classList.remove('show');
+        }
     });
     
     modalBtn.addEventListener('click', () => {

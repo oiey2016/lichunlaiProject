@@ -206,6 +206,16 @@ body {
     box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
 }
 
+.btn-info {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+}
+
+.btn-info:hover {
+    box-shadow: 0 6px 20px rgba(79, 172, 254, 0.6);
+}
+
 .btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -260,6 +270,63 @@ body {
     font-size: 1.2rem;
     margin-bottom: 25px;
     color: #666;
+}
+
+.rules-content {
+    text-align: left;
+    max-width: 450px;
+}
+
+.rules-content .modal-title {
+    text-align: center;
+}
+
+.rules-list {
+    margin: 25px 0;
+}
+
+.rule-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 18px;
+    padding: 12px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+}
+
+.rule-item:hover {
+    transform: translateX(5px);
+}
+
+.rule-icon {
+    font-size: 1.8rem;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.rule-text {
+    flex: 1;
+}
+
+.rule-text strong {
+    display: block;
+    font-size: 1.1rem;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.rule-text p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.rules-content .btn {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
 }
 
 @media (max-width: 480px) {

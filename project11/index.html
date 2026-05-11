@@ -36,6 +36,51 @@
             <button class="btn btn-primary" id="restartBtn">🔄 重新开始</button>
             <button class="btn btn-secondary" id="shuffleBtn">🔀 洗牌</button>
             <button class="btn btn-secondary" id="undoBtn">↩️ 撤销</button>
+            <button class="btn btn-info" id="rulesBtn">📖 规则</button>
+        </div>
+    </div>
+    
+    <div class="modal" id="rulesModal">
+        <div class="modal-content rules-content">
+            <h2 class="modal-title">📖 游戏规则</h2>
+            <div class="rules-list">
+                <div class="rule-item">
+                    <span class="rule-icon">🎯</span>
+                    <div class="rule-text">
+                        <strong>目标</strong>
+                        <p>消除场上所有卡牌即可过关</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">👆</span>
+                    <div class="rule-text">
+                        <strong>点击卡牌</strong>
+                        <p>只有最上层未被遮挡的卡牌才能点击，被遮挡的卡牌显示为半透明</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">📥</span>
+                    <div class="rule-text">
+                        <strong>槽位机制</strong>
+                        <p>点击的卡牌会放入下方7个槽位中，槽位满则游戏结束</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">✨</span>
+                    <div class="rule-text">
+                        <strong>三消规则</strong>
+                        <p>槽位中集齐3张相同的卡牌会自动消除</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">🛠️</span>
+                    <div class="rule-text">
+                        <strong>道具使用</strong>
+                        <p>洗牌：打乱场上卡牌图案；撤销：返回上一步</p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="closeRulesBtn">知道了</button>
         </div>
     </div>
     
