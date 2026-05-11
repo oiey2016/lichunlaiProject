@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合成大西瓜</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>合成大西瓜</h1>
+            <div class="score-board">
+                <div class="score-item">
+                    <span class="label">得分</span>
+                    <span class="value" id="score">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="label">最高分</span>
+                    <span class="value" id="high-score">0</span>
+                </div>
+            </div>
+            <button class="btn-restart" id="restart-btn">重新开始</button>
+        </header>
+        
+        <div class="game-main">
+            <canvas id="game-canvas"></canvas>
+            <div class="next-fruit" id="next-fruit"></div>
+        </div>
+        
+        <div class="game-rules">
+            <h3>游戏规则</h3>
+            <ul>
+                <li>点击屏幕放置水果</li>
+                <li>相同水果碰撞会合并成更大的水果</li>
+                <li>合成更大的水果获得更高分数</li>
+                <li>水果超出顶部边界游戏结束</li>
+            </ul>
+        </div>
+        
+        <div class="game-over" id="game-over">
+            <h2>游戏结束</h2>
+            <p>最终得分: <span id="final-score">0</span></p>
+            <button class="btn-restart" id="game-over-restart">再来一局</button>
+        </div>
+    </div>
+    
+    <script src="js/engine.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
