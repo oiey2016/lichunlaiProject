@@ -21,7 +21,8 @@ import {
     updateMoves, 
     waitForAnimation, 
     showGameOver, 
-    getClickedPiece 
+    getClickedPiece,
+    showRules
 } from './ui.js';
 
 class Game {
@@ -29,6 +30,7 @@ class Game {
         this.gameState = createGameState();
         this.gameBoardElement = document.getElementById('game-board');
         this.restartButton = document.getElementById('restart-btn');
+        this.rulesButton = document.getElementById('rules-btn');
         
         this.init();
     }
@@ -63,6 +65,11 @@ class Game {
         // 重新开始按钮
         this.restartButton.addEventListener('click', () => {
             this.startNewGame();
+        });
+
+        // 游戏规则按钮
+        this.rulesButton.addEventListener('click', () => {
+            showRules();
         });
     }
 

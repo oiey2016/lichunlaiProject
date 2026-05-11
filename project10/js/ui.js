@@ -145,3 +145,95 @@ export function getClickedPiece(event, gameBoardElement) {
     
     return { row, col };
 }
+
+/**
+ * 显示游戏规则弹窗
+ */
+export function showRules() {
+    const rulesModal = document.createElement('div');
+    rulesModal.className = 'rules-modal';
+    rulesModal.innerHTML = `
+        <div class="rules-content">
+            <div class="rules-header">
+                <h2>🎮 游戏规则</h2>
+                <button class="close-btn" id="close-rules">&times;</button>
+            </div>
+            <div class="rules-body">
+                <div class="rule-section">
+                    <h3>游戏目标</h3>
+                    <p>在限定步数内，通过消除棋子获得尽可能高的分数！</p>
+                </div>
+                
+                <div class="rule-section">
+                    <h3>基本操作</h3>
+                    <ul>
+                        <li>点击一个棋子将其选中（高亮显示）</li>
+                        <li>再点击另一个相邻的棋子进行交换</li>
+                        <li>如果再次点击已选中的棋子，则取消选中</li>
+                    </ul>
+                </div>
+                
+                <div class="rule-section">
+                    <h3>交换规则</h3>
+                    <ul>
+                        <li>两个棋子必须相邻（上下左右四个方向）</li>
+                        <li>交换后必须能形成可消除的组合</li>
+                        <li>无效的交换会自动恢复原位</li>
+                        <li>每次有效交换消耗一步</li>
+                    </ul>
+                </div>
+                
+                <div class="rule-section">
+                    <h3>消除规则</h3>
+                    <ul>
+                        <li>水平方向连续3个或以上相同棋子</li>
+                        <li>垂直方向连续3个或以上相同棋子</li>
+                        <li>十字形、T形、L形等特殊形状也会消除</li>
+                        <li>每个棋子消除得 10 分</li>
+                    </ul>
+                </div>
+                
+                <div class="rule-section">
+                    <h3>下落与补充</h3>
+                    <ul>
+                        <li>消除后，上方棋子会自动下落填补空位</li>
+                        <li>顶部空位会生成新的随机棋子</li>
+                        <li>新棋子可能触发连锁消除！</li>
+                    </ul>
+                </div>
+                
+                <div class="rule-section">
+                    <h3>游戏结束</h3>
+                    <ul>
+                        <li>步数用完时游戏结束</li>
+                        <li>尝试在有限步数内获得最高分！</li>
+                    </ul>
+                </div>
+                
+                <div class="rule-highlight">
+                    <p>💡 小提示：多观察棋盘，寻找能触发连锁消除的机会，这样可以获得更高的分数！</p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(rulesModal);
+    
+    const closeBtn = document.getElementById('close-rules');
+    closeBtn.addEventListener('click', () => {
+        rulesModal.remove();
+    });
+    
+    rulesModal.addEventListener('click', (event) => {
+        if (event.target === rulesModal) {
+            rulesModal.remove();
+        }
+    });
+    
+    document.addEventListener('keydown', function escHandler(event) {
+        if (event.key === 'Escape') {
+            rulesModal.remove();
+            document.removeEventListener('keydown', escHandler);
+        }
+    });
+}
