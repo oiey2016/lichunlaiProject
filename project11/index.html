@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>羊了个羊 - 趣味消除游戏</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">🐑 羊了个羊</h1>
+            <div class="game-stats">
+                <div class="stat-item">
+                    <span class="stat-label">关卡</span>
+                    <span class="stat-value" id="level">1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">步数</span>
+                    <span class="stat-value" id="moves">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <div class="card-board" id="cardBoard">
+            </div>
+        </div>
+        
+        <div class="slot-area">
+            <div class="slots-container" id="slots">
+            </div>
+        </div>
+        
+        <div class="game-controls">
+            <button class="btn btn-primary" id="restartBtn">🔄 重新开始</button>
+            <button class="btn btn-secondary" id="shuffleBtn">🔀 洗牌</button>
+            <button class="btn btn-secondary" id="undoBtn">↩️ 撤销</button>
+        </div>
+    </div>
+    
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="modalTitle">恭喜过关！</h2>
+            <p class="modal-message" id="modalMessage"></p>
+            <button class="btn btn-primary" id="modalBtn">继续游戏</button>
+        </div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
