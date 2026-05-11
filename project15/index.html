@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成语玩命猜</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <header class="game-header">
+            <h1 class="game-title">🎯 成语玩命猜</h1>
+            <div class="game-info">
+                <div class="score-box">
+                    <span class="label">得分</span>
+                    <span class="value" id="score">0</span>
+                </div>
+                <div class="level-box">
+                    <span class="label">关卡</span>
+                    <span class="value" id="level">1</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <section id="start-screen" class="screen active">
+                <div class="start-content">
+                    <div class="logo-section">
+                        <div class="big-icon">📚</div>
+                        <h2>欢迎来到成语玩命猜</h2>
+                        <p>体验中华文字的魅力，挑战你的成语储备！</p>
+                    </div>
+                    
+                    <div class="game-modes">
+                        <h3>选择游戏模式</h3>
+                        <div class="mode-cards">
+                            <div class="mode-card" data-mode="guess">
+                                <div class="mode-icon">🤔</div>
+                                <h4>猜成语</h4>
+                                <p>根据描述猜出正确的成语</p>
+                                <button class="btn btn-primary" onclick="Game.start('guess')">开始挑战</button>
+                            </div>
+                            
+                            <div class="mode-card" data-mode="quiz">
+                                <div class="mode-icon">📝</div>
+                                <h4>成语问答</h4>
+                                <p>回答关于成语的各种问题</p>
+                                <button class="btn btn-primary" onclick="Game.start('quiz')">开始答题</button>
+                            </div>
+                            
+                            <div class="mode-card" data-mode="wordle">
+                                <div class="mode-icon">🔤</div>
+                                <h4>成语字谜</h4>
+                                <p>逐字猜成语，类似Wordle玩法</p>
+                                <button class="btn btn-primary" onclick="Game.start('wordle')">开始猜测</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-rules">
+                        <h3>游戏规则</h3>
+                        <ul>
+                            <li>🎮 每道题答对得分，答错不扣分</li>
+                            <li>⏱️ 部分模式有时间限制</li>
+                            <li>🏆 连续答对可获得额外奖励</li>
+                            <li>💡 可以使用提示功能（消耗分数）</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="guess-screen" class="screen">
+                <div class="game-container">
+                    <nav class="back-nav">
+                        <button class="btn btn-outline" onclick="Game.back()">← 返回</button>
+                    </nav>
+                    
+                    <div class="question-section">
+                        <div class="question-number">
+                            第 <span id="guess-question-number">1</span> 题
+                        </div>
+                        <div class="question-content">
+                            <div class="description" id="guess-description"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="answer-section">
+                        <div class="answer-input-wrapper">
+                            <input type="text" id="guess-input" class="answer-input" placeholder="请输入成语（4个汉字）" maxlength="4">
+                            <button class="btn btn-primary" onclick="Game.guess()">提交</button>
+                        </div>
+                        
+                        <div class="hint-section">
+                            <button class="btn btn-outline" onclick="Game.getHint()">💡 提示 (-10分)</button>
+                            <div id="hint-display" class="hint-display"></div>
+                        </div>
+                        
+                        <div id="guess-result" class="result-display"></div>
+                    </div>
+                    
+                    <div class="game-stats">
+                        <div class="stat">
+                            <span class="stat-label">答对</span>
+                            <span class="stat-value" id="guess-correct">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">答错</span>
+                            <span class="stat-value" id="guess-wrong">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">连胜</span>
+                            <span class="stat-value" id="guess-streak">0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="quiz-screen" class="screen">
+                <div class="game-container">
+                    <nav class="back-nav">
+                        <button class="btn btn-outline" onclick="Game.back()">← 返回</button>
+                    </nav>
+                    
+                    <div class="question-section">
+                        <div class="question-number">
+                            第 <span id="quiz-question-number">1</span> 题
+                        </div>
+                        <div class="timer">
+                            <span id="timer">30</span> 秒
+                        </div>
+                        <div class="question-content">
+                            <div class="quiz-question" id="quiz-question"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="answer-section">
+                        <div class="options-list" id="quiz-options"></div>
+                        <div id="quiz-result" class="result-display"></div>
+                    </div>
+                    
+                    <div class="game-stats">
+                        <div class="stat">
+                            <span class="stat-label">答对</span>
+                            <span class="stat-value" id="quiz-correct">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">答错</span>
+                            <span class="stat-value" id="quiz-wrong">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">时间</span>
+                            <span class="stat-value" id="quiz-time">0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="wordle-screen" class="screen">
+                <div class="game-container">
+                    <nav class="back-nav">
+                        <button class="btn btn-outline" onclick="Game.back()">← 返回</button>
+                    </nav>
+                    
+                    <div class="question-section">
+                        <div class="question-number">
+                            猜成语 (剩余 <span id="wordle-attempts">6</span> 次)
+                        </div>
+                        <div class="question-content">
+                            <div class="wordle-hint" id="wordle-hint"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="wordle-grid" id="wordle-grid"></div>
+                    
+                    <div class="answer-section">
+                        <div class="keyboard-section">
+                            <div class="custom-keyboard" id="keyboard"></div>
+                        </div>
+                        <div id="wordle-result" class="result-display"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="game-over-screen" class="screen">
+                <div class="game-over-content">
+                    <div class="result-icon" id="game-over-icon">🎉</div>
+                    <h2 id="game-over-title">游戏结束</h2>
+                    <div class="final-stats">
+                        <div class="stat-item">
+                            <span class="label">最终得分</span>
+                            <span class="value" id="final-score">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="label">答对题数</span>
+                            <span class="value" id="final-correct">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="label">最高连胜</span>
+                            <span class="value" id="final-streak">0</span>
+                        </div>
+                    </div>
+                    <div class="game-over-actions">
+                        <button class="btn btn-primary" onclick="Game.restart()">再玩一次</button>
+                        <button class="btn btn-outline" onclick="Game.back()">返回主页</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="game-footer">
+            <p>🎯 成语玩命猜 - 传承中华文字之美</p>
+        </footer>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
