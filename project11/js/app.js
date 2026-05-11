@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const game = new Game(boardElement, slotsElement);
     game.startGame(1);
+	
     
     const restartBtn = document.getElementById('restartBtn');
     const shuffleBtn = document.getElementById('shuffleBtn');
