@@ -18,6 +18,12 @@ export class Renderer {
         this.drawBeans(game.mazeData.beans);
         this.drawObstacles(game.mazeData.obstacles);
         this.drawPlayer(game.player);
+        
+        if (game.player.x === game.mazeData.exit.x && 
+            game.player.y === game.mazeData.exit.y &&
+            game.beansCollected < game.totalBeans) {
+            this.drawExitHint(game.totalBeans - game.beansCollected);
+        }
     }
 
     drawMaze(maze) {
@@ -167,5 +173,24 @@ export class Renderer {
         this.ctx.beginPath();
         this.ctx.arc(x - 4, y - 4, 4, 0, Math.PI * 2);
         this.ctx.fill();
+    }
+
+    drawExitHint(remainingBeans) {
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+        const alpha = 0.8 + Math.sin(this.animationFrame * 0.1) * 0.2;
+        
+        this.ctx.fillStyle = `rgba(0, 0, 0, ${0.6 * alpha})`;
+        this.ctx.fillRect(centerX - 180, centerY - 50, 360, 100);
+        
+        this.ctx.fillStyle = `rgba(255, 215, 0, ${alpha})`;
+        this.ctx.font = 'bold 20px Arial';
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillText(`⚠️ 还需要收集 ${remainingBeans} 个豆子才能通关！`, centerX, centerY - 10);
+        
+        this.ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        this.ctx.font = '14px Arial';
+        this.ctx.fillText('按 R 键重新开始关卡', centerX, centerY + 20);
     }
 }

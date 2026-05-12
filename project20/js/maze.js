@@ -7,12 +7,21 @@ export class MazeGenerator {
     }
 
     generate(level) {
-        const maze = this.createMaze();
-        const beans = this.placeBeans(maze, level);
-        const obstacles = this.placeObstacles(maze, level);
-        const { start, exit } = this.placeStartAndExit(maze);
+        for (let attempt = 0; attempt < 10; attempt++) {
+            const maze = this.createMaze();
+            const { start, exit } = this.placeStartAndExit(maze);
+            const beans = this.placeBeans(maze, level, start, exit);
+            const obstacles = this.placeObstacles(maze, level, start, exit, beans);
+            
+            if (this.validateMaze(maze, start, exit, beans, obstacles)) {
+                return { maze, beans, obstacles, start, exit };
+            }
+        }
         
-        return { maze, beans, obstacles, start, exit };
+        const maze = this.createMaze();
+        const { start, exit } = this.placeStartAndExit(maze);
+        const beans = this.placeBeans(maze, level, start, exit);
+        return { maze, beans, obstacles: [], start, exit };
     }
 
     createMaze() {
@@ -67,7 +76,49 @@ export class MazeGenerator {
         return neighbors;
     }
 
-    placeBeans(maze, level) {
+    findPath(maze, start, end, obstacles = []) {
+        const queue = [{ ...start, path: [start] }];
+        const visited = new Set();
+        visited.add(`${start.x},${start.y}`);
+
+        const directions = [
+            { dx: 0, dy: -1 },
+            { dx: 0, dy: 1 },
+            { dx: -1, dy: 0 },
+            { dx: 1, dy: 0 }
+        ];
+
+        while (queue.length > 0) {
+            const current = queue.shift();
+            
+            if (current.x === end.x && current.y === end.y) {
+                return current.path;
+            }
+
+            for (const dir of directions) {
+                const nx = current.x + dir.dx;
+                const ny = current.y + dir.dy;
+                const key = `${nx},${ny}`;
+
+                if (nx >= 0 && nx < this.width && 
+                    ny >= 0 && ny < this.height && 
+                    maze[ny][nx] === 0 && 
+                    !visited.has(key) &&
+                    !obstacles.some(o => o.x === nx && o.y === ny)) {
+                    visited.add(key);
+                    queue.push({ 
+                        x: nx, 
+                        y: ny, 
+                        path: [...current.path, { x: nx, y: ny }] 
+                    });
+                }
+            }
+        }
+
+        return null;
+    }
+
+    placeBeans(maze, level, start, exit) {
         const beans = [];
         const beanCount = 5 + level * 2;
         let placed = 0;
@@ -77,7 +128,11 @@ export class MazeGenerator {
             const x = Math.floor(Math.random() * (this.width - 2)) + 1;
             const y = Math.floor(Math.random() * (this.height - 2)) + 1;
             
-            if (maze[y][x] === 0 && !beans.some(b => b.x === x && b.y === y)) {
+            if (maze[y][x] === 0 && 
+                !beans.some(b => b.x === x && b.y === y) &&
+                !(x === start.x && y === start.y) &&
+                !(x === exit.x && y === exit.y) &&
+                this.findPath(maze, start, { x, y })) {
                 beans.push({
                     x,
                     y,
@@ -92,7 +147,7 @@ export class MazeGenerator {
         return beans;
     }
 
-    placeObstacles(maze, level) {
+    placeObstacles(maze, level, start, exit, beans) {
         const obstacles = [];
         const obstacleCount = Math.min(level, 5);
         let placed = 0;
@@ -104,14 +159,36 @@ export class MazeGenerator {
             
             if (maze[y][x] === 0 && 
                 !obstacles.some(o => o.x === x && o.y === y) &&
-                !(x <= 2 && y <= 2)) {
+                !beans.some(b => b.x === x && b.y === y) &&
+                !(x === start.x && y === start.y) &&
+                !(x === exit.x && y === exit.y)) {
+                
                 obstacles.push({ x, y });
-                placed++;
+                
+                if (!this.validateMaze(maze, start, exit, beans, obstacles)) {
+                    obstacles.pop();
+                } else {
+                    placed++;
+                }
             }
             attempts++;
         }
 
         return obstacles;
+    }
+
+    validateMaze(maze, start, exit, beans, obstacles) {
+        if (!this.findPath(maze, start, exit, obstacles)) {
+            return false;
+        }
+
+        for (const bean of beans) {
+            if (!this.findPath(maze, start, bean, obstacles)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     placeStartAndExit(maze) {
@@ -121,10 +198,10 @@ export class MazeGenerator {
         maze[start.y][start.x] = 0;
         maze[exit.y][exit.x] = 0;
         
-        if (maze[exit.y][exit.x - 1] === 1 && maze[exit.y - 1][exit.x] === 1) {
+        if (!this.findPath(maze, start, exit)) {
             for (let y = this.height - 2; y > 0; y--) {
                 for (let x = this.width - 2; x > 0; x--) {
-                    if (maze[y][x] === 0) {
+                    if (maze[y][x] === 0 && this.findPath(maze, start, { x, y })) {
                         exit = { x, y };
                         return { start, exit };
                     }

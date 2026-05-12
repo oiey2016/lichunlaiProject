@@ -82,6 +82,9 @@ export class Game {
         if (key === 'ArrowDown' || key === 'KeyS') this.keys.down = value;
         if (key === 'ArrowLeft' || key === 'KeyA') this.keys.left = value;
         if (key === 'ArrowRight' || key === 'KeyD') this.keys.right = value;
+        if (key === 'KeyR' && value && this.isPlaying) {
+            this.restart();
+        }
     }
 
     update() {
