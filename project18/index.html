@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三国刺客 - 射击格斗游戏</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="start-screen" id="startScreen">
+            <h1>⚔️ 三国刺客 ⚔️</h1>
+            <p class="subtitle">刺杀曹操 - 射击格斗</p>
+            <div class="instructions">
+                <h3>操作说明</h3>
+                <p>🎮 WASD / 方向键 - 移动</p>
+                <p>🔫 鼠标左键 / J键 - 射击（弓箭）</p>
+                <p>⚔️ 鼠标右键 / K键 - 近战攻击（剑）</p>
+                <p>❤️ 消灭敌人，保护自己！</p>
+            </div>
+            <button class="start-btn" id="startBtn">开始游戏</button>
+        </div>
+        
+        <div class="game-ui" id="gameUI" style="display: none;">
+            <div class="health-bar">
+                <span class="label">❤️ 生命值</span>
+                <div class="bar-container">
+                    <div class="bar" id="healthBar"></div>
+                </div>
+            </div>
+            <div class="score">
+                <span>🏆 分数: </span>
+                <span id="scoreValue">0</span>
+            </div>
+            <div class="wave">
+                <span>🌊 波次: </span>
+                <span id="waveValue">1</span>
+            </div>
+        </div>
+        
+        <canvas id="gameCanvas"></canvas>
+        
+        <div class="game-over" id="gameOver" style="display: none;">
+            <h2>💀 游戏结束 💀</h2>
+            <p class="final-score">最终分数: <span id="finalScore">0</span></p>
+            <button class="restart-btn" id="restartBtn">重新开始</button>
+        </div>
+    </div>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/enemy.js"></script>
+    <script src="js/bullet.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
