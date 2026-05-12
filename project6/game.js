@@ -440,6 +440,8 @@ class GameUI {
     }
 
     makeMove(piece, toRow, toCol) {
+        this.game.saveState();
+        
         const capturedPiece = this.game.gameLogic.movePiece(piece, toRow, toCol);
         
         this.moveCount++;
@@ -455,6 +457,22 @@ class GameUI {
         this.renderPieces();
         this.renderPlayerInfo();
         this.updateTurnIndicator();
+    }
+
+    undoMove() {
+        if (this.game.undo()) {
+            if (this.moveCount > 0) {
+                this.moveCount--;
+                const historyList = document.getElementById('moveHistory');
+                if (historyList.firstChild) {
+                    historyList.removeChild(historyList.firstChild);
+                }
+            }
+            this.clearSelection();
+            this.renderPieces();
+            this.renderPlayerInfo();
+            this.updateTurnIndicator();
+        }
     }
 
     addMoveHistory(piece, toRow, toCol, capturedPiece) {
@@ -524,6 +542,10 @@ class GameUI {
     }
 
     setupEventListeners() {
+        document.getElementById('undoBtn').addEventListener('click', () => {
+            this.undoMove();
+        });
+
         document.getElementById('restartBtn').addEventListener('click', () => {
             this.game.reset();
             this.reset();
@@ -567,16 +589,51 @@ class Game {
         this.gameLogic = new GameLogic(this.board);
         this.currentPlayer = PLAYERS.RED;
         this.ui = null;
+        this.history = [];
     }
 
     switchPlayer() {
         this.currentPlayer = this.currentPlayer === PLAYERS.RED ? PLAYERS.BLUE : PLAYERS.RED;
     }
 
+    saveState() {
+        const state = {
+            pieces: this.board.pieces.map(p => ({
+                type: p.type,
+                player: p.player,
+                row: p.row,
+                col: p.col,
+                isAlive: p.isAlive
+            })),
+            currentPlayer: this.currentPlayer
+        };
+        this.history.push(state);
+    }
+
+    undo() {
+        if (this.history.length === 0) {
+            return false;
+        }
+
+        const previousState = this.history.pop();
+        
+        this.board.pieces.forEach((p, i) => {
+            p.type = previousState.pieces[i].type;
+            p.player = previousState.pieces[i].player;
+            p.row = previousState.pieces[i].row;
+            p.col = previousState.pieces[i].col;
+            p.isAlive = previousState.pieces[i].isAlive;
+        });
+        
+        this.currentPlayer = previousState.currentPlayer;
+        return true;
+    }
+
     reset() {
         this.board = new Board();
         this.gameLogic = new GameLogic(this.board);
         this.currentPlayer = PLAYERS.RED;
+        this.history = [];
     }
 
     init() {
