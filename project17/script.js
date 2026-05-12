@@ -209,7 +209,11 @@ const elements = {
     resultName: document.getElementById('resultName'),
     resultDesc: document.getElementById('resultDesc'),
     resultEffect: document.getElementById('resultEffect'),
-    closeModal: document.getElementById('closeModal')
+    closeModal: document.getElementById('closeModal'),
+    rulesBtn: document.getElementById('rulesBtn'),
+    rulesModal: document.getElementById('rulesModal'),
+    closeRules: document.getElementById('closeRules'),
+    startGameBtn: document.getElementById('startGameBtn')
 };
 
 function updateUI() {
@@ -364,6 +368,24 @@ function initEvents() {
     elements.resultModal.addEventListener('click', (e) => {
         if (e.target === elements.resultModal) {
             elements.resultModal.classList.remove('show');
+        }
+    });
+
+    elements.rulesBtn.addEventListener('click', () => {
+        elements.rulesModal.classList.add('show');
+    });
+
+    elements.closeRules.addEventListener('click', () => {
+        elements.rulesModal.classList.remove('show');
+    });
+
+    elements.startGameBtn.addEventListener('click', () => {
+        elements.rulesModal.classList.remove('show');
+    });
+
+    elements.rulesModal.addEventListener('click', (e) => {
+        if (e.target === elements.rulesModal) {
+            elements.rulesModal.classList.remove('show');
         }
     });
 }

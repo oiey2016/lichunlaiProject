@@ -22,6 +22,10 @@
                 </div>
                 <span class="energy-text" id="energyText">100/100</span>
             </div>
+            <button class="rules-btn" id="rulesBtn">
+                <span class="rules-icon">📖</span>
+                <span>游戏规则</span>
+            </button>
         </header>
 
         <main class="game-main">
@@ -129,6 +133,123 @@
                 </div>
                 <div class="modal-footer">
                     <button class="modal-btn" id="closeModal">收下祝福</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-overlay rules-modal" id="rulesModal">
+            <div class="modal-content rules-content">
+                <div class="modal-header rules-header">
+                    <h3>📖 游戏规则</h3>
+                    <button class="close-rules" id="closeRules">✕</button>
+                </div>
+                <div class="modal-body rules-body">
+                    <div class="rules-section">
+                        <h4 class="rules-section-title">🎯 游戏目标</h4>
+                        <p class="rules-section-desc">通过开启命运宝箱，收集各种神奇道具，不断提升角色属性，从普通人逆袭成为人生赢家！</p>
+                    </div>
+
+                    <div class="rules-section">
+                        <h4 class="rules-section-title">🎲 开箱玩法</h4>
+                        <div class="rules-list">
+                            <div class="rule-item">
+                                <span class="rule-icon">🎁</span>
+                                <div class="rule-text">
+                                    <strong>开启宝箱</strong>
+                                    <p>每次开箱消耗 20 点运气值</p>
+                                </div>
+                            </div>
+                            <div class="rule-item">
+                                <span class="rule-icon">⚡</span>
+                                <div class="rule-text">
+                                    <strong>运气恢复</strong>
+                                    <p>运气值每 3 秒自动恢复 1 点</p>
+                                </div>
+                            </div>
+                            <div class="rule-item">
+                                <span class="rule-icon">✨</span>
+                                <div class="rule-text">
+                                    <strong>道具效果</strong>
+                                    <p>获得的道具会立即提升相应属性</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rules-section">
+                        <h4 class="rules-section-title">💎 道具稀有度</h4>
+                        <div class="rarity-list">
+                            <div class="rarity-item common">
+                                <span class="rarity-name">普通</span>
+                                <span class="rarity-rate">55%</span>
+                            </div>
+                            <div class="rarity-item rare">
+                                <span class="rarity-name">稀有</span>
+                                <span class="rarity-rate">30%</span>
+                            </div>
+                            <div class="rarity-item epic">
+                                <span class="rarity-name">史诗</span>
+                                <span class="rarity-rate">13%</span>
+                            </div>
+                            <div class="rarity-item legendary">
+                                <span class="rarity-name">传说</span>
+                                <span class="rarity-rate">2%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rules-section">
+                        <h4 class="rules-section-title">📈 角色成长</h4>
+                        <div class="stats-explain">
+                            <div class="stat-explain">
+                                <span class="stat-icon wealth">💰</span>
+                                <div class="stat-info">
+                                    <strong>财富</strong>
+                                    <p>代表你的经济实力</p>
+                                </div>
+                            </div>
+                            <div class="stat-explain">
+                                <span class="stat-icon wisdom">📚</span>
+                                <div class="stat-info">
+                                    <strong>智慧</strong>
+                                    <p>代表你的知识与见识</p>
+                                </div>
+                            </div>
+                            <div class="stat-explain">
+                                <span class="stat-icon charm">💫</span>
+                                <div class="stat-info">
+                                    <strong>魅力</strong>
+                                    <p>代表你的人际吸引力</p>
+                                </div>
+                            </div>
+                            <div class="stat-explain">
+                                <span class="stat-icon health">❤️</span>
+                                <div class="stat-info">
+                                    <strong>健康</strong>
+                                    <p>代表你的身体状态</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rules-section">
+                        <h4 class="rules-section-title">🏆 称号系统</h4>
+                        <div class="titles-list">
+                            <div class="title-item"><span>🧑</span><span>初出茅庐</span></div>
+                            <div class="title-item"><span>💪</span><span>奋斗青年</span></div>
+                            <div class="title-item"><span>🌟</span><span>小有所成</span></div>
+                            <div class="title-item"><span>💼</span><span>精英人士</span></div>
+                            <div class="title-item"><span>👑</span><span>人生赢家</span></div>
+                            <div class="title-item"><span>🏆</span><span>传奇人物</span></div>
+                            <div class="title-item"><span>✨</span><span>都市传说</span></div>
+                        </div>
+                        <p class="rules-tip">💡 四大属性总和越高，称号越厉害！</p>
+                    </div>
+                </div>
+                <div class="modal-footer rules-footer">
+                    <button class="modal-btn start-btn" id="startGameBtn">
+                        <span>🚀 开始逆袭之旅</span>
+                    </button>
                 </div>
             </div>
         </div>

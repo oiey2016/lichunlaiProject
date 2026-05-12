@@ -594,4 +594,330 @@ body {
     .game-title {
         font-size: 1.6rem;
     }
+
+    .rules-list {
+        grid-template-columns: 1fr;
+    }
+
+    .rarity-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .titles-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-explain {
+        grid-template-columns: 1fr;
+    }
+}
+
+.rules-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.rules-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.rules-icon {
+    font-size: 1.1rem;
+}
+
+.game-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rules-modal .modal-content {
+    max-width: 550px;
+}
+
+.rules-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+}
+
+.rules-header h3 {
+    margin: 0;
+}
+
+.close-rules {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-rules:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.rules-body {
+    padding: 25px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.rules-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.rules-body::-webkit-scrollbar-track {
+    background: #f0e6d6;
+    border-radius: 3px;
+}
+
+.rules-body::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 3px;
+}
+
+.rules-section {
+    margin-bottom: 25px;
+}
+
+.rules-section:last-child {
+    margin-bottom: 0;
+}
+
+.rules-section-title {
+    font-size: 1.1rem;
+    color: #5d4e37;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rules-section-desc {
+    color: #8b7355;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    background: linear-gradient(135deg, #fff5e6, #ffe4d6);
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 4px solid #fdcb6e;
+}
+
+.rules-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.rule-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: linear-gradient(135deg, #fff5e6, #ffe4d6);
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.rule-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.rule-text strong {
+    display: block;
+    color: #5d4e37;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+}
+
+.rule-text p {
+    color: #8b7355;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.rarity-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.rarity-item {
+    padding: 12px 8px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.rarity-item:hover {
+    transform: translateY(-3px);
+}
+
+.rarity-item.common {
+    background: linear-gradient(135deg, #a8e6cf, #88d8b0);
+}
+
+.rarity-item.rare {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+    color: white;
+}
+
+.rarity-item.epic {
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    color: white;
+}
+
+.rarity-item.legendary {
+    background: linear-gradient(135deg, #ffeaa7, #fdcb6e, #e17055);
+    animation: legendaryGlow 2s ease-in-out infinite;
+}
+
+@keyframes legendaryGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(253, 203, 110, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(253, 203, 110, 0.8); }
+}
+
+.rarity-name {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.rarity-rate {
+    display: block;
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+.stats-explain {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.stat-explain {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #fff5e6, #ffe4d6);
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.stat-icon.wealth {
+    background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+}
+
+.stat-icon.wisdom {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+}
+
+.stat-icon.charm {
+    background: linear-gradient(135deg, #fd79a8, #e84393);
+}
+
+.stat-icon.health {
+    background: linear-gradient(135deg, #55efc4, #00b894);
+}
+
+.stat-info strong {
+    display: block;
+    color: #5d4e37;
+    margin-bottom: 2px;
+    font-size: 0.9rem;
+}
+
+.stat-info p {
+    color: #8b7355;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.titles-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.title-item {
+    background: linear-gradient(135deg, #fff5e6, #ffe4d6);
+    padding: 10px 8px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #5d4e37;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.3s ease;
+}
+
+.title-item:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ffe4d6, #fdcb6e);
+}
+
+.title-item span:first-child {
+    font-size: 1.3rem;
+}
+
+.rules-tip {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    padding: 12px 15px;
+    border-radius: 10px;
+    color: #2e7d32;
+    font-size: 0.85rem;
+    text-align: center;
+    border-left: 4px solid #4caf50;
+}
+
+.rules-footer {
+    padding: 20px 25px;
+}
+
+.start-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    width: 100%;
+}
+
+.start-btn:hover {
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
