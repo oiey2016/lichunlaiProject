@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>彩豆闯迷宫</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>🎮 彩豆闯迷宫</h1>
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="stat-label">关卡</span>
+                    <span class="stat-value" id="level">1</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">彩豆</span>
+                    <span class="stat-value" id="beans">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">时间</span>
+                    <span class="stat-value" id="timer">00:00</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <div class="maze-wrapper">
+                <canvas id="gameCanvas" width="600" height="600"></canvas>
+            </div>
+            
+            <aside class="game-controls">
+                <div class="control-panel">
+                    <h3>🎯 游戏规则</h3>
+                    <ul class="rules">
+                        <li>使用 <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 或 <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 移动</li>
+                        <li>收集所有彩色豆子</li>
+                        <li>到达出口完成关卡</li>
+                        <li>避开红色障碍物</li>
+                    </ul>
+                    
+                    <div class="button-group">
+                        <button id="startBtn" class="btn btn-primary">开始游戏</button>
+                        <button id="restartBtn" class="btn btn-secondary">重新开始</button>
+                    </div>
+                    
+                    <div class="level-selector">
+                        <h4>选择关卡</h4>
+                        <div class="level-buttons" id="levelButtons">
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <div id="gameModal" class="modal">
+            <div class="modal-content">
+                <h2 id="modalTitle">恭喜过关！</h2>
+                <p id="modalMessage"></p>
+                <button id="modalBtn" class="btn btn-primary">继续</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
