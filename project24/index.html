@@ -11,6 +11,7 @@
         <div id="game-ui">
             <div id="score-display">分数: <span id="score">0</span></div>
             <div id="highscore-display">最高分: <span id="highscore">0</span></div>
+            <button id="home-btn" class="hidden">🏠 返回</button>
         </div>
         
         <div id="start-screen" class="overlay">
@@ -28,12 +29,15 @@
             <h1>💀 游戏结束</h1>
             <p class="final-score">最终分数: <span id="final-score">0</span></p>
             <p class="new-record hidden">🎉 新纪录！</p>
-            <button id="restart-btn">再来一次</button>
+            <div class="game-over-buttons">
+                <button id="restart-btn">再来一次</button>
+                <button id="game-over-home-btn">🏠 返回首页</button>
+            </div>
         </div>
         
         <canvas id="game-canvas"></canvas>
     </div>
     
-    <script type="module" src="js/main.js"></script>
+    <script src="js/game.js"></script>
 </body>
 </html>

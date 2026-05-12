@@ -37,8 +37,13 @@ body {
     right: 20px;
     display: flex;
     justify-content: space-between;
-    pointer-events: none;
+    align-items: center;
     z-index: 10;
+    pointer-events: none;
+}
+
+#game-ui > * {
+    pointer-events: auto;
 }
 
 #score-display,
@@ -51,6 +56,33 @@ body {
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     border: 2px solid #ffd700;
+}
+
+#home-btn {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 15px rgba(231, 76, 60, 0.4);
+    border: 2px solid #fff;
+}
+
+#home-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 5px 20px rgba(231, 76, 60, 0.6);
+}
+
+#home-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+#home-btn.hidden {
+    display: none;
 }
 
 .overlay {
@@ -137,6 +169,28 @@ button:hover {
 
 button:active {
     transform: translateY(0) scale(0.98);
+}
+
+.game-over-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.game-over-buttons button {
+    padding: 12px 35px;
+    font-size: 20px;
+}
+
+#game-over-home-btn {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    box-shadow: 0 5px 20px rgba(52, 152, 219, 0.4);
+}
+
+#game-over-home-btn:hover {
+    box-shadow: 0 8px 30px rgba(52, 152, 219, 0.6);
 }
 
 @media (max-width: 768px) {
