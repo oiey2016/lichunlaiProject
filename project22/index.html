@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专注力训练器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 专注力训练器</h1>
+            <p class="subtitle">提升注意力，锻炼大脑反应</p>
+        </header>
+
+        <section id="start-screen" class="screen active">
+            <div class="game-card">
+                <div class="game-icon">🧠</div>
+                <h2>舒尔特方格训练</h2>
+                <p class="game-description">
+                    按顺序点击数字，训练你的专注力和反应速度。<br>
+                    数字分布越乱，越能锻炼注意力！
+                </p>
+                <div class="difficulty-selector">
+                    <label>选择难度：</label>
+                    <div class="difficulty-buttons">
+                        <button class="diff-btn active" data-size="3">3×3 (简单)</button>
+                        <button class="diff-btn" data-size="4">4×4 (普通)</button>
+                        <button class="diff-btn" data-size="5">5×5 (困难)</button>
+                        <button class="diff-btn" data-size="6">6×6 (专家)</button>
+                    </div>
+                </div>
+                <button id="start-btn" class="primary-btn">开始训练</button>
+                <button id="rules-btn" class="secondary-btn">游戏规则</button>
+            </div>
+
+            <div class="stats-panel">
+                <h3>📊 训练记录</h3>
+                <div id="best-scores">
+                    <p class="no-record">暂无记录，开始你的第一次训练吧！</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="rules-screen" class="screen">
+            <div class="rules-card">
+                <h2>📖 游戏规则</h2>
+                <div class="rules-content">
+                    <div class="rule-item">
+                        <span class="rule-number">1</span>
+                        <p>选择难度后，点击"开始训练"按钮</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-number">2</span>
+                        <p>按照数字从小到大的顺序依次点击方格</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-number">3</span>
+                        <p>点击错误会有红色提示，需要重新点击正确数字</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-number">4</span>
+                        <p>完成所有数字点击后，显示所用时间和评级</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-number">5</span>
+                        <p>坚持每天训练，专注力会显著提升！</p>
+                    </div>
+                </div>
+                <div class="tips">
+                    <h4>💡 小技巧</h4>
+                    <ul>
+                        <li>眼睛盯住中心，用余光搜索周围数字</li>
+                        <li>保持呼吸平稳，不要急躁</li>
+                        <li>每天训练5-10分钟效果最佳</li>
+                    </ul>
+                </div>
+                <button id="back-to-start" class="secondary-btn">返回首页</button>
+            </div>
+        </section>
+
+        <section id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="game-info">
+                    <div class="info-item">
+                        <span class="info-label">⏱️ 时间</span>
+                        <span id="timer" class="info-value">0.00s</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">🎯 当前</span>
+                        <span id="current-number" class="info-value">1</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">✅ 进度</span>
+                        <span id="progress" class="info-value">0/0</span>
+                    </div>
+                </div>
+                <button id="quit-btn" class="icon-btn" title="退出游戏">🚪</button>
+            </div>
+
+            <div id="game-grid" class="game-grid"></div>
+
+            <div class="game-controls">
+                <button id="restart-btn" class="secondary-btn">🔄 重新开始</button>
+            </div>
+        </section>
+
+        <section id="result-screen" class="screen">
+            <div class="result-card">
+                <div id="result-icon" class="result-icon">🎉</div>
+                <h2>训练完成！</h2>
+                <div class="result-stats">
+                    <div class="result-item">
+                        <span class="result-label">用时</span>
+                        <span id="final-time" class="result-value">0.00s</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">难度</span>
+                        <span id="final-difficulty" class="result-value">4×4</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">评级</span>
+                        <span id="final-rating" class="result-value">S</span>
+                    </div>
+                </div>
+                <p id="result-message" class="result-message">太棒了！你的专注力非常出色！</p>
+                <div class="result-actions">
+                    <button id="play-again-btn" class="primary-btn">再来一次</button>
+                    <button id="home-btn" class="secondary-btn">返回首页</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
