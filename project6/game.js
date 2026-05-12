@@ -100,7 +100,7 @@ class Board {
             { type: 'WOLF', row: 6, col: 2 },
             { type: 'DOG', row: 7, col: 5 },
             { type: 'CAT', row: 7, col: 1 },
-            { type: 'MOUSE', row: 8, col: 2 }
+            { type: 'MOUSE', row: 6, col: 6 }
         ];
 
         const bluePositions = [
@@ -111,7 +111,7 @@ class Board {
             { type: 'WOLF', row: 2, col: 4 },
             { type: 'DOG', row: 1, col: 1 },
             { type: 'CAT', row: 1, col: 5 },
-            { type: 'MOUSE', row: 0, col: 4 }
+            { type: 'MOUSE', row: 2, col: 0 }
         ];
 
         redPositions.forEach(pos => {
