@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神庙逃亡 - 无尽跑酷</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="game-ui">
+            <div id="score-display">分数: <span id="score">0</span></div>
+            <div id="highscore-display">最高分: <span id="highscore">0</span></div>
+        </div>
+        
+        <div id="start-screen" class="overlay">
+            <h1>🏛️ 神庙逃亡</h1>
+            <p class="game-instructions">
+                ← → 或 A D: 左右切换跑道<br>
+                ↑ 或 W 或 空格: 跳跃<br>
+                ↓ 或 S: 滑行<br>
+                躲避障碍物，跑得越远分数越高！
+            </p>
+            <button id="start-btn">开始游戏</button>
+        </div>
+        
+        <div id="game-over-screen" class="overlay hidden">
+            <h1>💀 游戏结束</h1>
+            <p class="final-score">最终分数: <span id="final-score">0</span></p>
+            <p class="new-record hidden">🎉 新纪录！</p>
+            <button id="restart-btn">再来一次</button>
+        </div>
+        
+        <canvas id="game-canvas"></canvas>
+    </div>
+    
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
