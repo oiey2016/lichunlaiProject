@@ -482,12 +482,13 @@ class Game {
     gameOver() {
         this.state = GameState.GAME_OVER;
         
-        if (this.score > this.highScore) {
-            this.highScore = this.score;
+        const currentScore = Math.floor(this.score);
+        if (currentScore > this.highScore) {
+            this.highScore = currentScore;
             localStorage.setItem('highScore', this.highScore);
         }
 
-        document.getElementById('finalScore').textContent = Math.floor(this.score);
+        document.getElementById('finalScore').textContent = currentScore;
         document.getElementById('finalCoins').textContent = this.coinCount;
         document.getElementById('highScore').textContent = this.highScore;
         document.getElementById('gameOverScreen').classList.remove('hidden');
