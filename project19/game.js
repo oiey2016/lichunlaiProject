@@ -498,25 +498,6 @@ class Game {
     }
 
     drawBackground() {
-        ctx.save();
-        ctx.strokeStyle = 'rgba(135, 206, 250, 0.3)';
-        ctx.lineWidth = 1;
-        
-        for (let i = 0; i < canvas.width; i += 30) {
-            ctx.beginPath();
-            ctx.moveTo(i, 0);
-            ctx.lineTo(i, canvas.height);
-            ctx.stroke();
-        }
-        
-        for (let i = 0; i < canvas.height; i += 30) {
-            ctx.beginPath();
-            ctx.moveTo(0, i);
-            ctx.lineTo(canvas.width, i);
-            ctx.stroke();
-        }
-        
-        ctx.restore();
     }
 
     update() {

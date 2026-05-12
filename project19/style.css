@@ -32,24 +32,7 @@ body {
     position: relative;
 }
 
-.paper-bg::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 31px,
-            #ADD8E6 31px,
-            #ADD8E6 32px
-        );
-    pointer-events: none;
-    border-radius: 8px;
-}
+
 
 .game-title {
     text-align: center;
