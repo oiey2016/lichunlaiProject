@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斗兽棋 - Jungle Chess</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>🐾 斗兽棋</h1>
+            <div class="turn-indicator">
+                <span id="currentTurn">红方回合</span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="rules-panel">
+                <h2>📖 游戏规则</h2>
+                <div class="rules-content">
+                    <h3>棋子大小（从大到小）</h3>
+                    <div class="piece-rank">
+                        <span class="rank-item">🐘 象</span>
+                        <span class="rank-item">🦁 狮</span>
+                        <span class="rank-item">🐅 虎</span>
+                        <span class="rank-item">🐆 豹</span>
+                        <span class="rank-item">🐺 狼</span>
+                        <span class="rank-item">🐕 狗</span>
+                        <span class="rank-item">🐱 猫</span>
+                        <span class="rank-item">🐭 鼠</span>
+                    </div>
+                    
+                    <h3>特殊规则</h3>
+                    <ul>
+                        <li><strong>🐭 鼠</strong> 可以吃 <strong>🐘 象</strong></li>
+                        <li>在水中的鼠不能吃岸上的象</li>
+                        <li>岸上的鼠也不能吃水中的象</li>
+                        <li>只有 <strong>🦁 狮</strong> 和 <strong>🐅 虎</strong> 可以跳河</li>
+                        <li>跳河时可以吃掉河对面的敌方棋子</li>
+                        <li>河中有鼠时不能跳河</li>
+                    </ul>
+
+                    <h3>目标</h3>
+                    <p>将棋子走入对方的兽穴即可获胜！</p>
+                </div>
+            </div>
+
+            <div class="board-container">
+                <div id="board" class="board"></div>
+                <div class="game-controls">
+                    <button id="restartBtn" class="btn btn-primary">🔄 重新开始</button>
+                    <button id="rulesBtn" class="btn btn-secondary">ℹ️ 规则说明</button>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <h2>📊 游戏信息</h2>
+                <div class="info-content">
+                    <div class="player-info red">
+                        <h3>🔴 红方</h3>
+                        <div id="redPieces" class="pieces-list"></div>
+                    </div>
+                    <div class="player-info blue">
+                        <h3>🔵 蓝方</h3>
+                        <div id="bluePieces" class="pieces-list"></div>
+                    </div>
+                    <div class="move-history">
+                        <h3>📝 移动记录</h3>
+                        <div id="moveHistory" class="history-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="rulesModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>📖 完整游戏规则</h2>
+            <div class="modal-rules">
+                <h3>一、棋盘介绍</h3>
+                <p>斗兽棋棋盘为7×9格，双方各有一个兽穴和三个陷阱。中间有两条小河（各2×3格）。</p>
+
+                <h3>二、棋子种类</h3>
+                <p>双方各有8种棋子：象、狮、虎、豹、狼、狗、猫、鼠，各一只。</p>
+
+                <h3>三、吃子规则</h3>
+                <p>1. 大棋子可以吃小棋子或同级棋子</p>
+                <p>2. 鼠可以吃象（老鼠钻象鼻）</p>
+                <p>3. 进入对方陷阱的棋子，任何棋子都可以吃它</p>
+
+                <h3>四、移动规则</h3>
+                <p>1. 每次只能移动一格，横走竖走均可</p>
+                <p>2. 只有鼠可以进入水中</p>
+                <p>3. 狮和虎可以跳过河流（直跳）</p>
+                <p>4. 不能走入自己的兽穴</p>
+
+                <h3>五、胜负判定</h3>
+                <p>1. 将棋子走入对方兽穴者获胜</p>
+                <p>2. 吃掉对方所有棋子者获胜</p>
+                <p>3. 一方所有棋子被围困不能移动时判负</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="winModal" class="modal">
+        <div class="modal-content win-content">
+            <h2 id="winMessage">🎉 恭喜获胜！</h2>
+            <p id="winDetails"></p>
+            <button id="playAgainBtn" class="btn btn-primary">🔄 再来一局</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
