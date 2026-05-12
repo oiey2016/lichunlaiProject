@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蜡笔战斗机 - Crayon Fighter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="paper-bg">
+            <div class="game-title">
+                <span class="crayon-text">🖍️ 蜡笔战斗机 🖍️</span>
+            </div>
+            
+            <div class="game-info">
+                <div class="info-item">
+                    <span class="label">分数:</span>
+                    <span id="score" class="value">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">生命:</span>
+                    <span id="lives" class="value">❤️❤️❤️</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">等级:</span>
+                    <span id="level" class="value">1</span>
+                </div>
+            </div>
+            
+            <canvas id="gameCanvas" width="600" height="700"></canvas>
+            
+            <div class="controls">
+                <button id="startBtn" class="crayon-btn">🎮 开始游戏</button>
+                <button id="pauseBtn" class="crayon-btn">⏸️ 暂停</button>
+                <button id="rulesBtn" class="crayon-btn">📖 游戏规则</button>
+            </div>
+            
+            <div class="key-hints">
+                <span class="hint">⬅️➡️⬆️⬇️ 移动</span>
+                <span class="hint">空格键 射击</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="rulesModal" class="modal">
+        <div class="modal-content paper-bg">
+            <h2 class="crayon-text">📖 游戏规则</h2>
+            <div class="rules-list">
+                <p>🎯 <strong>目标：</strong>驾驶蜡笔飞机，消灭敌人，获取高分！</p>
+                <p>🎮 <strong>操作：</strong></p>
+                <ul>
+                    <li>方向键 ⬆️⬇️⬅️➡️ - 控制飞机移动</li>
+                    <li>空格键 - 发射子弹</li>
+                    <li>P键 - 暂停/继续游戏</li>
+                </ul>
+                <p>❤️ <strong>生命：</strong>初始有3条生命，被敌机撞到会损失1条生命</p>
+                <p>⭐ <strong>得分：</strong></p>
+                <ul>
+                    <li>小敌机: +10分</li>
+                    <li>中敌机: +25分</li>
+                    <li>大敌机: +50分</li>
+                </ul>
+                <p>📈 <strong>升级：</strong>每1000分升一级，敌机速度会加快</p>
+                <p>💀 <strong>游戏结束：</strong>生命为0时游戏结束</p>
+            </div>
+            <button id="closeRulesBtn" class="crayon-btn">知道了！</button>
+        </div>
+    </div>
+    
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content paper-bg">
+            <h2 class="crayon-text">💥 游戏结束 💥</h2>
+            <div class="final-score">
+                <p>最终得分:</p>
+                <span id="finalScore">0</span>
+            </div>
+            <button id="restartBtn" class="crayon-btn">🔄 再来一局</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
