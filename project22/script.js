@@ -33,7 +33,8 @@ class FocusTrainer {
         document.getElementById('start-btn').addEventListener('click', () => this.startGame());
         document.getElementById('rules-btn').addEventListener('click', () => this.showScreen('rules'));
         document.getElementById('back-to-start').addEventListener('click', () => this.showScreen('start'));
-        document.getElementById('quit-btn').addEventListener('click', () => this.quitGame());
+        document.getElementById('home-btn-game').addEventListener('click', () => this.goHome());
+        document.getElementById('home-btn-game-bottom').addEventListener('click', () => this.goHome());
         document.getElementById('restart-btn').addEventListener('click', () => this.restartGame());
         document.getElementById('play-again-btn').addEventListener('click', () => this.startGame());
         document.getElementById('home-btn').addEventListener('click', () => this.showScreen('start'));
@@ -182,7 +183,7 @@ class FocusTrainer {
         this.startGame();
     }
 
-    quitGame() {
+    goHome() {
         this.gameActive = false;
         this.stopTimer();
         this.showScreen('start');

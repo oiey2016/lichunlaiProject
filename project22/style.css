@@ -400,11 +400,13 @@ header h1 {
 .game-controls {
     display: flex;
     justify-content: center;
+    gap: 15px;
 }
 
 .game-controls .secondary-btn {
     width: auto;
-    padding: 12px 30px;
+    padding: 12px 25px;
+    min-width: 120px;
 }
 
 .result-icon {
@@ -476,6 +478,14 @@ header h1 {
 
     .grid-cell {
         font-size: 1.1rem;
+    }
+
+    .game-controls {
+        flex-direction: column;
+    }
+
+    .game-controls .secondary-btn {
+        width: 100%;
     }
 
     .result-actions {
