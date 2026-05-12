@@ -83,11 +83,17 @@ class Game {
     pause() {
         this.gameState = 'paused';
         document.getElementById('pause-screen').classList.add('active');
+        if (typeof audioSystem !== 'undefined') {
+            audioSystem.stopBackgroundMusic();
+        }
     }
     
     resume() {
         this.gameState = 'playing';
         this.hideAllScreens();
+        if (typeof audioSystem !== 'undefined') {
+            audioSystem.startBackgroundMusic();
+        }
         this.gameLoop();
     }
     

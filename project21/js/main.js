@@ -76,10 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     document.getElementById('resume-btn').addEventListener('click', () => {
+        audioSystem.startBackgroundMusic();
         game.resume();
     });
     
     document.getElementById('quit-btn').addEventListener('click', () => {
+        audioSystem.stopBackgroundMusic();
         game.hideAllScreens();
         document.getElementById('start-screen').classList.add('active');
         game.gameState = 'start';
