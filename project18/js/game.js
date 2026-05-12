@@ -19,16 +19,37 @@ class Game {
         
         this.lastSpawnTime = 0;
         this.spawnInterval = GameConfig.enemySpawnRate;
+        this.isPaused = false;
         
         this.setupUI();
+        this.setupPauseControls();
     }
     
     setupUI() {
         const startBtn = document.getElementById('startBtn');
         const restartBtn = document.getElementById('restartBtn');
+        const resumeBtn = document.getElementById('resumeBtn');
         
         startBtn.addEventListener('click', () => this.start());
         restartBtn.addEventListener('click', () => this.restart());
+        resumeBtn.addEventListener('click', () => this.togglePause());
+    }
+    
+    setupPauseControls() {
+        window.addEventListener('keydown', (e) => {
+            if (!this.isRunning && !this.isGameOver) return;
+            
+            if (e.key === 'Escape' || e.key.toLowerCase() === 'p') {
+                this.togglePause();
+            }
+        });
+    }
+    
+    togglePause() {
+        if (this.isGameOver) return;
+        
+        this.isPaused = !this.isPaused;
+        document.getElementById('pauseScreen').style.display = this.isPaused ? 'flex' : 'none';
     }
     
     start() {
@@ -43,10 +64,12 @@ class Game {
         this.enemiesKilled = 0;
         this.isRunning = true;
         this.isGameOver = false;
+        this.isPaused = false;
         
         document.getElementById('startScreen').style.display = 'none';
         document.getElementById('gameUI').style.display = 'flex';
         document.getElementById('gameOver').style.display = 'none';
+        document.getElementById('pauseScreen').style.display = 'none';
         
         this.updateUI();
         this.gameLoop();
@@ -113,7 +136,7 @@ class Game {
     }
     
     update() {
-        if (!this.isRunning) return;
+        if (!this.isRunning || this.isPaused) return;
         
         this.player.update();
         

@@ -16,6 +16,7 @@
                 <p>🎮 WASD / 方向键 - 移动</p>
                 <p>🔫 鼠标左键 / J键 - 射击（弓箭）</p>
                 <p>⚔️ 鼠标右键 / K键 - 近战攻击（剑）</p>
+                <p>⏸️ ESC / P键 - 暂停游戏（查看规则）</p>
                 <p>❤️ 消灭敌人，保护自己！</p>
             </div>
             <button class="start-btn" id="startBtn">开始游戏</button>
@@ -39,6 +40,25 @@
         </div>
         
         <canvas id="gameCanvas"></canvas>
+        
+        <div class="pause-screen" id="pauseScreen" style="display: none;">
+            <h2>⏸️ 游戏暂停</h2>
+            <div class="rules-panel">
+                <h3>📜 游戏规则</h3>
+                <div class="rules-content">
+                    <p><strong>🎯 目标：</strong>消灭敌人，存活尽可能久，获得高分！</p>
+                    <p><strong>🎮 移动：</strong>使用 WASD 或 方向键 控制角色移动</p>
+                    <p><strong>🏹 射击：</strong>鼠标左键 或 J键 发射弓箭</p>
+                    <p><strong>⚔️ 近战：</strong>鼠标右键 或 K键 挥舞剑进行近战攻击</p>
+                    <p><strong>⏸️ 暂停：</strong>按 ESC 或 P键 暂停/继续游戏</p>
+                    <p><strong>👾 敌人：</strong>红色敌人会追踪你，接触造成伤害</p>
+                    <p><strong>💀 BOSS：</strong>每5波出现更大更强的BOSS，击杀获得100分</p>
+                    <p><strong>🌊 波次：</strong>每波敌人数量增加，刷新速度加快</p>
+                    <p><strong>❤️ 提示：</strong>利用远程射击消耗敌人，近战对付近身敌人！</p>
+                </div>
+            </div>
+            <button class="resume-btn" id="resumeBtn">继续游戏</button>
+        </div>
         
         <div class="game-over" id="gameOver" style="display: none;">
             <h2>💀 游戏结束 💀</h2>
