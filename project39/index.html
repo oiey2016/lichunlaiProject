@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>别踩白块儿</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>别踩白块儿</h1>
+            <div class="score-board">
+                <span>分数: <span id="score">0</span></span>
+                <span>最高: <span id="high-score">0</span></span>
+            </div>
+        </header>
+
+        <div class="game-wrapper">
+            <div id="game-board" class="game-board">
+                <div class="start-screen" id="start-screen">
+                    <h2>游戏规则</h2>
+                    <ul class="rules">
+                        <li>🎯 点击黑色方块</li>
+                        <li>❌ 别踩白色方块</li>
+                        <li>⏰ 不要让黑块落到底部</li>
+                        <li>🚀 速度会越来越快</li>
+                    </ul>
+                    <button id="start-btn" class="btn start-btn">开始游戏</button>
+                </div>
+                
+                <div class="game-over-screen hidden" id="game-over-screen">
+                    <h2>游戏结束</h2>
+                    <p>你的分数: <span id="final-score">0</span></p>
+                    <p id="new-record" class="new-record hidden">🎉 新纪录！</p>
+                    <button id="restart-btn" class="btn restart-btn">再来一次</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="pause-btn" class="btn pause-btn" disabled>暂停</button>
+            <button id="restart-game-btn" class="btn game-control-btn hidden">重新开始</button>
+            <button id="home-btn" class="btn game-control-btn hidden">返回首页</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
