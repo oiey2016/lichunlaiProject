@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>密室逃脱 - 幽暗庄园</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="start-screen" class="screen active">
+            <div class="start-content">
+                <h1 class="game-title">幽暗庄园</h1>
+                <p class="subtitle">一场神秘的解谜之旅</p>
+                <div class="story-intro">
+                    <p>你在一个陌生的庄园中醒来，四周弥漫着古老而神秘的气息...</p>
+                    <p>门上的锁锈迹斑斑，唯一的线索散落在这间屋子里的各个角落。</p>
+                    <p>你能找到出去的路吗？</p>
+                </div>
+                <button id="start-btn" class="btn-primary">开始冒险</button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="timer">
+                    <span class="timer-icon">⏱</span>
+                    <span id="time-display">00:00</span>
+                </div>
+                <div class="hint-btn" id="hint-btn">
+                    <span>💡 提示</span>
+                    <span class="hint-count" id="hint-count">(3)</span>
+                </div>
+            </div>
+
+            <div class="scene-container" id="scene-container">
+                <div class="scene" id="scene-main">
+                    <div class="scene-background"></div>
+                    
+                    <div class="interactive-object door" id="door" data-item="door">
+                        <div class="object-label">大门</div>
+                    </div>
+                    
+                    <div class="interactive-object desk" id="desk" data-item="desk">
+                        <div class="object-label">书桌</div>
+                    </div>
+                    
+                    <div class="interactive-object bookshelf" id="bookshelf" data-item="bookshelf">
+                        <div class="object-label">书架</div>
+                    </div>
+                    
+                    <div class="interactive-object painting" id="painting" data-item="painting">
+                        <div class="object-label">油画</div>
+                    </div>
+                    
+                    <div class="interactive-object cabinet" id="cabinet" data-item="cabinet">
+                        <div class="object-label">柜子</div>
+                    </div>
+                    
+                    <div class="interactive-object carpet" id="carpet" data-item="carpet">
+                        <div class="object-label">地毯</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inventory-panel">
+                <div class="inventory-title">物品栏</div>
+                <div class="inventory-slots" id="inventory-slots"></div>
+            </div>
+
+            <div class="dialog-box" id="dialog-box">
+                <div class="dialog-content" id="dialog-content"></div>
+                <button class="dialog-close" id="dialog-close">×</button>
+            </div>
+
+            <div class="modal" id="modal">
+                <div class="modal-content">
+                    <div class="modal-title" id="modal-title"></div>
+                    <div class="modal-body" id="modal-body"></div>
+                    <div class="modal-actions" id="modal-actions"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="end-screen" class="screen">
+            <div class="end-content">
+                <h1 class="end-title" id="end-title"></h1>
+                <p class="end-message" id="end-message"></p>
+                <div class="end-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">用时:</span>
+                        <span class="stat-value" id="final-time">00:00</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">使用提示:</span>
+                        <span class="stat-value" id="hints-used">0</span>
+                    </div>
+                </div>
+                <button id="restart-btn" class="btn-primary">再玩一次</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
