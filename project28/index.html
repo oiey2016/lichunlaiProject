@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幸福家园 - 社区经营模拟游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <div class="player-info">
+                <div class="player-avatar">👨‍🌾</div>
+                <div class="player-details">
+                    <h2 id="player-name">农场主</h2>
+                    <div class="level-bar">
+                        <span>等级 <span id="player-level">1</span></span>
+                        <div class="exp-bar">
+                            <div class="exp-fill" id="exp-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="resources">
+                <div class="resource-item">
+                    <span class="resource-icon">💰</span>
+                    <span id="gold">1000</span>
+                </div>
+                <div class="resource-item">
+                    <span class="resource-icon">💎</span>
+                    <span id="diamond">10</span>
+                </div>
+                <div class="resource-item">
+                    <span class="resource-icon">📦</span>
+                    <span id="crop-count">0</span>
+                </div>
+            </div>
+            <button class="rules-btn" id="rules-btn">📖 游戏规则</button>
+        </header>
+
+        <main class="game-main">
+            <aside class="sidebar">
+                <nav class="menu">
+                    <button class="menu-btn active" data-tab="farm">🌾 农场</button>
+                    <button class="menu-btn" data-tab="build">🏠 建造</button>
+                    <button class="menu-btn" data-tab="shop">🛒 商店</button>
+                    <button class="menu-btn" data-tab="community">👥 社区</button>
+                </nav>
+            </aside>
+
+            <section class="game-area">
+                <div class="tab-content active" id="farm-tab">
+                    <div class="farm-grid" id="farm-grid"></div>
+                </div>
+
+                <div class="tab-content" id="build-tab">
+                    <h3>建筑商店</h3>
+                    <div class="build-list" id="build-list"></div>
+                </div>
+
+                <div class="tab-content" id="shop-tab">
+                    <h3>种子商店</h3>
+                    <div class="shop-list" id="shop-list"></div>
+                </div>
+
+                <div class="tab-content" id="community-tab">
+                    <h3>社区中心</h3>
+                    <div class="community-content">
+                        <div class="neighbors">
+                            <h4>邻居列表</h4>
+                            <div class="neighbor-list" id="neighbor-list"></div>
+                        </div>
+                        <div class="achievements">
+                            <h4>成就系统</h4>
+                            <div class="achievement-list" id="achievement-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div class="modal" id="plant-modal">
+            <div class="modal-content">
+                <h3>选择种子</h3>
+                <div class="seed-options" id="seed-options"></div>
+                <button class="close-modal" id="close-modal">关闭</button>
+            </div>
+        </div>
+
+        <div class="modal" id="rules-modal">
+            <div class="modal-content">
+                <h3>📖 游戏规则</h3>
+                <div class="rules-content">
+                    <h4>🌾 种植系统</h4>
+                    <ul>
+                        <li>点击农场空地选择种子进行种植</li>
+                        <li>不同作物有不同的生长时间和收益</li>
+                        <li>作物成熟后会发光，点击即可收获</li>
+                        <li>收获可获得金币和经验值</li>
+                    </ul>
+                    <h4>🏠 建造系统</h4>
+                    <ul>
+                        <li>建造建筑可以产生自动收入</li>
+                        <li>不同建筑收入不同，价格也不同</li>
+                        <li>建筑收入会自动添加到您的金币中</li>
+                    </ul>
+                    <h4>📈 成长系统</h4>
+                    <ul>
+                        <li>收获作物获得经验值</li>
+                        <li>经验值达到一定数量即可升级</li>
+                        <li>升级可获得钻石奖励</li>
+                    </ul>
+                    <h4>🏆 成就系统</h4>
+                    <ul>
+                        <li>完成特定目标可解锁成就</li>
+                        <li>成就包括：初出茅庐、小有积蓄等</li>
+                    </ul>
+                </div>
+                <button class="close-modal" id="close-rules-modal">关闭</button>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
