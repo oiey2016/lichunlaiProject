@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脑力训练 - 脑筋急转弯</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 脑力训练</h1>
+            <p class="subtitle">跳出框框，挑战你的思维极限！</p>
+        </header>
+
+        <div class="game-stats">
+            <div class="stat">
+                <span class="stat-label">得分</span>
+                <span class="stat-value" id="score">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">关卡</span>
+                <span class="stat-value" id="level">1</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">剩余提示</span>
+                <span class="stat-value" id="hints">3</span>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div class="question-card" id="questionCard">
+                <div class="question-type" id="questionType">脑筋急转弯</div>
+                <h2 class="question-text" id="questionText">点击开始游戏</h2>
+                <div class="hint-area" id="hintArea" style="display: none;">
+                    <div class="hint-label">💡 提示：</div>
+                    <div class="hint-text" id="hintText"></div>
+                </div>
+            </div>
+
+            <div class="answer-area">
+                <input type="text" id="answerInput" placeholder="输入你的答案..." autocomplete="off">
+                <button class="btn btn-primary" id="submitBtn">提交答案</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="hintBtn">使用提示</button>
+                <button class="btn btn-secondary" id="skipBtn">跳过此题</button>
+            </div>
+
+            <div class="feedback" id="feedback"></div>
+
+            <div class="game-control-buttons">
+                <button class="btn btn-restart" id="restartGameBtn">重新游戏</button>
+                <button class="btn btn-home" id="goHomeBtn">返回首页</button>
+            </div>
+        </div>
+
+        <div class="start-screen" id="startScreen">
+            <div class="rules-card">
+                <h2>📜 游戏规则</h2>
+                <ul>
+                    <li>每道题都需要你跳出常规思维来解答</li>
+                    <li>答对一题得10分，连续答对有额外奖励</li>
+                    <li>每题有1次提示机会，使用提示答对得5分</li>
+                    <li>跳过题目不得分，但会显示正确答案</li>
+                    <li>挑战你的最高分！</li>
+                </ul>
+                <button class="btn btn-primary btn-large" id="startBtn">开始游戏</button>
+            </div>
+        </div>
+
+        <div class="result-screen" id="resultScreen" style="display: none;">
+            <div class="result-card">
+                <h2>🎉 恭喜完成！</h2>
+                <div class="final-score">
+                    <span>最终得分：</span>
+                    <span id="finalScore">0</span>
+                </div>
+                <p id="resultMessage"></p>
+                <button class="btn btn-primary btn-large" id="restartBtn">再来一局</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
