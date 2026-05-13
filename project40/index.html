@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飞扑之王</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-title">
+            <h1>🐦 飞扑之王</h1>
+            <p class="subtitle">点击屏幕让小鸟飞翔！</p>
+        </div>
+
+        <div id="gameCanvas" class="game-canvas">
+            <div id="bird" class="bird"></div>
+            <div id="pipesContainer" class="pipes-container"></div>
+            <div id="ground" class="ground"></div>
+
+            <div id="startScreen" class="overlay start-screen">
+                <div class="overlay-content">
+                    <div class="bird-icon">🐦</div>
+                    <h2>准备好了吗？</h2>
+                    <p>点击屏幕或按空格键开始</p>
+                    <button id="startBtn" class="btn btn-primary">开始游戏</button>
+                </div>
+            </div>
+
+            <div id="gameOverScreen" class="overlay game-over-screen hidden">
+                <div class="overlay-content">
+                    <div class="game-over-icon">�</div>
+                    <h2>游戏结束！</h2>
+                    <div class="final-score">
+                        <p>本次得分</p>
+                        <span id="finalScore">0</span>
+                    </div>
+                    <button id="restartBtn" class="btn btn-primary">再来一次</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-ui">
+            <div class="score-board">
+                <div class="score-item">
+                    <span class="label">当前分数</span>
+                    <span id="currentScore" class="score">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="label">最高分数</span>
+                    <span id="bestScore" class="score">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <p>💡 操作提示：点击屏幕或按 <kbd>空格键</kbd> 让小鸟向上飞</p>
+            <p>🎯 目标：穿过管道缝隙，不要撞到任何东西！</p>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
