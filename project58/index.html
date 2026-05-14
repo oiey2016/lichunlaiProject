@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>塔楼平衡</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="top-panel">
+            <div class="score">分数: <span id="score">0</span></div>
+            <button id="top-restart-btn" class="restart-btn">🔄 重新开始</button>
+            <div class="best-score">最高分: <span id="best-score">0</span></div>
+        </div>
+        
+        <canvas id="game-canvas"></canvas>
+        
+        <div class="instructions">
+            <p>点击屏幕放置积木</p>
+            <p>保持塔楼平衡！</p>
+        </div>
+        
+        <div id="game-over" class="game-over hidden">
+            <h2>游戏结束!</h2>
+            <p>最终分数: <span id="final-score">0</span></p>
+            <button id="restart-btn">重新开始</button>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

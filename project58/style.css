@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.game-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    max-height: 800px;
+    background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 50%, #90EE90 100%);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.top-panel {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    z-index: 10;
+    gap: 10px;
+}
+
+.score, .best-score {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+}
+
+.restart-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    white-space: nowrap;
+}
+
+.restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.restart-btn:active {
+    transform: translateY(0);
+}
+
+.score span, .best-score span {
+    color: #667eea;
+    font-size: 18px;
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.instructions {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #333;
+    font-size: 14px;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.instructions p {
+    margin: 5px 0;
+}
+
+.game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.game-over h2 {
+    color: #e74c3c;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.game-over p {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.game-over p span {
+    color: #667eea;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+#restart-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+#restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+#restart-btn:active {
+    transform: translateY(0);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: float 20s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(30px);
+    }
+}
