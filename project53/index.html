@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐玻璃杯 - Happy Glass</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="ui-overlay">
+            <div class="level-info">
+                <span class="level-label">关卡</span>
+                <span id="level-number">1</span>
+            </div>
+            <div class="water-info">
+                <span class="water-label">水量</span>
+                <span id="water-percentage">0%</span>
+            </div>
+            <div class="button-group">
+                <button id="rules-btn" class="btn-rules">📖 规则</button>
+                <button id="restart-btn" class="btn-restart">🔄 重来</button>
+            </div>
+        </div>
+        
+        <div id="game-message" class="game-message hidden">
+            <div class="message-content">
+                <h2 id="message-title">太棒了！</h2>
+                <p id="message-text">杯子装满了！</p>
+                <button id="next-level-btn" class="btn-next">下一关</button>
+            </div>
+        </div>
+        
+        <div id="rules-modal" class="game-message hidden">
+            <div class="rules-content">
+                <h2>🎮 游戏规则</h2>
+                <div class="rules-list">
+                    <div class="rule-item">
+                        <span class="rule-icon">✏️</span>
+                        <p><strong>画线引导</strong>：按住鼠标左键或手指在屏幕上画线，引导水流方向</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">🥤</span>
+                        <p><strong>装满杯子</strong>：让水流入杯子，当装水量达到 <strong>80%</strong> 以上即可过关</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">💧</span>
+                        <p><strong>墨水有限</strong>：注意屏幕底部的墨水剩余量，合理规划路线</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">🧩</span>
+                        <p><strong>利用障碍物</strong>：巧妙利用平台和障碍物反弹水流</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">🔄</span>
+                        <p><strong>重新开始</strong>：点击"重来"按钮可以重新挑战当前关卡</p>
+                    </div>
+                </div>
+                <button id="close-rules-btn" class="btn-close">知道了！</button>
+            </div>
+        </div>
+        
+        <canvas id="game-canvas"></canvas>
+    </div>
+    
+    <script src="js/config.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/line.js"></script>
+    <script src="js/glass.js"></script>
+    <script src="js/water.js"></script>
+    <script src="js/level.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
