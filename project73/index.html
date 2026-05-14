@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>暗影跑酷 - Shadow Runner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            color: #fff;
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #gameCanvas {
+            display: block;
+            background: linear-gradient(180deg, #0d1117 0%, #161b22 50%, #21262d 100%);
+        }
+
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        #score {
+            font-size: 24px;
+            color: #58a6ff;
+            text-shadow: 0 0 10px #58a6ff;
+        }
+
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #8b949e;
+            font-size: 14px;
+        }
+
+        #gameUI {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .ui-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+            border: 1px solid #484f58;
+            color: #8b949e;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+            clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+        }
+
+        .ui-btn:hover {
+            background: linear-gradient(135deg, #30363d 0%, #484f58 100%);
+            color: #f0883e;
+            border-color: #f0883e;
+        }
+
+        #modalOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 300;
+        }
+
+        #rulesModal {
+            background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+            border: 2px solid #f0883e;
+            padding: 40px;
+            max-width: 500px;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        }
+
+        #rulesModal h2 {
+            color: #f0883e;
+            font-size: 28px;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 0 0 15px #f0883e;
+        }
+
+        .rule-item {
+            color: #c9d1d9;
+            margin: 15px 0;
+            line-height: 1.8;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .rule-item::before {
+            content: '▸';
+            color: #58a6ff;
+            position: absolute;
+            left: 0;
+        }
+
+        .rule-key {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 3px;
+            color: #58a6ff;
+            margin: 0 3px;
+            font-size: 12px;
+        }
+
+        #closeModal {
+            margin-top: 30px;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #f0883e 0%, #d29922 100%);
+            border: none;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        #closeModal:hover {
+            box-shadow: 0 0 20px #f0883e;
+        }
+
+        #startScreen, #gameOverScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(13, 17, 23, 0.95);
+            z-index: 200;
+        }
+
+        #gameOverScreen {
+            display: none;
+        }
+
+        h1 {
+            font-size: 64px;
+            color: #f0883e;
+            text-shadow: 0 0 30px #f0883e, 0 0 60px #f0883e;
+            margin-bottom: 20px;
+            letter-spacing: 8px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #8b949e;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 15px 50px;
+            font-size: 20px;
+            background: linear-gradient(135deg, #f0883e 0%, #d29922 100%);
+            border: none;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px #f0883e;
+        }
+
+        .control-hint {
+            margin-top: 40px;
+            text-align: center;
+            line-height: 2;
+        }
+
+        .key {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 4px;
+            margin: 0 5px;
+            color: #58a6ff;
+        }
+
+        #finalScore {
+            font-size: 36px;
+            color: #58a6ff;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="ui">
+            <div id="score">分数: 0</div>
+        </div>
+
+        <div id="gameUI" style="display: none;">
+            <button class="ui-btn" id="homeBtn">返回首页</button>
+            <button class="ui-btn" id="pauseBtn">暂停</button>
+            <button class="ui-btn" id="restartBtn2">重新开始</button>
+            <button class="ui-btn" id="rulesBtn">游戏规则</button>
+        </div>
+
+        <div id="modalOverlay">
+            <div id="rulesModal">
+                <h2>游戏规则</h2>
+                <div class="rule-item">
+                    使用 <span class="rule-key">W</span> 或 <span class="rule-key">↑</span> 进行跳跃，空中可进行二段跳
+                </div>
+                <div class="rule-item">
+                    使用 <span class="rule-key">S</span> 或 <span class="rule-key">↓</span> 进行翻滚滑铲，可穿过高空障碍
+                </div>
+                <div class="rule-item">
+                    使用 <span class="rule-key">D</span> 或 <span class="rule-key">→</span> 进行攀爬，可穿过墙壁障碍
+                </div>
+                <div class="rule-item">
+                    躲避所有障碍物，生存越久分数越高
+                </div>
+                <div class="rule-item">
+                    随着游戏进行，速度会逐渐加快，难度递增
+                </div>
+                <button id="closeModal">我知道了</button>
+            </div>
+        </div>
+
+        <div id="controls">
+            <span class="key">W/↑</span> 跳跃 | 
+            <span class="key">S/↓</span> 翻滚/滑铲 | 
+            <span class="key">D/→</span> 攀爬
+        </div>
+
+        <div id="startScreen">
+            <h1>暗影跑酷</h1>
+            <p class="subtitle">SHADOW RUNNER</p>
+            <button class="btn" id="startBtn">开始游戏</button>
+            <div class="control-hint">
+                <p><span class="key">W</span> 或 <span class="key">↑</span> - 跳跃 / 二段跳</p>
+                <p><span class="key">S</span> 或 <span class="key">↓</span> - 翻滚 / 滑铲</p>
+                <p><span class="key">D</span> 或 <span class="key">→</span> - 贴墙攀爬</p>
+            </div>
+        </div>
+
+        <div id="gameOverScreen">
+            <h1>游戏结束</h1>
+            <p id="finalScore">分数: 0</p>
+            <button class="btn" id="restartBtn">重新开始</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
