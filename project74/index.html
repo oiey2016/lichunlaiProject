@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宝石迷阵 - Match 3 Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1 class="game-title">💎 宝石迷阵</h1>
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-label">分数</span>
+                    <span class="stat-value" id="score">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">关卡</span>
+                    <span class="stat-value" id="level">1</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">步数</span>
+                    <span class="stat-value" id="moves">30</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">目标</span>
+                    <span class="stat-value" id="target">1000</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="game-board-container">
+            <div class="game-board" id="gameBoard"></div>
+            <div class="combo-display" id="comboDisplay"></div>
+        </div>
+
+        <div class="game-controls">
+            <button class="btn btn-primary" id="hintBtn">💡 提示</button>
+            <button class="btn btn-secondary" id="shuffleBtn">🔀 重排</button>
+            <button class="btn btn-info" id="rulesBtn">📖 规则</button>
+            <button class="btn btn-danger" id="restartBtn">🔄 重新开始</button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="gameOverModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">游戏结束</h2>
+            <p id="modalMessage">恭喜你完成了这一关！</p>
+            <p class="final-score">最终分数: <span id="finalScore">0</span></p>
+            <button class="btn btn-primary" id="modalBtn">继续</button>
+        </div>
+    </div>
+
+    <div class="modal" id="rulesModal">
+        <div class="modal-content rules-content">
+            <h2>📖 游戏规则</h2>
+            <div class="rules-section">
+                <h3>🎯 基本玩法</h3>
+                <ul>
+                    <li>点击选中一个宝石，再点击相邻宝石进行交换</li>
+                    <li>横向或纵向 <strong>3个及以上</strong> 相同宝石连成一线即可消除</li>
+                    <li>在限定步数内达到目标分数即可过关</li>
+                </ul>
+            </div>
+            <div class="rules-section">
+                <h3>💰 得分规则</h3>
+                <ul>
+                    <li>每个消除的宝石基础得分：<strong class="score-highlight">10分</strong></li>
+                    <li>一次性消除3个宝石：3 × 10 = <strong class="score-highlight">30分</strong></li>
+                    <li>一次性消除4个宝石：4 × 10 = <strong class="score-highlight">40分</strong></li>
+                    <li>一次性消除5个及以上宝石：5 × 10 = <strong class="score-highlight">50分+</strong></li>
+                </ul>
+            </div>
+            <div class="rules-section">
+                <h3>🔥 连击奖励</h3>
+                <ul>
+                    <li>连续消除会触发连击效果</li>
+                    <li><strong>2x连击</strong>：总得分 × 2倍</li>
+                    <li><strong>3x连击</strong>：总得分 × 3倍</li>
+                    <li><strong>4x连击</strong>：总得分 × 4倍</li>
+                    <li>以此类推，连击倍数越高，得分越丰厚！</li>
+                </ul>
+            </div>
+            <div class="rules-section">
+                <h3>💡 小技巧</h3>
+                <ul>
+                    <li>使用提示按钮可以找到可消除的宝石</li>
+                    <li>没有可消除的组合时，棋盘会自动重排</li>
+                    <li>尽量制造连击来获得高分！</li>
+                </ul>
+            </div>
+            <button class="btn btn-primary" id="closeRulesBtn">知道了</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
