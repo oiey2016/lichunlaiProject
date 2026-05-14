@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水排序谜题</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💧 水排序谜题</h1>
+            <div class="stats">
+                <span class="moves">步数: 0</span>
+                <span class="level">关卡: 1</span>
+            </div>
+        </header>
+
+        <div class="game-area">
+            <div class="tubes-container" id="tubesContainer"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="undoBtn">↩️ 撤销</button>
+            <button class="btn" id="resetBtn">🔄 重置</button>
+            <button class="btn" id="newGameBtn">🎮 新游戏</button>
+            <button class="btn" id="hintBtn">💡 提示</button>
+        </div>
+
+        <div class="rules">
+            <h3>🎯 游戏玩法</h3>
+            <div class="rule-item">
+                <strong>操作方法：</strong>
+                <p>1️⃣ 先点击装有不同颜色水的试管，该试管会向上抬起表示选中</p>
+                <p>2️⃣ 再点击目标试管，即可将源试管最上层的水倒入目标试管</p>
+            </div>
+            <div class="rule-item">
+                <strong>💡 倒水规则：</strong>
+                <p>• 目标试管为空时可以倒入</p>
+                <p>• 目标试管最上层的颜色与源试管最上层颜色相同时可以倒入</p>
+                <p>• 每个试管最多装4层水，满了就无法再倒入</p>
+            </div>
+            <div class="rule-item">
+                <strong>🏆 胜利条件：</strong>
+                <p>将所有相同颜色的水归类到同一个试管，每个试管只有一种颜色！</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="win-modal" id="winModal">
+        <div class="modal-content">
+            <h2>🎉 恭喜过关！</h2>
+            <p>你用了 <span id="finalMoves">0</span> 步完成了本关</p>
+            <button class="btn" id="nextLevelBtn">下一关</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
