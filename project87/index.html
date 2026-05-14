@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>球球大作战 - 竞技版</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="startScreen" class="overlay">
+            <div class="menu">
+                <h1>🎮 球球大作战</h1>
+                <p class="subtitle">吃掉小球，躲避大球</p>
+                <div class="rules">
+                    <h3>📖 游戏规则</h3>
+                    <ul>
+                        <li>🖱️ 移动鼠标控制球球方向</li>
+                        <li>🍀 吃掉绿色食物增加体积</li>
+                        <li>🐟 吃掉比你小的敌人</li>
+                        <li>⚠️ 躲避比你大的敌人</li>
+                        <li>🏆 体积越大，排名越高</li>
+                    </ul>
+                </div>
+                <button id="startBtn" class="btn">开始游戏</button>
+            </div>
+        </div>
+        
+        <div id="gameOverScreen" class="overlay hidden">
+            <div class="menu">
+                <h1>💀 游戏结束</h1>
+                <div class="stats">
+                    <p>最终体积: <span id="finalMass">0</span></p>
+                    <p>排名: <span id="finalRank">#1</span></p>
+                    <p>击杀数: <span id="finalKills">0</span></p>
+                </div>
+                <button id="restartBtn" class="btn">再来一局</button>
+            </div>
+        </div>
+        
+        <div id="hud" class="hud hidden">
+            <div class="hud-item">
+                <span class="label">体积</span>
+                <span id="massDisplay" class="value">10</span>
+            </div>
+            <div class="hud-item">
+                <span class="label">排名</span>
+                <span id="rankDisplay" class="value">#1</span>
+            </div>
+            <div class="hud-item">
+                <span class="label">击杀</span>
+                <span id="killsDisplay" class="value">0</span>
+            </div>
+        </div>
+        
+        <div id="leaderboard" class="leaderboard hidden">
+            <h3>🏆 排行榜</h3>
+            <ol id="leaderboardList"></ol>
+        </div>
+        
+        <div id="minimap" class="minimap hidden">
+            <canvas id="minimapCanvas"></canvas>
+        </div>
+        
+        <div id="gameButtons" class="game-buttons hidden">
+            <button id="restartGameBtn" class="btn-small">🔄 重新开始</button>
+            <button id="homeBtn" class="btn-small">🏠 返回首页</button>
+        </div>
+    </div>
+    
+    <script src="js/Vector.js"></script>
+    <script src="js/Food.js"></script>
+    <script src="js/Cell.js"></script>
+    <script src="js/Player.js"></script>
+    <script src="js/AI.js"></script>
+    <script src="js/Camera.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
