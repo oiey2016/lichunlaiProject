@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黄金矿工</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <div class="stat">
+                <span class="label">💰 金钱:</span>
+                <span id="money" class="value">0</span>
+            </div>
+            <div class="stat">
+                <span class="label">🎯 目标:</span>
+                <span id="target" class="value">650</span>
+            </div>
+            <div class="stat">
+                <span class="label">⏱️ 时间:</span>
+                <span id="time" class="value">60</span>
+            </div>
+            <div class="stat">
+                <span class="label">📍 关卡:</span>
+                <span id="level" class="value">1</span>
+            </div>
+        </div>
+        
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        
+        <div class="items-panel">
+            <div class="item-slot" id="dynamite" title="炸药 - 炸掉抓到的东西">
+                <span class="item-icon">💣</span>
+                <span class="item-count">0</span>
+            </div>
+            <div class="item-slot" id="lucky" title="幸运草 - 增加稀有物品价值">
+                <span class="item-icon">🍀</span>
+                <span class="item-count">0</span>
+            </div>
+            <div class="item-slot" id="strength" title="力量药水 - 加快拉回速度">
+                <span class="item-icon">💪</span>
+                <span class="item-count">0</span>
+            </div>
+            <div class="item-slot" id="diamond" title="钻石收藏 - 钻石价值翻倍">
+                <span class="item-icon">💎</span>
+                <span class="item-count">0</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="startScreen" class="overlay">
+        <div class="overlay-content">
+            <h1>🏆 黄金矿工 🏆</h1>
+            <p>按空格键或点击屏幕放钩子</p>
+            <p>收集金块和钻石达到目标金额!</p>
+            <button id="startBtn">开始游戏</button>
+        </div>
+    </div>
+    
+    <div id="shopScreen" class="overlay hidden">
+        <div class="overlay-content shop-content">
+            <h2>🛒 商店</h2>
+            <p>当前存款: <span id="shopMoney">0</span></p>
+            <div class="shop-items">
+                <div class="shop-item" data-item="dynamite">
+                    <span class="icon">💣</span>
+                    <span class="name">炸药</span>
+                    <span class="price">200</span>
+                    <button>购买</button>
+                </div>
+                <div class="shop-item" data-item="lucky">
+                    <span class="icon">🍀</span>
+                    <span class="name">幸运草</span>
+                    <span class="price">100</span>
+                    <button>购买</button>
+                </div>
+                <div class="shop-item" data-item="strength">
+                    <span class="icon">💪</span>
+                    <span class="name">力量药水</span>
+                    <span class="price">300</span>
+                    <button>购买</button>
+                </div>
+                <div class="shop-item" data-item="diamond">
+                    <span class="icon">💎</span>
+                    <span class="name">钻石收藏</span>
+                    <span class="price">500</span>
+                    <button>购买</button>
+                </div>
+            </div>
+            <button id="nextLevelBtn">下一关</button>
+        </div>
+    </div>
+    
+    <div id="gameOverScreen" class="overlay hidden">
+        <div class="overlay-content">
+            <h1 id="gameOverTitle">游戏结束</h1>
+            <p id="gameOverMessage"></p>
+            <p>最终得分: <span id="finalScore">0</span></p>
+            <button id="restartBtn">重新开始</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
