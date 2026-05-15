@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>剑意歌行 - 古风音乐节奏游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="start-screen" class="screen active">
+            <div class="ink-bg"></div>
+            <div class="start-content">
+                <h1 class="game-title">剑意歌行</h1>
+                <p class="game-subtitle">古风剑舞 · 乐韵江湖</p>
+                <div class="menu-buttons">
+                    <button id="start-btn" class="menu-btn">开始游戏</button>
+                    <button id="rules-btn" class="menu-btn">游戏规则</button>
+                </div>
+                <div class="decoration left"></div>
+                <div class="decoration right"></div>
+            </div>
+        </div>
+
+        <div id="rules-screen" class="screen">
+            <div class="rules-content">
+                <h2>游戏规则</h2>
+                <div class="rules-list">
+                    <div class="rule-item">
+                        <span class="rule-icon">⚔️</span>
+                        <div class="rule-text">
+                            <h3>攻击判定</h3>
+                            <p>当红色剑影接近判定圈时按下 <strong>J键</strong> 或 <strong>点击左侧</strong> 发动攻击</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">🛡️</span>
+                        <div class="rule-text">
+                            <h3>防御判定</h3>
+                            <p>当蓝色盾影接近判定圈时按下 <strong>K键</strong> 或 <strong>点击右侧</strong> 进行防御</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">⭐</span>
+                        <div class="rule-text">
+                            <h3>判定等级</h3>
+                            <p>完美(Perfect) → 优秀(Great) → 良好(Good) → 失误(Miss)</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">💯</span>
+                        <div class="rule-text">
+                            <h3>连击加分</h3>
+                            <p>连续命中可获得连击加成，连击越高分数越多</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="back-btn" class="menu-btn">返回</button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div class="game-bg"></div>
+            <div class="game-ui">
+                <div class="top-bar">
+                    <div class="score-display">
+                        <span class="label">分数</span>
+                        <span id="score" class="value">0</span>
+                    </div>
+                    <div class="combo-display">
+                        <span class="label">连击</span>
+                        <span id="combo" class="value">0</span>
+                    </div>
+                    <div class="top-buttons">
+                        <button id="restart-btn" class="top-btn">🔄</button>
+                        <button id="pause-btn" class="top-btn">⏸️</button>
+                    </div>
+                </div>
+                <div class="judge-line"></div>
+                <div id="notes-container" class="notes-container"></div>
+                <div class="controls-area">
+                    <div id="attack-zone" class="control-zone attack-zone">
+                        <span class="zone-label">攻击 [J]</span>
+                        <div class="zone-icon sword"></div>
+                    </div>
+                    <div id="defend-zone" class="control-zone defend-zone">
+                        <span class="zone-label">防御 [K]</span>
+                        <div class="zone-icon shield"></div>
+                    </div>
+                </div>
+                <div id="judge-text" class="judge-text"></div>
+            </div>
+        </div>
+
+        <div id="result-screen" class="screen">
+            <div class="result-content">
+                <h2>游戏结束</h2>
+                <div class="result-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">最终分数</span>
+                        <span id="final-score" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">最高连击</span>
+                        <span id="max-combo" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">完美判定</span>
+                        <span id="perfect-count" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">准确率</span>
+                        <span id="accuracy" class="stat-value">0%</span>
+                    </div>
+                </div>
+                <div class="result-buttons">
+                    <button id="retry-btn" class="menu-btn">再来一次</button>
+                    <button id="home-btn" class="menu-btn">返回主页</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="pause-screen" class="screen overlay">
+            <div class="pause-content">
+                <h2>游戏暂停</h2>
+                <div class="pause-buttons">
+                    <button id="resume-btn" class="menu-btn">继续游戏</button>
+                    <button id="quit-btn" class="menu-btn">退出游戏</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
