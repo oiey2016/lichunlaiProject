@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猫咪后院 - 喵星人收集游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>🐱 猫咪后院</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-icon">🐟</span>
+                    <span id="fish-count">100</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">📖</span>
+                    <span id="cat-count">0</span>
+                    <span>/20</span>
+                </div>
+            </div>
+            <div class="header-buttons">
+                <button id="rules-btn" class="btn">📜 规则</button>
+                <button id="album-btn" class="btn">📚 图鉴</button>
+                <button id="shop-btn" class="btn">🛒 商店</button>
+                <button id="reset-btn" class="btn btn-danger">🔄 重置</button>
+            </div>
+        </header>
+
+        <main class="yard" id="yard">
+            <div class="yard-bg">
+                <div class="grass"></div>
+                <div class="sunshine"></div>
+            </div>
+            <div id="items-container" class="items-container"></div>
+            <div id="cats-container" class="cats-container"></div>
+        </main>
+
+        <div class="bottom-panel">
+            <div class="inventory">
+                <h3>🎒 背包</h3>
+                <div id="inventory-list" class="inventory-list"></div>
+            </div>
+            <div class="food-slot">
+                <h3>🍽️ 食盆</h3>
+                <div id="food-slot" class="food-container">
+                    <div class="empty-slot">空</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="album-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📚 猫咪图鉴</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div id="album-grid" class="album-grid"></div>
+        </div>
+    </div>
+
+    <div id="shop-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 商店</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="shop-tabs">
+                <button class="tab-btn active" data-tab="food">🍖 食物</button>
+                <button class="tab-btn" data-tab="toys">🧸 玩具</button>
+            </div>
+            <div id="shop-food" class="shop-tab active"></div>
+            <div id="shop-toys" class="shop-tab"></div>
+        </div>
+    </div>
+
+    <div id="rules-modal" class="modal">
+        <div class="modal-content rules-content">
+            <div class="modal-header">
+                <h2>📜 游戏规则</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="rules-list">
+                <div class="rule-item">
+                    <span class="rule-icon">🛒</span>
+                    <div class="rule-text">
+                        <h4>购买物品</h4>
+                        <p>点击商店按钮，使用小鱼干购买各种食物和玩具</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">🍽️</span>
+                    <div class="rule-text">
+                        <h4>放置食物</h4>
+                        <p>点击背包中的食物，放入食盆吸引猫咪</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">🧸</span>
+                    <div class="rule-text">
+                        <h4>放置玩具</h4>
+                        <p>拖拽背包中的玩具到草地上，猫咪会来玩耍</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">🐱</span>
+                    <div class="rule-text">
+                        <h4>吸引猫咪</h4>
+                        <p>有食物和玩具时，猫咪会随机来访，同时最多3只</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">🐟</span>
+                    <div class="rule-text">
+                        <h4>获取奖励</h4>
+                        <p>点击来访的猫咪，获得小鱼干奖励</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">📚</span>
+                    <div class="rule-text">
+                        <h4>收集图鉴</h4>
+                        <p>首次发现的猫咪会自动记录到图鉴中</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">💡</span>
+                    <div class="rule-text">
+                        <h4>小技巧</h4>
+                        <p>用猫咪喜欢的食物和玩具可以大幅提高来访概率哦！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="reset-modal" class="modal">
+        <div class="modal-content confirm-content">
+            <div class="modal-header">
+                <h2>⚠️ 确认重置</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="confirm-body">
+                <p class="confirm-icon">😿</p>
+                <p>确定要重新开始游戏吗？</p>
+                <p class="warning-text">所有的小鱼干、收集的猫咪、购买的物品都会消失！</p>
+                <div class="confirm-buttons">
+                    <button id="cancel-reset" class="btn btn-secondary">取消</button>
+                    <button id="confirm-reset" class="btn btn-danger">确认重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cat-modal" class="modal">
+        <div class="modal-content cat-detail">
+            <div class="modal-header">
+                <h2 id="cat-modal-name">猫咪</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="cat-detail-content">
+                <div id="cat-modal-image" class="cat-modal-image"></div>
+                <div class="cat-info">
+                    <p><strong>性格：</strong><span id="cat-modal-personality"></span></p>
+                    <p><strong>喜欢的食物：</strong><span id="cat-modal-food"></span></p>
+                    <p><strong>喜欢的玩具：</strong><span id="cat-modal-toy"></span></p>
+                    <p><strong>来访次数：</strong><span id="cat-modal-visits"></span></p>
+                    <p><strong>稀有度：</strong><span id="cat-modal-rarity"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
