@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐧 浮冰企鹅栖息地</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>❄️ 浮冰企鹅栖息地 ❄️</h1>
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="stat-icon">🐟</span>
+                    <span class="stat-value" id="fish-count">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">⭐</span>
+                    <span class="stat-value" id="happiness">50</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">🐧</span>
+                    <span class="stat-value" id="penguin-count">1</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-scene" id="game-scene">
+            <div class="ice-floe">
+                <div class="snow-pattern"></div>
+            </div>
+            <div class="water"></div>
+        </div>
+
+        <div class="control-panel">
+            <div class="panel-section">
+                <h3>🏠 建筑</h3>
+                <button class="btn" id="add-ice-house">
+                    冰屋 (50🐟)
+                </button>
+                <button class="btn" id="add-fishing-spot">
+                    钓鱼点 (30🐟)
+                </button>
+                <button class="btn" id="add-playground">
+                    游乐场 (40🐟)
+                </button>
+            </div>
+            <div class="panel-section">
+                <h3>🐧 企鹅</h3>
+                <button class="btn" id="add-penguin">
+                    新企鹅 (100🐟)
+                </button>
+                <button class="btn" id="feed-penguins">
+                    喂食 (10🐟)
+                </button>
+            </div>
+            <div class="panel-section">
+                <h3>📖 规则说明</h3>
+                <div class="rules">
+                    <p>• 企鹅会自动钓鱼和玩耍</p>
+                    <p>• 建造设施越多，效率越高</p>
+                    <p>• 保持快乐值越高，产出越多</p>
+                    <p>• 点击企鹅可以互动</p>
+                </div>
+                <button class="btn btn-danger" id="restart-game">
+                    🔄 重新开始
+                </button>
+            </div>
+        </div>
+
+        <div class="message-box" id="message-box"></div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
