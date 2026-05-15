@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>火柴人战争 - Stickman War</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>🏰 火柴人战争 ⚔️</h1>
+            <div class="resources">
+                <div class="resource-item">
+                    <span class="resource-icon">💰</span>
+                    <span id="gold">200</span>
+                </div>
+                <div class="resource-item">
+                    <span class="resource-icon">👥</span>
+                    <span id="population">0</span>/<span id="maxPopulation">20</span>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button id="startBtn" class="btn btn-primary">开始游戏</button>
+                <button id="pauseBtn" class="btn btn-secondary" disabled>暂停</button>
+                <button id="restartBtn" class="btn btn-danger">重新开始</button>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas" width="1200" height="500"></canvas>
+
+        <div class="control-panel">
+            <div class="unit-buttons">
+                <h3>🎖️ 训练单位</h3>
+                <div class="unit-grid">
+                    <button class="unit-btn" data-unit="miner">
+                        <div class="unit-icon">⛏️</div>
+                        <div class="unit-name">矿工</div>
+                        <div class="unit-cost">💰 50</div>
+                    </button>
+                    <button class="unit-btn" data-unit="soldier">
+                        <div class="unit-icon">🗡️</div>
+                        <div class="unit-name">步兵</div>
+                        <div class="unit-cost">💰 100</div>
+                    </button>
+                    <button class="unit-btn" data-unit="archer">
+                        <div class="unit-icon">🏹</div>
+                        <div class="unit-name">弓箭手</div>
+                        <div class="unit-cost">💰 150</div>
+                    </button>
+                    <button class="unit-btn" data-unit="wizard">
+                        <div class="unit-icon">🧙</div>
+                        <div class="unit-name">巫师</div>
+                        <div class="unit-cost">💰 250</div>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="game-info">
+                <h3>📋 游戏信息</h3>
+                <div class="info-item">
+                    <span>我方城堡:</span>
+                    <div class="health-bar">
+                        <div id="playerHealth" class="health-fill player-health"></div>
+                    </div>
+                    <span id="playerHealthText">1000/1000</span>
+                </div>
+                <div class="info-item">
+                    <span>敌方城堡:</span>
+                    <div class="health-bar">
+                        <div id="enemyHealth" class="health-fill enemy-health"></div>
+                    </div>
+                    <span id="enemyHealthText">1000/1000</span>
+                </div>
+                <div class="info-item">
+                    <span>波次:</span>
+                    <span id="wave">1</span>
+                </div>
+                <div class="info-item">
+                    <span>击杀数:</span>
+                    <span id="kills">0</span>
+                </div>
+            </div>
+
+            <div class="game-rules">
+                <h3>📜 游戏规则</h3>
+                <ul>
+                    <li>⛏️ 矿工开采金币，每秒+5金币</li>
+                    <li>🗡️ 步兵近战攻击，伤害高</li>
+                    <li>🏹 弓箭手远程攻击，射程远</li>
+                    <li>🧙 巫师范围魔法攻击，伤害强</li>
+                    <li>🎯 摧毁敌方城堡即可获胜！</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="gameOverlay" class="game-overlay">
+            <div class="overlay-content">
+                <h2 id="overlayTitle">游戏结束</h2>
+                <p id="overlayMessage"></p>
+                <button id="overlayRestartBtn" class="btn btn-primary">再来一局</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
